@@ -189,14 +189,14 @@
                 <p id="errorFeedback" class="text-[9px] text-rose-400 font-extrabold mt-3 h-3 tracking-wider uppercase"></p>
             </div>
 
-            <!-- MODULE 2: ULTRA-COOL REBUILT SURPRISE VAULT CONTAINER -->
+            <!-- MODULE 2: ULTRA-COOL GREETING & TRANSITION CARD -->
             <div id="surprisePortal" class="w-full rounded-[2.5rem] p-6 text-center absolute z-20 premium-gpu opacity-0 scale-75 pointer-events-none transition-all duration-500 neon-border-glow flex flex-col items-center">
                 <span id="surpriseDayBadge" class="text-[9px] font-extrabold tracking-[0.45em] text-pink-400 uppercase block mb-1">GALAXY UNLOCKED</span>
                 
-                <!-- NEW CONTENT CONTAINER -->
-                <div class="bg-black/50 border border-white/5 rounded-2xl p-5 mb-4 mt-2 text-left w-full">
-                    <h3 id="surpriseTitle" class="font-luxury font-black text-white text-base leading-snug mb-2 tracking-wide text-pink-400"></h3>
-                    <p id="surpriseBody" class="text-xs font-semibold text-slate-200 leading-relaxed tracking-wide overflow-y-auto max-h-[160px]"></p>
+                <!-- GREETING CONTENT CONTAINER -->
+                <div class="bg-black/50 border border-white/5 rounded-2xl p-5 mb-4 mt-2 text-center w-full">
+                    <h3 id="surpriseTitle" class="font-luxury font-black text-white text-lg leading-snug mb-2 tracking-wide text-pink-400">Happy Birthday! 🎉🎂</h3>
+                    <p id="surpriseBody" class="text-xs font-semibold text-slate-200 leading-relaxed tracking-wide">Welcome to your ultimate magical space! Opening your special world in just a moment... ❤️✨</p>
                 </div>
 
                 <!-- LIVE COUNTDOWN DISPLAY BOX GRID -->
@@ -213,17 +213,8 @@
     </div>
 
     <script>
-        // =========================================================================
-        // 📅 FRESH NEW JOURNEY DATA STORAGE (Roz yahan change kar lena bina kisi issue ke!)
-        // Ab koi automated calendar check nahi hai—jo code yahan doge wahi lock unlock karega!
-        // =========================================================================
-        const COSMIC_SURPRISE_DATA = {
-            code: "1206",  // Aap jo bhi code dalna chaho test karne ke liye yahan badal do
-            dayLabel: "PRE-BIRTHDAY ADVENTURE // LEVEL 01 ACTIVE",
-            title: "Day 47: Fresh Beginnings & Beautiful Surprises! ✨",
-            body: "Welcome to your brand new cosmic portal! From today onwards, every single day we are going to write a completely fresh chapter. Old pages are gone, and a new journey starts right now. Every time you unlock this vault, a beautiful new message will greet you alongside a real-time countdown to your special big day on July 31st. I can't wait to build this universe for you! 🌸❤️"
-        };
-
+        // MASTER CONFIGURATION
+        const SECRET_KEY = "2910";
         let isPasswordResolved = false;
         let dollTapsCount = 0;
 
@@ -243,7 +234,7 @@
                     bubble.innerText = "One more tap and I'll spill! 🤫🌸";
                 } else if (dollTapsCount >= 3) {
                     targetImg.src = "images/mascot_happy.png";
-                    bubble.innerText = `Today's Key is ${COSMIC_SURPRISE_DATA.code}! 🔑✨`;
+                    bubble.innerText = `Today's Key is ${SECRET_KEY}! 🔑✨`;
                     setTimeout(() => { 
                         targetImg.src = "images/mascot.png"; 
                         bubble.innerText = "Tap for Today's Key! 🔑🌸";
@@ -252,25 +243,26 @@
                 }
             } else {
                 targetImg.src = "images/mascot_excited.png";
-                bubble.innerText = "Enjoy today's magical space! 🥰🚀";
+                bubble.innerText = "Warping to your universe! 🥰🚀";
             }
         }
 
         function verifySecretCode() {
             const inputField = document.getElementById('secretInput');
             const errorBox = document.getElementById('errorFeedback');
+            const targetImg = document.getElementById('mascotDynamicImg');
 
-            // Pure dynamic test key mapping link loop bypass
-            if (inputField.value.trim() === COSMIC_SURPRISE_DATA.code || inputField.value.trim() === "2910") {
+            if (inputField.value.trim() === SECRET_KEY) {
                 isPasswordResolved = true;
                 
-                document.getElementById("surpriseDayBadge").innerText = COSMIC_SURPRISE_DATA.dayLabel;
-                document.getElementById("surpriseTitle").innerText = COSMIC_SURPRISE_DATA.title;
-                document.getElementById("surpriseBody").innerText = COSMIC_SURPRISE_DATA.body;
+                // Mascot celebration update
+                targetImg.src = "images/mascot_happy.png";
+                document.getElementById("dollBubble").innerText = "YAY! Access Granted! 😍🎉";
 
-                // Fire magical element particle rain automatically
+                // Particle explosion
                 triggerCelebrationFairyRain();
 
+                // Smooth Greeting Transition & Page Redirection to Page 1
                 gsap.to("#passcodePortal", {
                     y: 40, opacity: 0, scale: 0.8, duration: 0.4, ease: "power3.in",
                     onComplete: () => {
@@ -279,10 +271,21 @@
                         const surpriseCard = document.getElementById("surprisePortal");
                         surpriseCard.classList.remove("pointer-events-none", "opacity-0", "scale-75");
                         surpriseCard.classList.add("opacity-100", "scale-100", "pointer-events-auto");
+                        
+                        // 🚀 Smooth Auto-Redirection to Page 1 Welcome
+                        setTimeout(() => {
+                            gsap.to("body", {
+                                opacity: 0,
+                                duration: 0.8,
+                                onComplete: () => {
+                                    window.location.href = "page1-welcome.html";
+                                }
+                            });
+                        }, 2500); // 2.5 second display before smooth transition
                     }
                 });
             } else {
-                errorBox.innerText = "INVALID VAULT PORTAL CODE! LOCK IS ACTIVE! 🔒";
+                errorBox.innerText = "INVALID KEY! TRY AGAIN! 🔒";
                 inputField.value = "";
                 document.getElementById("heartDisplayOverlay").innerText = ""; 
                 gsap.fromTo("#passcodePortal", { x: -10 }, { x: 10, duration: 0.04, repeat: 4, yoyo: true });
@@ -318,7 +321,7 @@
             }
         }
 
-        // --- BACKGROUND CORES ---
+        // BACKGROUND ENGINES
         function initAsynchronousLightingMatrix() {
             const trackLayer = document.getElementById("asyncLightsMatrix");
             for(let i=0; i<6; i++) {
@@ -355,7 +358,7 @@
             document.getElementById("heartDisplayOverlay").innerText = heartString;
         }
 
-        // --- CANVAS SPARK TRAILS ---
+        // CANVAS TOUCH PARTICLES
         const touchCanvas = document.getElementById('touchCanvas');
         const tCtx = touchCanvas.getContext('2d');
         let touchParticles = [];
