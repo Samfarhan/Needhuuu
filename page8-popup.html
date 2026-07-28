@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>The Bubble Shell | Queen Needhzy</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@700;800&family=Playfair+Display:ital,wght@0,900;1,600&display=swap" rel="stylesheet">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+
+    <style>
+        .font-luxury { font-family: 'Playfair Display', serif; }
+        .font-sans-premium { font-family: 'Plus Jakarta Sans', sans-serif; }
+        
+        .premium-gpu {
+            will-change: transform, opacity, filter;
+            transform: translateZ(0);
+            backface-visibility: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Luxury Soft Shifting Pastel Shimmer Background Grid Mesh */
+        @keyframes luxuryGlowFlow {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        .animated-boutique-bg {
+            background: linear-gradient(-45deg, #ffe4e6, #f5f3ff, #e0f2fe, #fdf2f8, #faf5ff);
+            background-size: 400% 400%;
+            animation: luxuryGlowFlow 12s ease infinite;
+        }
+
+        /* 🔄 CSS VIEWPORT SAFE RESTRAINT FOR FLOATING MASCOT */
+        @keyframes safeMascotTrack {
+            0% { top: 12%; left: 6%; transform: scale(1) rotate(0deg); }
+            25% { top: 14%; left: 62%; transform: scale(1.05) rotate(6deg); }
+            50% { top: 70%; left: 64%; transform: scale(0.95) rotate(-6deg); }
+            75% { top: 64%; left: 8%; transform: scale(1.02) rotate(4deg); }
+            100% { top: 12%; left: 6%; transform: scale(1) rotate(0deg); }
+        }
+        .animate-safe-mascot {
+            position: fixed;
+            animation: safeMascotTrack 18s linear infinite;
+        }
+
+        /* Highly Styled Round Capsule Flawless Glass Shadows */
+        .glass-pod-glow {
+            box-shadow: 0 15px 35px rgba(244, 63, 94, 0.05), inset 0 0 20px rgba(255, 255, 255, 0.95);
+            border: 2px solid rgba(255, 255, 255, 0.85);
+        }
+
+        .glass-terminal-glow {
+            box-shadow: 0 30px 70px rgba(244, 63, 94, 0.06), inset 0 0 30px rgba(255, 255, 255, 0.85);
+            border: 2px solid rgba(255, 255, 255, 0.7);
+        }
+
+        /* 🔄 COMPACT SCREEN CONTAINER LIMITER FOR ABSOLUTE BOUNDS PROTECTION */
+        .phone-container {
+            width: 100%;
+            max-width: 412px;
+            height: 100vh;
+            max-height: 892px;
+        }
+    </style>
+</head>
+<body class="animated-boutique-bg text-slate-800 font-sans-premium min-h-screen w-full flex items-center justify-center overflow-hidden select-none relative">
+
+    <audio id="sfxPop" src="sfx/pop.wav" preload="auto"></audio>
+    <audio id="sfxSuccess" src="sfx/success.wav" preload="auto"></audio>
+
+    <canvas id="touchCanvas" class="fixed inset-0 w-full h-full pointer-events-none z-40"></canvas>
+
+    <div id="roamingDoll" class="animate-safe-mascot w-20 h-28 cursor-pointer select-none z-40 premium-gpu filter drop-shadow-[0_10px_20px_rgba(244,63,94,0.12)]">
+        <img id="mascotDynamicImg" src="images/mascot.png" class="w-full h-full object-contain" alt="Mascot Doll" onclick="triggerMascotCoreTalk()">
+        
+        <div id="dollBubble" class="absolute -top-10 left-1/2 -translate-x-1/2 bg-white border border-pink-100 py-1 px-3 rounded-xl shadow-md text-[9px] font-extrabold text-pink-500 tracking-wide scale-100 transition-all duration-300 whitespace-nowrap">
+            Don't touch that core panel! 😱🚨
+        </div>
+    </div>
+
+    <div class="phone-container relative z-10 flex flex-col justify-between p-4 pb-8 overflow-hidden">
+        
+        <div class="text-center w-full premium-gpu mt-6" id="trapHeader">
+            <span class="text-[9px] font-extrabold tracking-[0.5em] text-pink-600 uppercase block mb-1 animate-pulse">THE CORE FLOW</span>
+            <h1 class="font-luxury font-black text-2xl text-indigo-950 leading-tight">The Forbidden Matrix<br>Control Panel Hub 🚨🔮</h1>
+            <p class="text-[10px] font-medium text-slate-400 mt-1">Warning: Affection overload sequence initialized</p>
+        </div>
+
+        <div id="mainTriggerContainer" class="w-full backdrop-blur-3xl bg-white/50 rounded-[2.5rem] p-6 glass-terminal-glow text-center flex flex-col items-center justify-center py-12 my-auto transition-all premium-gpu z-20">
+            <div class="w-16 h-16 rounded-full bg-pink-100 border border-white flex items-center justify-center text-2xl mb-4 shadow-inner animate-pulse">⚡</div>
+            <h2 class="font-luxury font-black text-base text-slate-800 tracking-tight mb-2">Unstable Frequency Node</h2>
+            <p class="text-[11px] text-slate-400 font-medium mb-6 px-4">Tap below to release all custom emotional network records at once.</p>
+            <button id="dangerTriggerBtn" onclick="initiateMassivePopupBlast(this)" class="w-28 h-28 rounded-full bg-gradient-to-tr from-pink-400 via-rose-400 to-purple-500 text-white font-black tracking-[0.2em] text-[9px] shadow-xl border-4 border-white active:scale-95 transition-all premium-gpu">
+                LAUNCH BLAST 🚨
+            </button>
+        </div>
+
+        <div id="popupSpawnPlane" class="absolute inset-x-4 top-24 bottom-24 pointer-events-none z-30 overflow-hidden rounded-3xl"></div>
+
+        <div class="w-full flex flex-col items-center gap-2 mt-4">
+            <div class="text-[8px] font-bold tracking-widest text-slate-400 uppercase" id="progressMetrics">
+                SYSTEM CORE STATUS: <span class='text-pink-500 font-black animate-pulse'>STANDBY MODE</span>
+            </div>
+
+            <div id="actionFooterBar" class="w-full opacity-0 scale-90 hidden pointer-events-none transition-all duration-500 z-40">
+                <button onclick="advanceToWishesGrandPage()" class="w-full bg-gradient-to-r from-pink-400 via-rose-400 to-purple-500 text-white font-extrabold tracking-[0.22em] text-[10px] py-4 rounded-xl shadow-md shadow-pink-300/30 border border-white/20 premium-gpu animate-bounce">
+                    PROCEED TO WISHES 🎂🚀
+                </button>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        let currentSpawnIndex = 0;
+        let activePopupsCounter = 0;
+        let isBlastInitiated = false;
+
+        // 🧠 30 COMPLETELY UNIQUE STATEMENTS FOR THE FLOOD (Zero repetition)
+        const pureUniquePhrasesPool = [
+            "You are legally mine now! No arguments! 😡❤️",
+            "Cutest human alive on this entire planet! 🌸✨",
+            "Excuse me, your pouts are highly dangerous! 😤💖",
+            "Stop trying to close these, I am everywhere! 👀💎",
+            "You belong to my cosmos forever! 🌌🔮",
+            "My mood cure station is 100% locked on you! 🥰⚡",
+            "You cannot escape my care, Queen Needhzy! 👸🏻👑",
+            "Warning: Absolute pure affection overload! 🚨💝",
+            "You are completely stuck with me! No bypass! 💕🔒",
+            "The prettiest smile in the entire network! ✨👑",
+            "You think you can close them all? Try harder! 😜⚡",
+            "My favorite notification is always your text! 💬💞",
+            "No one else is allowed to be this adorable! 🙅🏻‍♀️🌸",
+            "You cross my mind thousands of times a day! 🧠❤️",
+            "Your voice note is literally my comfort track! 🎵✨",
+            "An absolute sovereign of this private space! 👑🌟",
+            "Forever grateful for your beautiful support! 🥺💎",
+            "Your presence makes everything look so vibrant! 🌈💕",
+            "May your gorgeous smile never vanish! 🌸💖",
+            "No firewall can stop this message flow! 🛡️❌",
+            "You are the absolute best thing in my universe! ✨🌌",
+            "Literally the queen of late-night conversations! 💬🌙",
+            "Your care is my favorite parameter! 🍼❤️",
+            "Stop fighting it, you are simply perfect! 😍🎀",
+            "Even when you are angry, it's super precious! 😡💞",
+            "A total monopoly on my happy thoughts! 📈💖",
+            "The sweetest monitor in educational history! 📚✨",
+            "My system runs 100% smoother when you ping! ⚡🚀",
+            "You hold the primary access keys to my heart! 🔑🔐",
+            "Celebrating your phenomenal existence today! 🎉👑"
+        ];
+
+        let trackingPhrasesUsedIndices = new Set();
+
+        const needhzyTrapTalks = [
+            "Oh no! Look what you triggered! 😂💥",
+            "Hahaha! The capsules look so pretty! 😜🌸",
+            "The screen is filled with pure truth! 💖💎",
+            "They just keep multiplying! 🥰⚡",
+            "Click the bottom button to unlock the birthday wishes! 🎂🚀"
+        ];
+        let trackingTalksPool = [...needhzyTrapTalks];
+
+        const playSFX = (id) => {
+            const audio = document.getElementById(id);
+            if (audio) { audio.currentTime = 0; audio.play().catch(e => {}); }
+        };
+
+        // 💥 INITIALIZE THE STYLISH FLOOD CASADE
+        function initiateMassivePopupBlast(buttonNode) {
+            if (isBlastInitiated) return;
+            isBlastInitiated = true;
+            playSFX('sfxSuccess');
+
+            // Fade out the main danger panel smoothly
+            gsap.to("#mainTriggerContainer", { scale: 0.9, opacity: 0, duration: 0.4, onComplete: () => {
+                document.getElementById("mainTriggerContainer").remove();
+            }});
+
+            document.getElementById("progressMetrics").innerHTML = "DECRYPT STATUS: <span class='text-pink-500 font-black animate-pulse'>MATRIX OVERLOAD! 🚨</span>";
+
+            let currentBurstCount = 0;
+            const totalInitialBurst = 25; // Locked dense burst count lines!
+
+            const burstTimerInterval = setInterval(() => {
+                if (currentBurstCount >= totalInitialBurst) {
+                    clearInterval(burstTimerInterval);
+                    activateFinalProceedStationBar();
+                    return;
+                }
+                spawnSingleCutePopupNode();
+                currentBurstCount++;
+            }, 60); 
+        }
+
+        // 🖼 shrinked capsule boxes elements positioning generator paths
+        function spawnSingleCutePopupNode() {
+            if (activePopupsCounter >= 35) return; // Strict boundary capping to maintain design balance inside screen bounds
+            playSFX('sfxPop');
+
+            const container = document.getElementById("popupSpawnPlane");
+            const newPopup = document.createElement("div");
+
+            activePopupsCounter++;
+            currentSpawnIndex++;
+
+            let chosenTextStr = "";
+            if (trackingPhrasesUsedIndices.size < pureUniquePhrasesPool.length) {
+                let randomIndex;
+                do {
+                    randomIndex = Math.floor(Math.random() * pureUniquePhrasesPool.length);
+                } while (trackingPhrasesUsedIndices.has(randomIndex));
+                
+                trackingPhrasesUsedIndices.add(randomIndex);
+                chosenTextStr = pureUniquePhrasesPool[randomIndex];
+            } else {
+                chosenTextStr = pureUniquePhrasesPool[Math.floor(Math.random() * pureUniquePhrasesPool.length)];
+            }
+
+            // Locked 100% inside screen boundary lines (positions relative to canvas layout frame)
+            const posX = Math.random() * 42 + 2; // Constrained left offset limits lines
+            const posY = Math.random() * 66 + 2; // Constrained top offset limits lines
+
+            newPopup.className = "absolute backdrop-blur-2xl bg-white/95 rounded-[2.2rem] p-3 py-4.5 glass-pod-glow text-center w-44 pointer-events-auto shadow-xl premium-gpu select-none border border-pink-200/30";
+            newPopup.style.left = `${posX}%`;
+            newPopup.style.top = `${posY}%`;
+            newPopup.style.zIndex = 100 + currentSpawnIndex;
+            newPopup.id = `cutePopupBoxElement${currentSpawnIndex}`;
+
+            const dynamicRotation = Math.random() * 16 - 8;
+
+            newPopup.innerHTML = `
+                <div class="absolute -top-2.5 -right-1 bg-gradient-to-tr from-pink-400 to-rose-400 text-white font-black text-[9px] w-5 h-5 rounded-full flex items-center justify-center cursor-pointer shadow-md border-2 border-white scale-100 active:scale-90 transition-all" onclick="closePopupActionHandler(${currentSpawnIndex}, event)">💖</div>
+                <p class="text-[9px] text-slate-700 font-extrabold leading-relaxed px-1 italic">“${chosenTextStr}”</p>
+            `;
+
+            container.appendChild(newPopup);
+
+            gsap.fromTo(newPopup, { scale: 0, rotation: 0 }, { scale: 1, rotation: dynamicRotation, duration: 0.35, ease: "back.out(1.3)" });
+
+            if (currentSpawnIndex % 3 === 0) triggerChibiExpressionShift();
+        }
+
+        // ❌ MULTIPLIER RESPONSE CHAIN CONTROLLER
+        function closePopupActionHandler(id, event) {
+            event.stopPropagation();
+            playSFX('sfxPop');
+
+            const targetElement = document.getElementById(`cutePopupBoxElement${id}`);
+            if (!targetElement) return;
+
+            const r = targetElement.getBoundingClientRect();
+            for(let i=0; i<5; i++) touchParticles.push(new TouchSparkle(r.left + (r.width/2), r.top + (r.height/2), '🌸'));
+
+            gsap.to(targetElement, { scale: 0, opacity: 0, duration: 0.2, onComplete: () => {
+                targetElement.remove();
+                activePopupsCounter--;
+
+                // Safe multiply without clipping limits lines bounds boundaries
+                if (currentSpawnIndex < 40) {
+                    setTimeout(() => { spawnSingleCutePopupNode(); }, 120);
+                    setTimeout(() => { spawnSingleCutePopupNode(); }, 240);
+                }
+            }});
+        }
+
+        function triggerChibiExpressionShift() {
+            const bubble = document.getElementById("dollBubble");
+            const targetImg = document.getElementById("mascotDynamicImg");
+
+            if (trackingTalksPool.length === 0) trackingTalksPool = [...needhzyTrapTalks];
+            bubble.innerText = trackingTalksPool.splice(Math.floor(Math.random() * trackingTalksPool.length), 1)[0];
+
+            const expressions = ["images/mascot_happy.png", "images/mascot_excited.png"];
+            targetImg.src = expressions[Math.floor(Math.random() * expressions.length)];
+
+            setTimeout(() => {
+                targetImg.src = "images/mascot.png";
+                bubble.innerText = "Close them if you can! 😜🚨";
+            }, 3500);
+        }
+
+        function triggerMascotCoreTalk() {
+            playSFX('sfxPop');
+            triggerChibiExpressionShift();
+            const r = document.getElementById("roamingDoll").getBoundingClientRect();
+            for(let i=0; i<5; i++) touchParticles.push(new TouchSparkle(r.left + 35, r.top + 35, '✨'));
+        }
+
+        function activateFinalProceedStationBar() {
+            const footerBar = document.getElementById("actionFooterBar");
+            footerBar.classList.remove("hidden");
+            
+            setTimeout(() => {
+                footerBar.classList.remove("opacity-0", "scale-90");
+                footerBar.classList.add("opacity-100", "scale-100", "pointer-events-auto");
+            }, 50);
+
+            setInterval(() => {
+                touchParticles.push(new TouchSparkle(Math.random() * window.innerWidth, Math.random() * window.innerHeight, '🌸'));
+            }, 400);
+        }
+
+        // 🚗 INTERBAL LINKS JUMP DIRECTION STRAIGHT ROUTE WISHES HUB
+        function advanceToWishesGrandPage() {
+            playSFX('sfxPop');
+            gsap.to("body", { opacity: 0, duration: 0.5, onComplete: () => {
+                window.location.href = "page9-wishes.html"; // Perfectly shifts forward directly to your next step!
+            }});
+        }
+
+        // --- MOBILE OPTIMIZED TOUCH SPARK TRAIL ENGINE ---
+        const touchCanvas = document.getElementById('touchCanvas');
+        const tCtx = touchCanvas.getContext('2d');
+        let touchParticles = [];
+        touchCanvas.width = window.innerWidth; touchCanvas.height = window.innerHeight;
+
+        class TouchSparkle {
+            constructor(x, y, sym = '✨') {
+                this.x = x; this.y = y; this.size = Math.random() * 12 + 10;
+                this.speedX = (Math.random() - 0.5) * 4; this.speedY = (Math.random() - 0.5) * 4;
+                this.opacity = 1; this.symbol = sym;
+            }
+            update() { this.x += this.speedX; this.y += this.speedY; this.opacity -= 0.02; }
+            draw() { tCtx.save(); tCtx.globalAlpha = this.opacity; tCtx.font = `${this.size}px serif`; tCtx.fillText(this.symbol, this.x, this.y); tCtx.restore(); }
+        }
+
+        window.addEventListener('mousemove', (e) => { touchParticles.push(new TouchSparkle(e.clientX, e.clientY)); });
+        window.addEventListener('touchmove', (e) => { if(e.touches.length) touchParticles.push(new TouchSparkle(e.touches[0].clientX, e.touches[0].clientY)); });
+
+        function animateTouchTrail() {
+            tCtx.clearRect(0, 0, touchCanvas.width, touchCanvas.height);
+            for (let i = 0; i < touchParticles.length; i++) {
+                touchParticles[i].update(); touchParticles[i].draw();
+                if (touchParticles[i].opacity <= 0) { touchParticles.splice(i, 1); i--; }
+            }
+            requestAnimationFrame(animateTouchTrail);
+        }
+        animateTouchTrail();
+    </script>
+</body>
+</html>

@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>The Grand Finale | Happy Birthday Needhzy!</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@700;800&family=Playfair+Display:ital,wght=0,900;1,600&display=swap" rel="stylesheet">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+
+    <style>
+        .font-luxury { font-family: 'Playfair Display', serif; }
+        .font-sans-premium { font-family: 'Plus Jakarta Sans', sans-serif; }
+        
+        .premium-gpu {
+            will-change: transform, opacity, filter;
+            transform: translateZ(0);
+            backface-visibility: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Luxury Soft Shifting Pastel Shimmer Background Grid Mesh */
+        @keyframes luxuryGlowFlow {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        .animated-boutique-bg {
+            background: linear-gradient(-45deg, #ffe4e6, #f5f3ff, #e0f2fe, #fdf2f8, #faf5ff);
+            background-size: 400% 400%;
+            animation: luxuryGlowFlow 12s ease infinite;
+        }
+
+        /* High-End Frosted Glass Container Outlines */
+        .glass-finale-glow {
+            box-shadow: 0 30px 70px rgba(244, 63, 94, 0.06), inset 0 0 30px rgba(255, 255, 255, 0.9);
+            border: 2px solid rgba(255, 255, 255, 0.7);
+        }
+
+        /* Realistic Multi-Layer CSS Cake Styling */
+        .cake-wrapper {
+            position: relative;
+            width: 220px;
+            height: 180px;
+            transition: all 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+        .cake-layer {
+            border-radius: 12px 12px 4px 4px;
+            box-shadow: inset 0 4px 6px rgba(255,255,255,0.6), 0 6px 12px rgba(0,0,0,0.05);
+        }
+        .cake-cream-line {
+            background: repeating-linear-gradient(90deg, #fff, #fff 10px, #f48fb1 10px, #f48fb1 20px);
+        }
+
+        /* Candle Flame Flickering Animation */
+        @keyframes flameWobble {
+            0%, 100% { transform: scale(1) rotate(-2deg); filter: drop-shadow(0 0 6px #f59e0b); }
+            50% { transform: scale(1.15) rotate(3deg); filter: drop-shadow(0 0 12px #ef4444); }
+        }
+        .animate-flame {
+            animation: flameWobble 0.5s ease-in-out infinite;
+        }
+
+        @keyframes safeMascotTrack {
+            0% { top: 12%; left: 6%; transform: scale(1) rotate(0deg); }
+            25% { top: 14%; left: 62%; transform: scale(1.05) rotate(6deg); }
+            50% { top: 70%; left: 64%; transform: scale(0.95) rotate(-6deg); }
+            75% { top: 64%; left: 8%; transform: scale(1.02) rotate(4deg); }
+            100% { top: 12%; left: 6%; transform: scale(1) rotate(0deg); }
+        }
+        .animate-safe-mascot {
+            position: fixed;
+            animation: safeMascotTrack 18s linear infinite;
+        }
+
+        .phone-container {
+            width: 100%;
+            max-width: 412px;
+            height: 100vh;
+            max-height: 892px;
+        }
+        
+        .knife-draggable {
+            touch-action: none;
+            cursor: grab;
+        }
+        .knife-draggable:active {
+            cursor: grabbing;
+        }
+    </style>
+</head>
+<body class="animated-boutique-bg text-slate-800 font-sans-premium min-h-screen w-full flex items-center justify-center overflow-hidden select-none relative">
+
+    <audio id="sfxSuccess" src="sfx/success.wav" preload="auto"></audio>
+    <audio id="sfxPop" src="sfx/pop.wav" preload="auto"></audio>
+
+    <canvas id="touchCanvas" class="fixed inset-0 w-full h-full pointer-events-none z-40"></canvas>
+
+    <div id="whiteFlashOverlay" class="fixed inset-0 bg-white opacity-0 pointer-events-none z-50 transition-opacity duration-200"></div>
+
+    <div id="roamingDoll" class="animate-safe-mascot w-20 h-28 cursor-pointer select-none z-40 premium-gpu filter drop-shadow-[0_10px_20px_rgba(244,63,94,0.12)]">
+        <img id="mascotDynamicImg" src="images/mascot.png" class="w-full h-full object-contain" alt="Mascot Doll" onclick="triggerMascotFinaleTalk()">
+        <div id="dollBubble" class="absolute -top-10 left-1/2 -translate-x-1/2 bg-white border border-pink-100 py-1 px-3 rounded-xl shadow-md text-[9px] font-extrabold text-pink-500 tracking-wide scale-100 transition-all duration-300 whitespace-nowrap">
+            Cut the cake, Needhzy! 🎂🔪
+        </div>
+    </div>
+
+    <div class="phone-container relative z-10 flex flex-col justify-between p-4 pb-8 overflow-hidden">
+        
+        <div class="text-center w-full premium-gpu mt-4 opacity-0" id="finaleHeader" style="transform: translateY(-20px);">
+            <span class="text-[9px] font-extrabold tracking-[0.5em] text-pink-600 uppercase block mb-1">THE CELESTIAL MOMENT</span>
+            <h1 id="mainCelebrationTitle" class="font-luxury font-black text-2xl text-indigo-950 leading-tight transition-all duration-500">Slice The Cake,<br>Queen Needhzy 👑✨</h1>
+        </div>
+
+        <div id="celebrationTheaterPanel" class="w-full backdrop-blur-3xl bg-white/50 rounded-[2.5rem] p-5 glass-finale-glow text-center flex flex-col items-center justify-center my-auto opacity-0 scale-90 premium-gpu z-20 relative min-h-[64vh]">
+            
+            <div class="relative w-full h-48 flex items-center justify-center my-3" id="cakeStageBox">
+                
+                <div id="fullCakeStructure" class="cake-wrapper flex items-center justify-center">
+                    
+                    <div id="cakeLeftHalf" class="absolute inset-0 transition-transform duration-1000 cubic-bezier(0.16, 1, 0.3, 1) origin-center" style="clip-path: inset(0 50% 0 0);">
+                        <div class="absolute left-[104px] top-2 w-3 h-10 bg-amber-100 border-l border-amber-200 rounded-sm">
+                            <div id="candleFlameLeft" class="absolute -top-4 -left-1 text-xl animate-flame">🔥</div>
+                        </div>
+                        <div class="absolute left-14 top-12 w-28 h-10 bg-pink-100 cake-layer">
+                            <div class="w-full h-2 cake-cream-line absolute bottom-0 rounded-b-sm"></div>
+                        </div>
+                        <div class="absolute left-9 top-20 w-38 h-12 bg-pink-200 cake-layer">
+                            <div class="w-full h-2.5 cake-cream-line absolute bottom-0 rounded-b-sm"></div>
+                        </div>
+                        <div class="absolute left-4 top-30 w-48 h-14 bg-pink-300 cake-layer">
+                            <div class="w-full h-3 cake-cream-line absolute bottom-0 rounded-b-sm"></div>
+                        </div>
+                        <div class="absolute left-0 top-44 w-56 h-3 bg-slate-200 rounded-full shadow-sm"></div>
+                    </div>
+
+                    <div id="cakeRightHalf" class="absolute inset-0 transition-transform duration-1000 cubic-bezier(0.16, 1, 0.3, 1) origin-center" style="clip-path: inset(0 0 0 50%);">
+                        <div class="absolute left-[104px] top-2 w-3 h-10 bg-amber-100 border-r border-amber-200 rounded-sm">
+                            <div id="candleFlameRight" class="absolute -top-4 -left-1 text-xl animate-flame">🔥</div>
+                        </div>
+                        <div class="absolute left-14 top-12 w-28 h-10 bg-pink-100 cake-layer">
+                            <div class="w-full h-2 cake-cream-line absolute bottom-0 rounded-b-sm"></div>
+                        </div>
+                        <div class="absolute left-9 top-20 w-38 h-12 bg-pink-200 cake-layer">
+                            <div class="w-full h-2.5 cake-cream-line absolute bottom-0 rounded-b-sm"></div>
+                        </div>
+                        <div class="absolute left-4 top-30 w-48 h-14 bg-pink-300 cake-layer">
+                            <div class="w-full h-3 cake-cream-line absolute bottom-0 rounded-b-sm"></div>
+                        </div>
+                        <div class="absolute left-0 top-44 w-56 h-3 bg-slate-200 rounded-full shadow-sm"></div>
+                    </div>
+
+                </div>
+
+                <div id="cakeAuraBackglow" class="absolute w-36 h-36 rounded-full bg-pink-400/10 filter blur-2xl animate-pulse pointer-events-none"></div>
+            </div>
+
+            <div id="knifeTrackZone" class="w-full flex flex-col items-center justify-center py-2 transition-all duration-500">
+                <div id="virtualKnifeNode" class="knife-draggable text-5xl filter drop-shadow-[0_6px_10px_rgba(0,0,0,0.15)] active:scale-110 transition-transform duration-700 z-30 select-none pb-1">
+                    🔪
+                </div>
+                <span id="dragPromptHint" class="bg-gradient-to-r from-pink-500 to-purple-500 text-white font-sans-premium font-extrabold text-[8px] tracking-widest px-4 py-1.5 rounded-full uppercase shadow-md animate-pulse border border-white/20 whitespace-nowrap mt-4 select-none pointer-events-none">
+                    Drag Knife Up to Cut Cake ⚡
+                </span>
+            </div>
+            
+            <div id="letterWrapperBlock" class="w-full overflow-hidden relative max-h-0 opacity-0 transition-all duration-1000">
+                <div class="h-[1px] w-24 bg-pink-200 mx-auto my-2"></div>
+                <p class="text-[11px] text-slate-600 font-semibold leading-relaxed px-3 italic mt-3 text-center">
+                    “And here, this beautiful cosmic transmission safely comes to its peak. Thank you for being the most incredible, irreplaceable, and genuinely comforting presence in my entire universe. No matter where the timelines move, your happiness will always remain my absolute primary focus. Have the most spectacular, magical birthday, my absolute Queen. ❤️”
+                </p>
+                
+                <div class="mt-5 flex gap-2 items-center justify-center text-[7px] font-black tracking-widest text-emerald-500 bg-emerald-50 px-3 py-1 rounded-md border border-emerald-100/40 max-w-max mx-auto">
+                    <span>🎉 PARTY IN FULL BLAST</span>
+                    <span>•</span>
+                    <span>100% COMPLETE</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="w-full text-center premium-gpu opacity-0 mt-1" id="finaleFooterTrack">
+            <span class="text-[9px] font-extrabold tracking-[0.25em] text-indigo-950 uppercase block">THANK YOU FOR SHINING BRIGHTLY ❤️</span>
+            <span class="text-[7px] font-bold tracking-widest text-slate-400 uppercase mt-1 block">DESIGNED WITH PURE AFFECTION • 2026</span>
+        </div>
+
+    </div>
+
+    <script>
+        let isCakeSlicingExecuted = false;
+        const needhzyFinaleTalks = [
+            "Happy Birthday to the supreme Queen! 😍👑",
+            "OMG! You cut the cake so beautifully! 👸🏻🌸",
+            "Never stop smiling, Needhzy! 💖✨",
+            "The screen is exploding with affection! 🥰🎈",
+            "Thank you for completing the entire journey! 🪐"
+        ];
+        let trackingTalksPool = [...needhzyFinaleTalks];
+
+        const playSFX = (id) => {
+            const audio = document.getElementById(id);
+            if (audio) { audio.currentTime = 0; audio.play().catch(e => {}); }
+        };
+
+        window.addEventListener('load', () => {
+            gsap.to("#finaleHeader", { opacity: 1, y: 0, duration: 0.6, ease: "power2.out" });
+            gsap.to("#celebrationTheaterPanel", { opacity: 1, scale: 1, duration: 0.7, ease: "back.out(1.1)", delay: 0.1, onComplete: setupKnifeDragEngine });
+            gsap.to("#finaleFooterTrack", { opacity: 1, duration: 0.5, delay: 0.5 });
+        });
+
+        // 🛠️ DRAG & DROP MOBILE TOUCH INTERACTION DRIVER HOOKS
+        function setupKnifeDragEngine() {
+            const knife = document.getElementById("virtualKnifeNode");
+            const cakeStage = document.getElementById("cakeStageBox");
+            let isDragging = false;
+            let startY = 0;
+            let currentTranslateY = 0;
+
+            knife.addEventListener('mousedown', dragStart);
+            knife.addEventListener('touchstart', dragStart, { passive: true });
+
+            window.addEventListener('mousemove', dragMove);
+            window.addEventListener('touchmove', dragMove, { passive: false });
+
+            window.addEventListener('mouseup', dragEnd);
+            window.addEventListener('touchend', dragEnd);
+
+            function dragStart(e) {
+                if (isCakeSlicingExecuted) return;
+                isDragging = true;
+                startY = e.touches ? e.touches[0].clientY : e.clientY;
+                knife.style.transition = "none";
+            }
+
+            function dragMove(e) {
+                if (!isDragging || isCakeSlicingExecuted) return;
+                if (e.touches) e.preventDefault(); 
+
+                const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+                let deltaY = clientY - startY;
+
+                if (deltaY > 0) deltaY = 0; // Prevent dragging downwards
+                currentTranslateY = deltaY;
+
+                knife.style.transform = `translateY(${currentTranslateY}px)`;
+
+                const knifeRect = knife.getBoundingClientRect();
+                const cakeRect = cakeStage.getBoundingClientRect();
+
+                // Collision detection at the tray base coordinate vector
+                if (knifeRect.top <= (cakeRect.top + cakeRect.height - 40)) {
+                    isDragging = false;
+                    executeGrandExplosionCutSequence();
+                }
+            }
+
+            function dragEnd() {
+                if (!isDragging || isCakeSlicingExecuted) return;
+                isDragging = false;
+                knife.style.transition = "transform 0.4s cubic-bezier(0.25, 1, 0.5, 1)";
+                knife.style.transform = "translateY(0px)";
+                currentTranslateY = 0;
+            }
+        }
+
+        // 💥 THE HIGH-END CAKE SLITTING & PARTICLES BLAST ENGINES
+        function executeGrandExplosionCutSequence() {
+            if (isCakeSlicingExecuted) return;
+            isCakeSlicingExecuted = true;
+
+            playSFX('sfxSuccess');
+
+            // 1. Core Visual Cinematic Flash
+            const flash = document.getElementById("whiteFlashOverlay");
+            flash.style.opacity = "1";
+            setTimeout(() => { flash.style.opacity = "0"; }, 250);
+
+            // 2. Extinguish candle flame elements smoothly
+            document.getElementById("candleFlameLeft").remove();
+            document.getElementById("candleFlameRight").remove();
+
+            // 3. Realistic Layer Displacement Split Physics
+            document.getElementById("cakeLeftHalf").style.transform = "translateX(-35px) rotate(-6deg)";
+            document.getElementById("cakeRightHalf").style.transform = "translateX(35px) rotate(6deg)";
+            document.getElementById("cakeAuraBackglow").style.transform = "scale(2.2)";
+            document.getElementById("cakeAuraBackglow").style.opacity = "0.4";
+
+            // 4. Remove Controller Nodes Assembly smoothly
+            gsap.to("#knifeTrackZone", { scale: 0.8, opacity: 0, duration: 0.4, onComplete: () => {
+                document.getElementById("knifeTrackZone").remove();
+            }});
+
+            // 5. Update Typography Messaging lines
+            const mainTitle = document.getElementById("mainCelebrationTitle");
+            mainTitle.innerHTML = "HAPPY BIRTHDAY<br>NEEDHZY! 🎉🥳";
+            mainTitle.style.color = "#f43f5e";
+            gsap.fromTo(mainTitle, { scale: 0.9 }, { scale: 1.05, duration: 0.4, yoyo: true, repeat: 1, ease: "back.out(1.3)" });
+
+            // 6. Expand Core Letter Drawer smoothly
+            const drawer = document.getElementById("letterWrapperBlock");
+            drawer.classList.remove("opacity-0");
+            drawer.style.maxHeight = "none";
+            const computedHeight = drawer.clientHeight;
+            drawer.style.maxHeight = "0px";
+
+            gsap.to(drawer, {
+                maxHeight: computedHeight,
+                opacity: 1,
+                duration: 1,
+                ease: "power4.out",
+                delay: 0.1
+            });
+
+            // 7. Update mascot expression states
+            document.getElementById("mascotDynamicImg").src = "images/mascot_excited.png";
+            document.getElementById("dollBubble").innerText = "HAPPY BIRTHDAY QUEEN! 😍🎉";
+
+            // 8. Fire ultra-dense party celebratory confetti streams loop
+            setInterval(() => {
+                touchParticles.push(new TouchSparkle(Math.random() * window.innerWidth, window.innerHeight + 15, null, true));
+            }, 65); 
+        }
+
+        function triggerChibiExpressionShift() {
+            const bubble = document.getElementById("dollBubble");
+            const targetImg = document.getElementById("mascotDynamicImg");
+
+            if (trackingTalksPool.length === 0) trackingTalksPool = [...needhzyFinaleTalks];
+            bubble.innerText = trackingTalksPool.splice(Math.floor(Math.random() * trackingTalksPool.length), 1)[0];
+
+            const expressions = ["images/mascot_happy.png", "images/mascot_excited.png"];
+            targetImg.src = expressions[Math.floor(Math.random() * expressions.length)];
+
+            setTimeout(() => {
+                targetImg.src = "images/mascot.png";
+                bubble.innerText = isCakeSlicingExecuted ? "Long live the Queen! 👑💖" : "Cut the cake, Needhzy! 🎂🔪";
+            }, 3500);
+        }
+
+        function triggerMascotFinaleTalk() {
+            playSFX('sfxPop');
+            triggerChibiExpressionShift();
+            const r = document.getElementById("roamingDoll").getBoundingClientRect();
+            for(let i=0; i<5; i++) touchParticles.push(new TouchSparkle(r.left + 35, r.top + 35, '🎉'));
+        }
+
+        // --- HIGH-PERFORMANCE 60FPS CONFETTI CANVAS ENGINE ---
+        const touchCanvas = document.getElementById('touchCanvas');
+        const tCtx = touchCanvas.getContext('2d');
+        let touchParticles = [];
+        touchCanvas.width = window.innerWidth; touchCanvas.height = window.innerHeight;
+
+        window.addEventListener('resize', () => { touchCanvas.width = window.innerWidth; touchCanvas.height = window.innerHeight; });
+
+        class TouchSparkle {
+            constructor(x, y, sym = null, isFountain = false) {
+                this.x = x; this.y = y; this.isFountain = isFountain;
+                this.size = Math.random() * 16 + 12;
+                
+                if (this.isFountain) {
+                    this.speedX = (Math.random() - 0.5) * 6;
+                    this.speedY = -(Math.random() * 7 + 5); 
+                    this.opacity = 1;
+                    this.symbol = ['🌸', '✨', '💖', '🎈', '🎉', '🥳', '🧁', '💝', '🎁'][Math.floor(Math.random() * 9)];
+                } else {
+                    this.speedX = (Math.random() - 0.5) * 4;
+                    this.speedY = (Math.random() - 0.5) * 4;
+                    this.opacity = 1;
+                    this.symbol = sym ? sym : ['✨', '🌸', '👑', '💖'][Math.floor(Math.random() * 4)];
+                }
+            }
+            update() { 
+                this.x += this.speedX; 
+                this.y += this.speedY; 
+                this.opacity -= this.isFountain ? 0.007 : 0.018; 
+            }
+            draw() { 
+                tCtx.save(); 
+                tCtx.globalAlpha = this.opacity; 
+                tCtx.font = `${this.size}px serif`; 
+                tCtx.fillText(this.symbol, this.x, this.y); 
+                tCtx.restore(); 
+            }
+        }
+
+        window.addEventListener('mousemove', (e) => { touchParticles.push(new TouchSparkle(e.clientX, e.clientY)); });
+        window.addEventListener('touchmove', (e) => { if(e.touches.length) touchParticles.push(new TouchSparkle(e.touches[0].clientX, e.touches[0].clientY)); });
+
+        function animateTouchTrail() {
+            tCtx.clearRect(0, 0, touchCanvas.width, touchCanvas.height);
+            for (let i = 0; i < touchParticles.length; i++) {
+                touchParticles[i].update(); touchParticles[i].draw();
+                if (touchParticles[i].opacity <= 0 || touchParticles[i].y < -20) { touchParticles.splice(i, 1); i--; }
+            }
+            requestAnimationFrame(animateTouchTrail);
+        }
+        animateTouchTrail();
+    </script>
+</body>
+</html>

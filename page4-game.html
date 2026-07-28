@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Cosmic Arcade | Needhzy Challenge</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@700;800&family=Playfair+Display:ital,wght@0,900;1,400&display=swap" rel="stylesheet">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+
+    <style>
+        .font-luxury { font-family: 'Playfair Display', serif; }
+        .font-sans-premium { font-family: 'Plus Jakarta Sans', sans-serif; }
+        
+        .premium-gpu {
+            will-change: transform, opacity;
+            transform: translateZ(0);
+            backface-visibility: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Fluid Cyber Pastel Shifting Background Layout Mesh */
+        @keyframes dynamicSky {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        .animated-game-bg {
+            background: linear-gradient(-45deg, #ffd6e8, #bae6fd, #e0e7ff, #fbcfe8);
+            background-size: 400% 400%;
+            animation: dynamicSky 12s ease infinite;
+        }
+
+        /* 🔄 COMPACT RESPONSIVE VIEWPORT BOUNDS FOR MASCOT STICKER */
+        @keyframes safeMascotTrack {
+            0% { top: 12%; left: 6%; transform: scale(1) rotate(0deg); }
+            25% { top: 14%; left: 62%; transform: scale(1.05) rotate(6deg); }
+            50% { top: 70%; left: 64%; transform: scale(0.95) rotate(-6deg); }
+            75% { top: 64%; left: 8%; transform: scale(1.02) rotate(4deg); }
+            100% { top: 12%; left: 6%; transform: scale(1) rotate(0deg); }
+        }
+        .animate-safe-mascot {
+            position: fixed;
+            animation: safeMascotTrack 18s linear infinite;
+        }
+
+        .holo-card-glow {
+            box-shadow: 0 25px 60px rgba(244, 63, 94, 0.12), inset 0 0 20px rgba(255, 255, 255, 0.8);
+        }
+
+        .neon-basket-glow {
+            box-shadow: 0 0 20px rgba(244, 63, 94, 0.35), inset 0 0 10px rgba(255, 255, 255, 0.6);
+        }
+    </style>
+</head>
+<body id="masterBody" class="animated-game-bg text-slate-800 font-sans-premium h-screen overflow-hidden relative select-none flex flex-col items-center justify-start p-4">
+
+    <audio id="sfxPop" src="sfx/pop.wav" preload="auto"></audio>
+    <audio id="sfxError" src="sfx/error.wav" preload="auto"></audio>
+    <audio id="sfxSuccess" src="sfx/success.wav" preload="auto"></audio>
+
+    <canvas id="touchCanvas" class="fixed inset-0 w-full h-full pointer-events-none z-40"></canvas>
+
+    <div id="roamingDoll" class="animate-safe-mascot w-20 h-28 cursor-pointer select-none z-40 premium-gpu filter drop-shadow-[0_10px_20px_rgba(244,63,94,0.12)]">
+        <img id="mascotDynamicImg" src="images/mascot.png" class="w-full h-full object-contain" alt="Mascot Doll" onclick="triggerMascotArcadeTalk()">
+        
+        <div id="dollBubble" class="absolute -top-10 left-1/2 -translate-x-1/2 bg-white border border-pink-100 py-1 px-3 rounded-xl shadow-md text-[9px] font-extrabold text-pink-500 tracking-wide scale-100 transition-all duration-300 whitespace-nowrap">
+            Avoid the icy obstacles! 🧊✨
+        </div>
+    </div>
+
+    <div id="mainContentGroup" class="w-full max-w-xs flex flex-col items-center justify-start h-full premium-gpu">
+        
+        <div class="text-center mt-6 mb-2 w-full">
+            <span class="text-[9px] font-extrabold tracking-[0.45em] text-pink-600 uppercase block mb-1 animate-pulse">COSMIC TERMINAL</span>
+            <h1 class="font-luxury font-black text-2xl text-indigo-950 leading-tight">Needhzy's Heart Quest 🌌</h1>
+        </div>
+
+        <div class="w-full backdrop-blur-3xl bg-white/50 border border-white p-3 rounded-2xl flex items-center justify-between shadow-sm relative mb-6 px-4">
+            <div class="flex flex-col">
+                <span class="text-[9px] font-extrabold text-slate-400 tracking-wider uppercase">Stability Shard</span>
+                <span id="warningCounter" class="text-xs font-black text-rose-500 tracking-wide">❤️❤️❤️ THREE LIVES</span>
+            </div>
+            <div class="h-6 w-[1px] bg-pink-100"></div>
+            <div class="flex flex-col items-end">
+                <span class="text-[9px] font-extrabold text-pink-500 tracking-wider uppercase">Combo Scores</span>
+                <span id="comboGoalDisplay" class="text-xs font-black text-pink-500 bg-pink-50 px-2.5 py-0.5 rounded-lg border border-pink-100">0 / 5 CAUGHT</span>
+            </div>
+        </div>
+
+        <div id="gamePlayground" class="w-full flex-1 bg-white/40 border-2 border-white rounded-[2.5rem] relative premium-gpu holo-card-glow overflow-hidden mb-8">
+            <div id="fallingContainer" class="absolute inset-0 pointer-events-none w-full h-full"></div>
+
+            <div id="catcherBasket" class="absolute bottom-5 left-1/2 -translate-x-1/2 w-20 h-6 bg-gradient-to-r from-pink-400 via-rose-400 to-purple-500 rounded-full flex items-center justify-center text-[10px] text-white border border-white/40 neon-basket-glow font-extrabold cursor-grab active:cursor-grabbing select-none" style="touch-action: none;">
+                💝 BASKET
+            </div>
+        </div>
+
+    </div>
+
+    <div id="winScreenOverlay" class="w-full max-w-xs backdrop-blur-3xl bg-white/90 border-2 border-pink-200 rounded-[2.5rem] p-7 text-center absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50 premium-gpu shadow-2xl hidden opacity-0 scale-90">
+        <div class="w-16 h-16 mx-auto mb-4 bg-gradient-to-tr from-pink-100 to-purple-100 rounded-2xl border border-white flex items-center justify-center text-2xl shadow-inner">
+            👑
+        </div>
+        <h2 class="font-luxury font-black text-2xl text-indigo-950 mb-2">Jackpot Win! 🎉</h2>
+        <p class="text-xs text-slate-600 font-bold leading-relaxed mb-6">
+            OMG, Needhzy! You matched every moving cosmic coordinate flawlessly. You are simply the absolute prettiest and most stunning person alive. Never forget that you mean the entire galaxy to me! 💕🪐
+        </p>
+        <button onclick="navigateToPageFive()" class="w-full bg-gradient-to-r from-pink-400 via-rose-400 to-purple-600 text-white font-extrabold tracking-widest text-[10px] py-4 rounded-xl shadow-md border border-white/20 active:scale-95 transition-all">
+            PROCEED TO NEXT SECRET PAGE 🚀
+        </button>
+    </div>
+
+    <script>
+        let scoreCount = 0;
+        let warningStrikes = 3;
+        const finalMaxScore = 5;
+        let spawnTimerInterval;
+        let isGameFinished = false;
+
+        const needhzyCompliments = [
+            "Nice catch! You are lightning fast, Needhzy! 😍🎀",
+            "Wow! Perfect catch alignment, beautiful! 👸🏻🌸",
+            "OMG! Keep going, you look so graceful! 💖",
+            "Unstoppable! Another point logged for Needhzy! 🥰⚡",
+            "Amazing! Your cosmic aura level is at 100%! 🏆🌟"
+        ];
+        let trackingCompliments = [...needhzyCompliments];
+
+        const playSFX = (id) => {
+            const audio = document.getElementById(id);
+            if (audio) { audio.currentTime = 0; audio.play().catch(e => {}); }
+        };
+
+        window.addEventListener('DOMContentLoaded', () => {
+            initMobileBasketController();
+            startGravityDropEngine();
+        });
+
+        function initMobileBasketController() {
+            const basket = document.getElementById("catcherBasket");
+            const playground = document.getElementById("gamePlayground");
+            let activeDrag = false;
+
+            const handlePointerMove = (e) => {
+                if (!activeDrag || isGameFinished || warningStrikes <= 0) return;
+                const bounds = playground.getBoundingClientRect();
+                let clientX = e.clientX;
+                if (e.touches && e.touches.length) clientX = e.touches[0].clientX;
+
+                let calculatedX = clientX - bounds.left;
+                if (calculatedX < 40) calculatedX = 40;
+                if (calculatedX > bounds.width - 40) calculatedX = bounds.width - 40;
+
+                basket.style.left = `${calculatedX}px`;
+            };
+
+            basket.addEventListener('pointerdown', () => activeDrag = true);
+            window.addEventListener('pointerup', () => activeDrag = false);
+            window.addEventListener('pointermove', handlePointerMove);
+            basket.addEventListener('touchstart', () => activeDrag = true);
+            window.addEventListener('touchend', () => activeDrag = false);
+            window.addEventListener('touchmove', handlePointerMove, { passive: true });
+        }
+
+        function startGravityDropEngine() {
+            spawnTimerInterval = setInterval(() => {
+                if (scoreCount >= finalMaxScore || warningStrikes <= 0 || isGameFinished) {
+                    clearInterval(spawnTimerInterval);
+                    return;
+                }
+                dropSingleRandomParticle();
+            }, 1600);
+        }
+
+        function dropSingleRandomParticle() {
+            const playground = document.getElementById("gamePlayground");
+            const dropZone = document.getElementById("fallingContainer");
+            const itemNode = document.createElement("div");
+
+            const isObstacle = Math.random() < 0.35;
+            if (isObstacle) {
+                itemNode.innerText = '🧊';
+                itemNode.setAttribute("data-type", "obstacle");
+            } else {
+                const targetPool = ['💖', '🌸', '✨', '💝', '🎀', '🍰'];
+                itemNode.innerText = targetPool[Math.floor(Math.random() * targetPool.length)];
+                itemNode.setAttribute("data-type", "reward");
+            }
+
+            itemNode.className = "absolute text-3xl select-none premium-gpu filter drop-shadow-sm";
+            
+            const pBounds = playground.getBoundingClientRect();
+            const randomXOffset = Math.floor(Math.random() * (pBounds.width - 60)) + 30;
+            itemNode.style.left = `${randomXOffset}px`;
+            itemNode.style.top = "-40px";
+
+            dropZone.appendChild(itemNode);
+
+            gsap.to(itemNode, {
+                top: `${playground.clientHeight + 40}px`,
+                duration: 3.2,
+                ease: "none",
+                onUpdate: () => {
+                    if (isGameFinished || warningStrikes <= 0) {
+                        gsap.killTweensOf(itemNode);
+                        itemNode.remove();
+                        return;
+                    }
+
+                    const basket = document.getElementById("catcherBasket");
+                    const itemY = parseFloat(itemNode.style.top);
+                    const basketY = playground.clientHeight - 44;
+
+                    if (itemY >= basketY && itemY <= basketY + 24) {
+                        const bX = basket.offsetLeft;
+                        const iX = itemNode.offsetLeft;
+
+                        if (iX >= bX - 42 && iX <= bX + 42) {
+                            gsap.killTweensOf(itemNode);
+                            
+                            const itemType = itemNode.getAttribute("data-type");
+                            if (itemType === "reward") {
+                                registerSuccessHeartCatch();
+                            } else {
+                                registerObstacleStrikeHit();
+                            }
+                            itemNode.remove();
+                        }
+                    }
+                },
+                onComplete: () => { itemNode.remove(); }
+            });
+        }
+
+        function registerSuccessHeartCatch() {
+            if (scoreCount >= finalMaxScore || warningStrikes <= 0) return;
+            scoreCount++;
+            playSFX('sfxPop');
+
+            document.getElementById("comboGoalDisplay").innerText = `${scoreCount} / ${finalMaxScore} CAUGHT`;
+
+            const targetImg = document.getElementById("mascotDynamicImg");
+            const bubble = document.getElementById("dollBubble");
+
+            if (trackingCompliments.length === 0) trackingCompliments = [...needhzyCompliments];
+            bubble.innerText = trackingCompliments.splice(Math.floor(Math.random() * trackingCompliments.length), 1)[0];
+            targetImg.src = "images/mascot_happy.png";
+
+            gsap.fromTo("#catcherBasket", { scaleY: 0.7 }, { scaleY: 1, duration: 0.2, ease: "back.out(1.2)" });
+
+            const basketRect = document.getElementById("catcherBasket").getBoundingClientRect();
+            for(let i=0; i<5; i++) touchParticles.push(new TouchSparkle(basketRect.left + 40, basketRect.top, '💖'));
+
+            setTimeout(() => {
+                if(!isGameFinished && warningStrikes > 0) {
+                    targetImg.src = "images/mascot.png";
+                    bubble.innerText = "Avoid the icy obstacles! 🧊✨";
+                }
+            }, 1800);
+
+            if (scoreCount === finalMaxScore) executeGrandWinSequence();
+        }
+
+        function registerObstacleStrikeHit() {
+            warningStrikes--;
+            playSFX('sfxError');
+
+            const strikesLabel = document.getElementById("warningCounter");
+            
+            if (warningStrikes === 2) strikesLabel.innerText = "❤️❤️🖤 TWO LIVES";
+            else if (warningStrikes === 1) strikesLabel.innerText = "❤️🖤🖤 LAST LIFE";
+
+            if (warningStrikes > 0) {
+                document.getElementById("dollBubble").innerText = "Ouch! Watch out, Needhzy! 🥺❌";
+                document.getElementById("mascotDynamicImg").src = "images/mascot_sad.png";
+                
+                gsap.fromTo("#gamePlayground", { backgroundColor: "rgba(244,63,94,0.18)" }, { backgroundColor: "rgba(255,255,255,0.4)", duration: 0.4 });
+                gsap.fromTo("#catcherBasket", { x: -8 }, { x: 8, duration: 0.05, repeat: 4, yoyo: true });
+                
+                setTimeout(() => {
+                    if(!isGameFinished && warningStrikes > 0) {
+                        document.getElementById("mascotDynamicImg").src = "images/mascot.png";
+                        document.getElementById("dollBubble").innerText = "Avoid the icy obstacles! 🧊✨";
+                    }
+                }, 1500);
+            } else {
+                strikesLabel.innerText = "🖤🖤🖤 RESETTING...";
+                document.getElementById("dollBubble").innerText = "Let's rebuild the grid! 🔄🔮";
+                document.getElementById("mascotDynamicImg").src = "images/mascot_sad.png";
+                clearInterval(spawnTimerInterval);
+                
+                gsap.to("#gamePlayground", { opacity: 0.2, scale: 0.96, duration: 0.4, onComplete: () => {
+                    scoreCount = 0;
+                    warningStrikes = 3;
+                    document.getElementById("comboGoalDisplay").innerText = `0 / ${finalMaxScore} CAUGHT`;
+                    strikesLabel.innerText = "❤️❤️❤️ THREE LIVES";
+                    document.getElementById("mascotDynamicImg").src = "images/mascot.png";
+                    
+                    gsap.to("#gamePlayground", { opacity: 1, scale: 1, duration: 0.4, onComplete: () => {
+                        startGravityDropEngine();
+                    }});
+                }});
+            }
+        }
+
+        function executeGrandWinSequence() {
+            isGameFinished = true;
+            clearInterval(spawnTimerInterval);
+            playSFX('sfxSuccess');
+
+            document.getElementById("mascotDynamicImg").src = "images/mascot_excited.png";
+            document.getElementById("dollBubble").innerText = "MISSION SUCCESSFUL! 😍🏆";
+
+            setTimeout(() => {
+                gsap.to("#mainContentGroup", { scale: 0.9, opacity: 0.3, filter: "blur(8px)", duration: 0.6 });
+                
+                const winCard = document.getElementById("winScreenOverlay");
+                winCard.classList.remove("hidden");
+                gsap.to(winCard, { opacity: 1, scale: 1, duration: 0.5, ease: "back.out(1.1)" });
+            }, 1000);
+        }
+
+        function triggerMascotArcadeTalk() {
+            playSFX('sfxPop');
+            const bubble = document.getElementById("dollBubble");
+            bubble.innerText = "You are doing wonderful, Needhzy! 👸🏻🌸";
+            gsap.fromTo("#roamingDoll", { scale: 0.95 }, { scale: 1.05, duration: 0.2, yoyo: true, repeat: 1 });
+            setTimeout(() => { bubble.innerText = "Avoid the icy obstacles! 🧊✨"; }, 3000);
+        }
+
+        /* ✅ ROUTING FLUIDLY PATCHED TO TARGET PAGE5-GALLERY.HTML */
+        function navigateToPageFive() {
+            playSFX('sfxPop');
+            gsap.to("body", { opacity: 0, duration: 0.5, onComplete: () => {
+                window.location.href = "page5-gallery.html";
+            }});
+        }
+
+        // --- MOBILE OPTIMIZED TOUCH SPARK TRAIL ENGINE ---
+        const touchCanvas = document.getElementById('touchCanvas');
+        const tCtx = touchCanvas.getContext('2d');
+        let touchParticles = [];
+        touchCanvas.width = window.innerWidth; touchCanvas.height = window.innerHeight;
+
+        class TouchSparkle {
+            constructor(x, y, sym = '✨') {
+                this.x = x; this.y = y; this.size = Math.random() * 12 + 10;
+                this.speedX = (Math.random() - 0.5) * 4; this.speedY = (Math.random() - 0.5) * 4;
+                this.opacity = 1; this.symbol = sym;
+            }
+            update() { this.x += this.speedX; this.y += this.speedY; this.opacity -= 0.02; }
+            draw() { tCtx.save(); tCtx.globalAlpha = this.opacity; tCtx.font = `${this.size}px serif`; tCtx.fillText(this.symbol, this.x, this.y); tCtx.restore(); }
+        }
+
+        window.addEventListener('mousemove', (e) => { touchParticles.push(new TouchSparkle(e.clientX, e.clientY)); });
+        window.addEventListener('touchmove', (e) => { if(e.touches.length) touchParticles.push(new TouchSparkle(e.touches[0].clientX, e.touches[0].clientY)); });
+
+        function animateTouchTrail() {
+            tCtx.clearRect(0, 0, touchCanvas.width, touchCanvas.height);
+            for (let i = 0; i < touchParticles.length; i++) {
+                touchParticles[i].update(); touchParticles[i].draw();
+                if (touchParticles[i].opacity <= 0) { touchParticles.splice(i, 1); i--; }
+            }
+            requestAnimationFrame(animateTouchTrail);
+        }
+        animateTouchTrail();
+    </script>
+</body>
+</html>

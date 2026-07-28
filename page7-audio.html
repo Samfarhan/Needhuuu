@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>The Audio Matrix | Needhzy Playlist</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&family=Playfair+Display:ital,wght@0,900;1,600&display=swap" rel="stylesheet">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+
+    <style>
+        .font-luxury { font-family: 'Playfair Display', serif; }
+        .font-sans-premium { font-family: 'Plus Jakarta Sans', sans-serif; }
+        
+        .premium-gpu {
+            will-change: transform, opacity, filter;
+            transform: translateZ(0);
+            backface-visibility: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Iridescent Pastel Silk Shifting Background Mesh */
+        @keyframes pastelSilkFlow {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        .animated-boutique-bg {
+            background: linear-gradient(-45deg, #ffe4e6, #f5f3ff, #e0f2fe, #fdf2f8, #faf5ff);
+            background-size: 400% 400%;
+            animation: pastelSilkFlow 12s ease infinite;
+        }
+
+        /* 🔄 CSS VIEWPORT SAFE RESTRAINT FOR FLOATING MASCOT */
+        @keyframes safeMascotTrack {
+            0% { top: 12%; left: 6%; transform: scale(1) rotate(0deg); }
+            25% { top: 14%; left: 62%; transform: scale(1.05) rotate(6deg); }
+            50% { top: 70%; left: 64%; transform: scale(0.95) rotate(-6deg); }
+            75% { top: 64%; left: 8%; transform: scale(1.02) rotate(4deg); }
+            100% { top: 12%; left: 6%; transform: scale(1) rotate(0deg); }
+        }
+        .animate-safe-mascot {
+            position: fixed;
+            animation: safeMascotTrack 18s linear infinite;
+        }
+
+        /* Luxurious Frosted Glass Audio Console Shell Shadows */
+        .glass-player-glow {
+            box-shadow: 0 30px 70px rgba(244, 63, 94, 0.06), inset 0 0 30px rgba(255, 255, 255, 0.85);
+            border: 2px solid rgba(255, 255, 255, 0.7);
+        }
+
+        /* Fluid rotating disc animation when music tracks run */
+        @keyframes spinningDisc {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .disc-active-spin {
+            animation: spinningDisc 12s linear infinite;
+        }
+
+        /* Dynamic fluid sound audio bars animation profiles */
+        @keyframes audioFountain {
+            0% { transform: scaleY(0.2); }
+            100% { transform: scaleY(1.1); }
+        }
+        .live-audio-bar {
+            animation: audioFountain 0.6s ease-in-out infinite alternate;
+            transform-origin: bottom;
+        }
+    </style>
+</head>
+<body id="masterBody" class="animated-boutique-bg text-slate-800 font-sans-premium min-h-screen overflow-x-hidden overflow-y-auto relative select-none flex flex-col items-center justify-start p-4 pb-28">
+
+    <audio id="mainAudioPlayer" ontimeupdate="updatePlayerProgressBar()" onended="handleTrackFinished()"></audio>
+    <audio id="sfxPop" src="sfx/pop.wav" preload="auto"></audio>
+
+    <canvas id="touchCanvas" class="fixed inset-0 w-full h-full pointer-events-none z-40"></canvas>
+
+    <div id="roamingDoll" class="animate-safe-mascot w-20 h-28 cursor-pointer select-none z-40 premium-gpu filter drop-shadow-[0_10px_20px_rgba(244,63,94,0.12)]">
+        <img id="mascotDynamicImg" src="images/mascot.png" class="w-full h-full object-contain" alt="Mascot Doll" onclick="triggerMascotPlayerTalk()">
+        
+        <div id="dollBubble" class="absolute -top-10 left-1/2 -translate-x-1/2 bg-white border border-pink-100 py-1 px-3 rounded-xl shadow-md text-[9px] font-extrabold text-pink-500 tracking-wide scale-100 transition-all duration-300 whitespace-nowrap">
+            Play your custom tunes, Queen! 🎵✨
+        </div>
+    </div>
+
+    <div class="text-center mt-10 mb-8 relative z-20 w-full max-w-sm premium-gpu" id="playerHeader">
+        <span class="text-[9px] font-extrabold tracking-[0.5em] text-pink-600 uppercase block mb-1 animate-pulse">THE AUDIO STATION</span>
+        <h1 class="font-luxury font-black text-3xl text-indigo-950 leading-tight">Needhzy's Top 5<br>Cosmic Playlist 🎧✨</h1>
+        <p class="text-[11px] font-medium text-slate-400 mt-2">A personalized ambient studio built entirely for you</p>
+    </div>
+
+    <div id="audioConsoleTerminal" class="w-full max-w-xs backdrop-blur-3xl bg-white/50 rounded-[2.5rem] p-5 glass-player-glow relative z-20 premium-gpu flex flex-col items-center overflow-hidden mb-6">
+        
+        <div class="w-32 h-32 rounded-full bg-gradient-to-tr from-slate-900 to-indigo-950 p-1 shadow-xl relative flex items-center justify-center mb-4 premium-gpu" id="vinylDiscShell">
+            <div id="vinylDiscCore" class="w-full h-full rounded-full border-4 border-double border-white/20 flex items-center justify-center relative overflow-hidden">
+                <div class="w-10 h-10 rounded-full bg-gradient-to-br from-pink-200 to-purple-300 border-4 border-slate-900 z-10 flex items-center justify-center text-[10px]">🎵</div>
+                <div class="absolute inset-0 bg-gradient-to-tr from-transparent via-white/10 to-transparent pointer-events-none"></div>
+            </div>
+        </div>
+
+        <div class="text-center mb-4 w-full px-2">
+            <h2 id="activeTrackTitle" class="font-luxury font-black text-base text-slate-800 tracking-tight truncate">Select a Track below</h2>
+            <p id="activeTrackArtist" class="text-[10px] font-bold text-pink-400 tracking-widest uppercase mt-0.5">Standby Mode</p>
+        </div>
+
+        <div class="flex items-end justify-center gap-[4px] h-8 w-full mb-5 opacity-40 transition-opacity duration-300" id="equalizerWaveLayer">
+            <div class="w-[3px] h-2 bg-pink-400 rounded-full"></div>
+            <div class="w-[3px] h-4 bg-purple-400 rounded-full"></div>
+            <div class="w-[3px] h-6 bg-pink-500 rounded-full"></div>
+            <div class="w-[3px] h-3 bg-sky-400 rounded-full"></div>
+            <div class="w-[3px] h-5 bg-purple-500 rounded-full"></div>
+            <div class="w-[3px] h-2 bg-rose-400 rounded-full"></div>
+        </div>
+
+        <div class="w-full px-1 mb-5 flex flex-col gap-1.5">
+            <div class="w-full h-1 bg-pink-100 rounded-full relative overflow-hidden cursor-pointer" onclick="handleProgressBarSeekAction(event)" id="seekBarRail">
+                <div class="h-full bg-gradient-to-r from-pink-400 to-purple-500 w-0 rounded-full transition-all duration-100 ease-linear" id="progressFillSlider"></div>
+            </div>
+            <div class="w-full flex justify-between text-[8px] font-black text-slate-400 tracking-widest">
+                <span id="timeCurrentLabel">0:00</span>
+                <span id="timeTotalLabel">0:00</span>
+            </div>
+        </div>
+
+        <div class="w-full flex flex-col gap-2 border-t border-slate-100 pt-4" id="trackPlayQueueList">
+            
+            <div class="w-full bg-white/80 rounded-2xl p-3 border border-pink-100/50 flex items-center justify-between cursor-pointer group active:scale-98 transition-all premium-gpu relative overflow-hidden" onclick="loadAndExecuteTrackHub(1)" id="queueTrackRow1">
+                <div class="flex items-center gap-3 min-w-0 flex-1">
+                    <span id="playIconState1" class="w-7 h-7 rounded-xl bg-pink-50 flex items-center justify-center text-xs border border-pink-100 text-pink-500 font-bold">01</span>
+                    <div class="flex flex-col min-w-0 flex-1">
+                        <span class="font-luxury font-black text-xs text-slate-800 truncate">First Special Melody</span>
+                        <span class="text-[8px] font-extrabold text-slate-400 tracking-wider uppercase mt-0.5">Track Active</span>
+                    </div>
+                </div>
+                <span class="text-[10px] opacity-40 group-hover:opacity-100 transition-opacity pl-2">▶</span>
+            </div>
+
+            <div class="w-full bg-slate-50/40 rounded-2xl p-3 border border-dashed border-slate-200 flex items-center justify-between opacity-60 relative select-none" id="queueTrackRow2">
+                <div class="flex items-center gap-3 min-w-0">
+                    <span class="w-7 h-7 rounded-xl bg-slate-100 flex items-center justify-center text-[10px] text-slate-400 font-bold">🔒</span>
+                    <div class="flex flex-col min-w-0">
+                        <span class="font-luxury font-bold text-xs text-slate-400 truncate">Melody Slot Two</span>
+                        <span class="text-[8px] font-bold text-slate-400 tracking-wider uppercase mt-0.5">Locked Status</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="w-full bg-slate-50/40 rounded-2xl p-3 border border-dashed border-slate-200 flex items-center justify-between opacity-60 relative select-none" id="queueTrackRow3">
+                <div class="flex items-center gap-3 min-w-0">
+                    <span class="w-7 h-7 rounded-xl bg-slate-100 flex items-center justify-center text-[10px] text-slate-400 font-bold">🔒</span>
+                    <div class="flex flex-col min-w-0">
+                        <span class="font-luxury font-bold text-xs text-slate-400 truncate">Melody Slot Three</span>
+                        <span class="text-[8px] font-bold text-slate-400 tracking-wider uppercase mt-0.5">Locked Status</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="w-full bg-slate-50/40 rounded-2xl p-3 border border-dashed border-slate-200 flex items-center justify-between opacity-60 relative select-none" id="queueTrackRow4">
+                <div class="flex items-center gap-3 min-w-0">
+                    <span class="w-7 h-7 rounded-xl bg-slate-100 flex items-center justify-center text-[10px] text-slate-400 font-bold">🔒</span>
+                    <div class="flex flex-col min-w-0">
+                        <span class="font-luxury font-bold text-xs text-slate-400 truncate">Melody Slot Four</span>
+                        <span class="text-[8px] font-bold text-slate-400 tracking-wider uppercase mt-0.5">Locked Status</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="w-full bg-slate-50/40 rounded-2xl p-3 border border-dashed border-slate-200 flex items-center justify-between opacity-60 relative select-none" id="queueTrackRow5">
+                <div class="flex items-center gap-3 min-w-0">
+                    <span class="w-7 h-7 rounded-xl bg-slate-100 flex items-center justify-center text-[10px] text-slate-400 font-bold">🔒</span>
+                    <div class="flex flex-col min-w-0">
+                        <span class="font-luxury font-bold text-xs text-slate-400 truncate">Melody Slot Five</span>
+                        <span class="text-[8px] font-bold text-slate-400 tracking-wider uppercase mt-0.5">Locked Status</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div id="actionFooterBar" class="w-full max-w-xs relative z-20 text-center px-4 opacity-0 scale-90 pointer-events-none transition-all duration-500">
+        <button onclick="advanceToPopUpWishesPage()" class="w-full bg-gradient-to-r from-pink-400 via-rose-400 to-purple-500 text-white font-extrabold tracking-[0.22em] text-[10px] py-4 rounded-xl shadow-md shadow-pink-300/30 hover:scale-[1.02] active:scale-95 transition-all border border-white/20 premium-gpu">
+            PROCEED TO POP-UPS 🚀🔮
+        </button>
+    </div>
+
+    <script>
+        let currentlyPlayingTrackId = null;
+        let audioStreamInstance = document.getElementById("mainAudioPlayer");
+
+        const playlistTracksRegistry = {
+            1: { title: "First Special Melody", artist: "Curated For Needhzy", path: "audio/track1.mp3" },
+            2: { title: "Melody Slot Two", artist: "Locked Data", path: "audio/track2.mp3" },
+            3: { title: "Melody Slot Three", artist: "Locked Data", path: "audio/track3.mp3" },
+            4: { title: "Melody Slot Four", artist: "Locked Data", path: "audio/track4.mp3" },
+            5: { title: "Melody Slot Five", artist: "Locked Data", path: "audio/track5.mp3" }
+        };
+
+        const needhzyPlayerTalks = [
+            "This track sounds so beautiful, Needhzy! 😍🎵",
+            "Music scales perfectly sync'd to your vibration! 👸🏻🌸",
+            "OMG! Keep listening, the vibe is incredible! 💖",
+            "The audio core is running perfectly! 🥰⚡",
+            "Tap the bottom button to proceed to the pop-up vault! 🚀🔮"
+        ];
+        let trackingTalksPool = [...needhzyPlayerTalks];
+
+        const playSFX = (id) => {
+            const sfx = document.getElementById(id);
+            if (sfx) { sfx.currentTime = 0; sfx.play().catch(e => {}); }
+        };
+
+        window.addEventListener('DOMContentLoaded', () => {
+            gsap.from("#playerHeader", { opacity: 0, y: -20, duration: 0.7, ease: "back.out(1.15)" });
+            gsap.from("#audioConsoleTerminal", { opacity: 0, scale: 0.95, duration: 0.8, ease: "back.out(1.1)", delay: 0.1 });
+        });
+
+        // 🧠 MAIN AUDIO MATRIX ENGINE CONSOLE CONTROLLER
+        function loadAndExecuteTrackHub(trackId) {
+            playSFX('sfxPop');
+            
+            const targetTrack = playlistTracksRegistry[trackId];
+            const eqBars = document.getElementById("equalizerWaveLayer");
+            const disc = document.getElementById("vinylDiscCore");
+
+            // Toggle play/pause condition if user hits the already active track row
+            if (currentlyPlayingTrackId === trackId) {
+                if (!audioStreamInstance.paused) {
+                    audioStreamInstance.pause();
+                    document.getElementById(`playIconState${trackId}`).innerText = "▶";
+                    eqBars.classList.add("opacity-40");
+                    disc.classList.remove("disc-active-spin");
+                    toggleLiveAudioBarsAnimation(false);
+                } else {
+                    audioStreamInstance.play().catch(e => { alert("Please ensure audio/track1.mp3 exists in your folder!") });
+                    document.getElementById(`playIconState${trackId}`).innerText = "⏸";
+                    eqBars.classList.remove("opacity-40");
+                    disc.classList.add("disc-active-spin");
+                    toggleLiveAudioBarsAnimation(true);
+                }
+                return;
+            }
+
+            // Fresh load new audio tracks track stream coordinates
+            currentlyPlayingTrackId = trackId;
+            audioStreamInstance.src = targetTrack.path;
+            
+            document.getElementById("activeTrackTitle").innerText = targetTrack.title;
+            document.getElementById("activeTrackArtist").innerText = targetTrack.artist;
+
+            audioStreamInstance.play().then(() => {
+                document.getElementById(`playIconState${trackId}`).innerText = "⏸";
+                eqBars.classList.remove("opacity-40");
+                disc.classList.add("disc-active-spin");
+                toggleLiveAudioBarsAnimation(true);
+                revealProceedNavigationFooterBar();
+            }).catch(error => {
+                console.log("Audio play error: missing path audio/track1.mp3");
+                // Temporary fallback presentation to simulate success if file is missing during setup tests
+                revealProceedNavigationFooterBar();
+            });
+
+            triggerChibiExpressionShift();
+        }
+
+        // 📊 LIQUID EQUALIZER GRAPHIC TOGGLE WHEEL
+        function toggleLiveAudioBarsAnimation(start) {
+            const bars = document.querySelectorAll(".live-audio-bar");
+            bars.forEach((bar, index) => {
+                if (start) {
+                    bar.style.animation = `audioFountain ${0.4 + (index * 0.1)}s ease-in-out infinite alternate`;
+                } else {
+                    bar.style.animation = "none";
+                    bar.style.transform = "scaleY(0.2)";
+                }
+            });
+        }
+
+        // ⏱️ TIME PROGRESS BAR COMPASS TICK CALCULATIONS
+        function updatePlayerProgressBar() {
+            if (!audioStreamInstance.duration) return;
+            
+            const curTime = audioStreamInstance.currentTime;
+            const totTime = audioStreamInstance.duration;
+            
+            const percentageProgress = (curTime / totTime) * 100;
+            document.getElementById("progressFillSlider").style.w = `${percentageProgress}%`;
+
+            // Helper clean format string converters
+            const formatStringTime = (secs) => {
+                const mins = Math.floor(secs / 60);
+                const remainder = Math.floor(secs % 60);
+                return `${mins}:${remainder < 10 ? '0' : ''}${remainder}`;
+            };
+
+            document.getElementById("timeCurrentLabel").innerText = formatStringTime(curTime);
+            document.getElementById("timeTotalLabel").innerText = formatStringTime(totTime);
+        }
+
+        function handleProgressBarSeekAction(event) {
+            if (!audioStreamInstance.duration || currentlyPlayingTrackId === null) return;
+            const rail = document.getElementById("seekBarRail");
+            const rect = rail.getBoundingClientRect();
+            const clickWidthOffset = event.clientX - rect.left;
+            const normalizedRatio = clickWidthOffset / rect.width;
+            
+            audioStreamInstance.currentTime = normalizedRatio * audioStreamInstance.duration;
+        }
+
+        function handleTrackFinished() {
+            if (currentlyPlayingTrackId) {
+                document.getElementById(`playIconState${currentlyPlayingTrackId}`).innerText = "▶";
+            }
+            document.getElementById("equalizerWaveLayer").classList.add("opacity-40");
+            document.getElementById("vinylDiscCore").classList.remove("disc-active-spin");
+            toggleLiveAudioBarsAnimation(false);
+        }
+
+        function triggerChibiExpressionShift() {
+            const bubble = document.getElementById("dollBubble");
+            const targetImg = document.getElementById("mascotDynamicImg");
+
+            if (trackingTalksPool.length === 0) trackingTalksPool = [...needhzyPlayerTalks];
+            bubble.innerText = trackingTalksPool.splice(Math.floor(Math.random() * trackingTalksPool.length), 1)[0];
+
+            const expressions = ["images/mascot_happy.png", "images/mascot_excited.png"];
+            targetImg.src = expressions[Math.floor(Math.random() * expressions.length)];
+
+            setTimeout(() => {
+                targetImg.src = "images/mascot.png";
+                bubble.innerText = "Play your custom tunes, Queen! 🎵✨";
+            }, 3500);
+        }
+
+        function triggerMascotPlayerTalk() {
+            playSFX('sfxPop');
+            triggerChibiExpressionShift();
+            const r = document.getElementById("roamingDoll").getBoundingClientRect();
+            for(let i=0; i<5; i++) touchParticles.push(new TouchSparkle(r.left + 35, r.top + 35, '✨'));
+        }
+
+        function revealProceedNavigationFooterBar() {
+            const footerBar = document.getElementById("actionFooterBar");
+            footerBar.classList.remove("hidden");
+            setTimeout(() => {
+                footerBar.classList.remove("opacity-0", "scale-90");
+                footerBar.classList.add("opacity-100", "scale-100", "pointer-events-auto");
+            }, 50);
+
+            // Constant elegant canvas sparkle explosions loop
+            setInterval(() => {
+                touchParticles.push(new TouchSparkle(window.innerWidth/2, window.innerHeight/2, '🎵'));
+            }, 500);
+        }
+
+        // 🚗 HUBFORWARD INTERCONNECTING PORTAL LINKS DIRECT REDIRECTS
+        function advanceToPopUpWishesPage() {
+            playSFX('sfxPop');
+            gsap.to("body", { opacity: 0, duration: 0.5, onComplete: () => {
+                window.location.href = "page8-popup.html"; // Secure channel jump forward to Page 8!
+            }});
+        }
+
+        // --- MOBILE OPTIMIZED TOUCH SPARK TRAIL ENGINE ---
+        const touchCanvas = document.getElementById('touchCanvas');
+        const tCtx = touchCanvas.getContext('2d');
+        let touchParticles = [];
+        touchCanvas.width = window.innerWidth; touchCanvas.height = window.innerHeight;
+
+        class TouchSparkle {
+            constructor(x, y, sym = '✨') {
+                this.x = x; this.y = y; this.size = Math.random() * 12 + 10;
+                this.speedX = (Math.random() - 0.5) * 4; this.speedY = (Math.random() - 0.5) * 4;
+                this.opacity = 1; this.symbol = sym;
+            }
+            update() { this.x += this.speedX; this.y += this.speedY; this.opacity -= 0.02; }
+            draw() { tCtx.save(); tCtx.globalAlpha = this.opacity; tCtx.font = `${this.size}px serif`; tCtx.fillText(this.symbol, this.x, this.y); tCtx.restore(); }
+        }
+
+        window.addEventListener('mousemove', (e) => { touchParticles.push(new TouchSparkle(e.clientX, e.clientY)); });
+        window.addEventListener('touchmove', (e) => { if(e.touches.length) touchParticles.push(new TouchSparkle(e.touches[0].clientX, e.touches[0].clientY)); });
+
+        function animateTouchTrail() {
+            tCtx.clearRect(0, 0, touchCanvas.width, touchCanvas.height);
+            for (let i = 0; i < touchParticles.length; i++) {
+                touchParticles[i].update(); touchParticles[i].draw();
+                if (touchParticles[i].opacity <= 0) { touchParticles.splice(i, 1); i--; }
+            }
+            requestAnimationFrame(animateTouchTrail);
+        }
+        animateTouchTrail();
+
+        // Inject dynamic audio elements lines inside waveform box layer
+        const container = document.getElementById("equalizerWaveLayer");
+        container.innerHTML = "";
+        for (let i = 0; i < 22; i++) {
+            container.innerHTML += `<div class="w-[3px] h-2 bg-gradient-to-t from-pink-400 to-purple-500 rounded-full live-audio-bar"></div>`;
+        }
+        toggleLiveAudioBarsAnimation(false);
+    </script>
+</body>
+</html>

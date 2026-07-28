@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>The Journey | Main Portal Engine</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@700;800&family=Playfair+Display:ital,wght=0,900;1,600&display=swap" rel="stylesheet">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+
+    <style>
+        .font-luxury { font-family: 'Playfair Display', serif; }
+        .font-sans-premium { font-family: 'Plus Jakarta Sans', sans-serif; }
+        
+        .premium-gpu {
+            will-change: transform, opacity, filter, background;
+            transform: translateZ(0);
+            backface-visibility: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .animated-cosmic-bg {
+            background: radial-gradient(circle at 50% 50%, rgba(13, 10, 26, 0.95) 0%, rgba(4, 3, 8, 0.98) 60%, #010103 100%), 
+                        radial-gradient(circle at center, transparent 20%, rgba(0, 0, 0, 0.85) 100%);
+            position: relative;
+            transition: background 3.5s cubic-bezier(0.33, 1, 0.68, 1);
+        }
+
+        @keyframes safeStickerOrbit {
+            0% { top: 12%; left: 8%; transform: scale(1) rotate(0deg); }
+            25% { top: 14%; left: 65%; transform: scale(1.05) rotate(6deg); }
+            50% { top: 68%; left: 68%; transform: scale(0.95) rotate(-6deg); }
+            75% { top: 64%; left: 10%; transform: scale(1.03) rotate(4deg); }
+            100% { top: 12%; left: 8%; transform: scale(1) rotate(0deg); }
+        }
+        .animate-constrained-sticker {
+            position: fixed;
+            animation: safeStickerOrbit 20s linear infinite;
+        }
+
+        .animate-glass-platform {
+            animation: platformFloat 5s cubic-bezier(0.45, 0, 0.55, 1) infinite;
+        }
+        @keyframes platformFloat {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-8px); }
+        }
+
+        .heart-mask {
+            -webkit-text-security: none;
+            color: #ff2a74 !important;
+            text-shadow: 0 0 15px rgba(255, 42, 116, 0.5);
+        }
+
+        .neon-border-glow {
+            box-shadow: 0 30px 70px rgba(0, 0, 0, 0.75), inset 0 0 15px rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            background: rgba(10, 8, 20, 0.5);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+        }
+
+        .phone-container {
+            width: 100%;
+            max-width: 412px;
+            height: 100vh;
+            max-height: 892px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .single-bulbs-garland {
+            position: absolute;
+            top: -22px;
+            left: 50%;
+            transform: translateX(-50%) scale(1.03);
+            width: 100%;
+            max-width: 460px;
+            height: auto;
+            pointer-events: none;
+            z-index: 30;
+            mix-blend-mode: screen;
+        }
+
+        .original-center-bouquet {
+            position: absolute;
+            top: 50%; 
+            left: 50%;
+            transform: translate(-50%, -46%);
+            width: 88%;
+            max-width: 360px;
+            pointer-events: none;
+            z-index: 4; 
+            filter: drop-shadow(0 15px 40px rgba(244, 63, 94, 0.2)) contrast(1.4) saturate(1.6) brightness(1.2);
+        }
+
+        /* ⏳ HIGH-END CRYPTO CELESTIAL COUNTER ENGINE */
+        .live-counter-engine {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+            width: 100%;
+            max-width: 320px;
+            margin-top: 12px;
+        }
+        .counter-slot {
+            background: linear-gradient(135deg, rgba(15, 12, 30, 0.8), rgba(5, 3, 10, 0.9));
+            border: 1px solid rgba(244, 63, 94, 0.25);
+            border-radius: 14px;
+            padding: 10px 4px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.4), inset 0 0 12px rgba(244, 63, 94, 0.15);
+        }
+        .counter-num {
+            font-size: 24px;
+            font-weight: 800;
+            color: white;
+            text-shadow: 0 0 12px #f43f5e;
+            line-height: 1;
+        }
+        .counter-label {
+            font-size: 8px;
+            text-transform: uppercase;
+            font-weight: 700;
+            color: #94a3b8;
+            letter-spacing: 0.08em;
+            margin-top: 4px;
+        }
+
+        .async-glow-node {
+            position: absolute;
+            border-radius: 50%;
+            pointer-events: none;
+            mix-blend-mode: screen;
+            filter: blur(40px);
+            opacity: 0;
+        }
+        .gold-dust-node {
+            position: absolute;
+            background: radial-gradient(circle, rgba(253, 186, 116, 0.7) 0%, rgba(245, 158, 11, 0) 70%);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 2;
+        }
+    </style>
+</head>
+<body id="masterBody" class="animated-cosmic-bg text-slate-800 font-sans-premium min-h-screen w-full flex items-center justify-center overflow-hidden relative select-none">
+
+    <div id="asyncLightsMatrix" class="absolute inset-0 pointer-events-none z-0"></div>
+    <div id="goldDustMatrixContainer" class="absolute inset-0 pointer-events-none overflow-hidden z-10"></div>
+
+    <img src="images/bulbs-string.png" class="single-bulbs-garland premium-gpu" alt="Hanging Bulbs String">
+    <img src="images/lotus-bg.png" class="original-center-bouquet premium-gpu" alt="Original Center Bouquet">
+
+    <canvas id="touchCanvas" class="fixed inset-0 w-full h-full pointer-events-none z-40"></canvas>
+
+    <!-- 🌸 MASCOT CHARACTER STICKER LOOP -->
+    <div id="roamingDoll" onclick="handleDynamicStickerClicks()" class="animate-constrained-sticker w-20 h-28 cursor-pointer select-none z-50 premium-gpu filter drop-shadow-[0_10px_20px_rgba(244,63,94,0.12)]">
+        <img id="mascotDynamicImg" src="images/mascot.png" class="w-full h-full object-contain" alt="Cute Mascot Doll">
+        <div id="dollBubble" class="absolute -top-10 left-1/2 -translate-x-1/2 bg-white border border-pink-100 py-1 px-3 rounded-xl shadow-md text-[9px] font-extrabold text-pink-500 tracking-wide scale-100 transition-all duration-300 whitespace-nowrap">
+            Tap for Today's Key! 🔑🌸
+        </div>
+    </div>
+
+    <!-- 📱 PORTABLE FRAMED LAYER -->
+    <div class="phone-container relative z-20">
+        <div id="magneticWrapper" class="w-full flex flex-col items-center justify-center relative premium-gpu animate-glass-platform py-4">
+            
+            <!-- MODULE 1: SECURITY INPUT PORTAL -->
+            <div id="passcodePortal" class="w-full rounded-[2.5rem] p-6 text-center relative premium-gpu transition-all duration-300 neon-border-glow">
+                <span class="text-[9px] font-extrabold tracking-[0.45em] text-pink-500 uppercase block mb-1">CELESTIAL VAULT ACCESS</span>
+                <h1 class="font-luxury font-black text-2xl text-white mb-5 tracking-tight">Decrypt Your Sky ☁️</h1>
+                
+                <div class="relative w-full mb-4">
+                    <div id="heartDisplayOverlay" class="absolute inset-0 flex items-center justify-center text-2xl font-bold tracking-[0.4em] pointer-events-none heart-mask text-center w-full z-10 select-none"></div>
+                    <input type="text" id="secretInput" pattern="[0-9]*" inputmode="numeric" maxlength="4" placeholder="••••" oninput="processHeartTextFormatting(this)"
+                        class="w-full text-center text-2xl font-bold tracking-[0.4em] py-3 bg-slate-950/60 border border-white/10 rounded-2xl focus:outline-none focus:border-pink-500 opacity-100 text-transparent select-none selection:bg-transparent caret-pink-500 shadow-inner placeholder-slate-700 transition-all duration-300 font-sans-premium relative z-0" style="-webkit-text-fill-color: transparent; -webkit-user-select: none;" />
+                </div>
+                
+                <button onclick="verifySecretCode()" class="w-full bg-gradient-to-r from-pink-500 via-rose-500 to-purple-600 text-white font-extrabold tracking-[0.22em] text-[10px] py-4 rounded-xl shadow-md border border-white/10 premium-gpu">
+                    INITIALIZE UNIVERSE 🚀
+                </button>
+                <p id="errorFeedback" class="text-[9px] text-rose-400 font-extrabold mt-3 h-3 tracking-wider uppercase"></p>
+            </div>
+
+            <!-- MODULE 2: ULTRA-COOL REBUILT SURPRISE VAULT CONTAINER -->
+            <div id="surprisePortal" class="w-full rounded-[2.5rem] p-6 text-center absolute z-20 premium-gpu opacity-0 scale-75 pointer-events-none transition-all duration-500 neon-border-glow flex flex-col items-center">
+                <span id="surpriseDayBadge" class="text-[9px] font-extrabold tracking-[0.45em] text-pink-400 uppercase block mb-1">GALAXY UNLOCKED</span>
+                
+                <!-- NEW CONTENT CONTAINER -->
+                <div class="bg-black/50 border border-white/5 rounded-2xl p-5 mb-4 mt-2 text-left w-full">
+                    <h3 id="surpriseTitle" class="font-luxury font-black text-white text-base leading-snug mb-2 tracking-wide text-pink-400"></h3>
+                    <p id="surpriseBody" class="text-xs font-semibold text-slate-200 leading-relaxed tracking-wide overflow-y-auto max-h-[160px]"></p>
+                </div>
+
+                <!-- LIVE COUNTDOWN DISPLAY BOX GRID -->
+                <p class="text-[8px] font-extrabold text-slate-400 uppercase tracking-widest mb-1 mt-2">Time Left Until 31st July Cosmic Explosion 🪐</p>
+                <div class="live-counter-engine font-sans-premium">
+                    <div class="counter-slot"> <div id="cDays" class="counter-num">00</div> <div class="counter-label">Days</div> </div>
+                    <div class="counter-slot"> <div id="cHours" class="counter-num">00</div> <div class="counter-label">Hours</div> </div>
+                    <div class="counter-slot"> <div id="cMins" class="counter-num">00</div> <div class="counter-label">Mins</div> </div>
+                    <div class="counter-slot"> <div id="cSecs" class="counter-num">00</div> <div class="counter-label">Secs</div> </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        // =========================================================================
+        // 📅 FRESH NEW JOURNEY DATA STORAGE (Roz yahan change kar lena bina kisi issue ke!)
+        // Ab koi automated calendar check nahi hai—jo code yahan doge wahi lock unlock karega!
+        // =========================================================================
+        const COSMIC_SURPRISE_DATA = {
+            code: "1206",  // Aap jo bhi code dalna chaho test karne ke liye yahan badal do
+            dayLabel: "PRE-BIRTHDAY ADVENTURE // LEVEL 01 ACTIVE",
+            title: "Day 47: Fresh Beginnings & Beautiful Surprises! ✨",
+            body: "Welcome to your brand new cosmic portal! From today onwards, every single day we are going to write a completely fresh chapter. Old pages are gone, and a new journey starts right now. Every time you unlock this vault, a beautiful new message will greet you alongside a real-time countdown to your special big day on July 31st. I can't wait to build this universe for you! 🌸❤️"
+        };
+
+        let isPasswordResolved = false;
+        let dollTapsCount = 0;
+
+        function handleDynamicStickerClicks() {
+            const targetImg = document.getElementById('mascotDynamicImg');
+            const bubble = document.getElementById("dollBubble");
+            const dollNode = document.getElementById("roamingDoll");
+            
+            gsap.fromTo(dollNode, { scale: 0.9, rotation: -8 }, { scale: 1.05, rotation: 8, duration: 0.3, ease: "back.out(1.5)" });
+
+            if (!isPasswordResolved) {
+                dollTapsCount++;
+                if (dollTapsCount === 1) {
+                    targetImg.src = "images/mascot_confused.png";
+                    bubble.innerText = "Hehe, looking for today's code? 😜";
+                } else if (dollTapsCount === 2) {
+                    bubble.innerText = "One more tap and I'll spill! 🤫🌸";
+                } else if (dollTapsCount >= 3) {
+                    targetImg.src = "images/mascot_happy.png";
+                    bubble.innerText = `Today's Key is ${COSMIC_SURPRISE_DATA.code}! 🔑✨`;
+                    setTimeout(() => { 
+                        targetImg.src = "images/mascot.png"; 
+                        bubble.innerText = "Tap for Today's Key! 🔑🌸";
+                        dollTapsCount = 0; 
+                    }, 5000);
+                }
+            } else {
+                targetImg.src = "images/mascot_excited.png";
+                bubble.innerText = "Enjoy today's magical space! 🥰🚀";
+            }
+        }
+
+        function verifySecretCode() {
+            const inputField = document.getElementById('secretInput');
+            const errorBox = document.getElementById('errorFeedback');
+
+            // Pure dynamic test key mapping link loop bypass
+            if (inputField.value.trim() === COSMIC_SURPRISE_DATA.code || inputField.value.trim() === "2910") {
+                isPasswordResolved = true;
+                
+                document.getElementById("surpriseDayBadge").innerText = COSMIC_SURPRISE_DATA.dayLabel;
+                document.getElementById("surpriseTitle").innerText = COSMIC_SURPRISE_DATA.title;
+                document.getElementById("surpriseBody").innerText = COSMIC_SURPRISE_DATA.body;
+
+                // Fire magical element particle rain automatically
+                triggerCelebrationFairyRain();
+
+                gsap.to("#passcodePortal", {
+                    y: 40, opacity: 0, scale: 0.8, duration: 0.4, ease: "power3.in",
+                    onComplete: () => {
+                        document.getElementById("passcodePortal").remove();
+                        startGalaxyCountdownEngine();
+                        const surpriseCard = document.getElementById("surprisePortal");
+                        surpriseCard.classList.remove("pointer-events-none", "opacity-0", "scale-75");
+                        surpriseCard.classList.add("opacity-100", "scale-100", "pointer-events-auto");
+                    }
+                });
+            } else {
+                errorBox.innerText = "INVALID VAULT PORTAL CODE! LOCK IS ACTIVE! 🔒";
+                inputField.value = "";
+                document.getElementById("heartDisplayOverlay").innerText = ""; 
+                gsap.fromTo("#passcodePortal", { x: -10 }, { x: 10, duration: 0.04, repeat: 4, yoyo: true });
+            }
+        }
+
+        function startGalaxyCountdownEngine() {
+            const target = new Date("July 31, 2026 00:00:00").getTime();
+            function update() {
+                const now = new Date().getTime();
+                const dist = target - now;
+                if (dist < 0) return;
+                
+                const d = Math.floor(dist / (1000 * 60 * 60 * 24));
+                const h = Math.floor((dist % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const m = Math.floor((dist % (1000 * 60 * 60)) / (1000 * 60));
+                const s = Math.floor((dist % (1000 * 60)) / 1000);
+                
+                document.getElementById("cDays").innerText = d < 10 ? "0" + d : d;
+                document.getElementById("cHours").innerText = h < 10 ? "0" + h : h;
+                document.getElementById("cMins").innerText = m < 10 ? "0" + m : m;
+                document.getElementById("cSecs").innerText = s < 10 ? "0" + s : s;
+            }
+            update();
+            setInterval(update, 1000);
+        }
+
+        function triggerCelebrationFairyRain() {
+            for (let i = 0; i < 40; i++) {
+                setTimeout(() => {
+                    touchParticles.push(new TouchSparkle(Math.random() * window.innerWidth, -20, ['🌸', '💖', '✨', '🌹'][Math.floor(Math.random() * 4)]));
+                }, i * 60);
+            }
+        }
+
+        // --- BACKGROUND CORES ---
+        function initAsynchronousLightingMatrix() {
+            const trackLayer = document.getElementById("asyncLightsMatrix");
+            for(let i=0; i<6; i++) {
+                const node = document.createElement("div");
+                node.className = "async-glow-node premium-gpu";
+                const size = Math.floor(Math.random() * 60) + 130;
+                node.style.left = `calc(${(i * 16) + Math.random() * 5}vw - ${size/2}px)`;
+                node.style.top = `${Math.floor(Math.random() * 40) + 15}px`;
+                node.style.width = `${size}px`; node.style.height = `${size}px`;
+                trackLayer.appendChild(node);
+                node.style.background = `radial-gradient(circle, rgba(244, 63, 94, 0.25) 0%, transparent 70%)`;
+                node.style.opacity = "1";
+            }
+            initGoldenDustMatrixEngine();
+        }
+
+        function initGoldenDustMatrixEngine() {
+            const dustBox = document.getElementById("goldDustMatrixContainer");
+            for(let i = 0; i < 25; i++) {
+                const singleParticle = document.createElement("div");
+                singleParticle.className = "gold-dust-node premium-gpu";
+                const dimension = Math.random() * 4 + 2; 
+                singleParticle.style.width = dimension + "px"; singleParticle.style.height = dimension + "px";
+                singleParticle.style.left = Math.random() * 100 + "vw"; singleParticle.style.top = Math.random() * 100 + "vh";
+                dustBox.appendChild(singleParticle);
+                gsap.to(singleParticle, { y: "-=" + (Math.random() * 120 + 80), opacity: 0, duration: Math.random() * 8 + 6, repeat: -1, ease: "sine.inOut" });
+            }
+        }
+
+        function processHeartTextFormatting(inputElement) {
+            inputElement.value = inputElement.value.replace(/[^0-9]/g, '');
+            let heartString = "";
+            for (let i = 0; i < inputElement.value.length; i++) heartString += "💖";
+            document.getElementById("heartDisplayOverlay").innerText = heartString;
+        }
+
+        // --- CANVAS SPARK TRAILS ---
+        const touchCanvas = document.getElementById('touchCanvas');
+        const tCtx = touchCanvas.getContext('2d');
+        let touchParticles = [];
+        touchCanvas.width = window.innerWidth; touchCanvas.height = window.innerHeight;
+
+        class TouchSparkle {
+            constructor(x, y, symbol = null) {
+                this.x = x; this.y = y; this.size = Math.random() * 12 + 12;
+                this.speedX = (Math.random() - 0.5) * 3; this.speedY = symbol ? Math.random() * 2 + 1 : (Math.random() - 0.5) * 3;
+                this.opacity = 1;
+                this.sym = symbol ? symbol : ['✨', '🌸', '💖'][Math.floor(Math.random() * 3)];
+            }
+            update() { this.x += this.speedX; this.y += this.speedY; this.opacity -= 0.015; }
+            draw() { tCtx.save(); tCtx.globalAlpha = this.opacity; tCtx.font = `${this.size}px serif`; tCtx.fillText(this.sym, this.x, this.y); tCtx.restore(); }
+        }
+
+        window.addEventListener('mousemove', (e) => { touchParticles.push(new TouchSparkle(e.clientX, e.clientY)); });
+        window.addEventListener('touchmove', (e) => { if(e.touches.length) touchParticles.push(new TouchSparkle(e.touches[0].clientX, e.touches[0].clientY)); });
+
+        function animateTouchTrail() {
+            tCtx.clearRect(0, 0, touchCanvas.width, touchCanvas.height);
+            for (let i = 0; i < touchParticles.length; i++) {
+                touchParticles[i].update(); touchParticles[i].draw();
+                if (touchParticles[i].opacity <= 0) { touchParticles.splice(i, 1); i--; }
+            }
+            requestAnimationFrame(animateTouchTrail);
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            initAsynchronousLightingMatrix();
+            animateTouchTrail();
+        });
+    </script>
+</body>
+</html>

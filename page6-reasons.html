@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>The Vault | Special Reasons for Needhzy</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&family=Playfair+Display:ital,wght@0,900;1,600&display=swap" rel="stylesheet">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+
+    <style>
+        .font-luxury { font-family: 'Playfair Display', serif; }
+        .font-sans-premium { font-family: 'Plus Jakarta Sans', sans-serif; }
+        
+        .premium-gpu {
+            will-change: transform, opacity, height, filter;
+            transform: translateZ(0);
+            backface-visibility: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Iridescent Pastel Silk Shifting Background Mesh */
+        @keyframes pastelSilkFlow {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        .animated-boutique-bg {
+            background: linear-gradient(-45deg, #ffe4e6, #f5f3ff, #e0f2fe, #fdf2f8, #faf5ff);
+            background-size: 400% 400%;
+            animation: pastelSilkFlow 12s ease infinite;
+        }
+
+        /* 🔄 CSS VIEWPORT SAFE RESTRAINT FOR FLOATING MASCOT */
+        @keyframes safeMascotTrack {
+            0% { top: 12%; left: 6%; transform: scale(1) rotate(0deg); }
+            25% { top: 14%; left: 62%; transform: scale(1.05) rotate(6deg); }
+            50% { top: 70%; left: 64%; transform: scale(0.95) rotate(-6deg); }
+            75% { top: 64%; left: 8%; transform: scale(1.02) rotate(4deg); }
+            100% { top: 12%; left: 6%; transform: scale(1) rotate(0deg); }
+        }
+        .animate-safe-mascot {
+            position: fixed;
+            animation: safeMascotTrack 18s linear infinite;
+        }
+
+        /* Luxurious Frosted Glass Terminal Shadow Profiles */
+        .glass-terminal-glow {
+            box-shadow: 0 30px 70px rgba(244, 63, 94, 0.06), inset 0 0 30px rgba(255, 255, 255, 0.85);
+            border: 2px solid rgba(255, 255, 255, 0.7);
+        }
+
+        /* Clean Accordion Node Border Separator Styles */
+        .accordion-node-border {
+            border-bottom: 1px solid rgba(244, 63, 94, 0.08);
+        }
+        .accordion-node-border:last-child {
+            border-bottom: none;
+        }
+    </style>
+</head>
+<body id="masterBody" class="animated-boutique-bg text-slate-800 font-sans-premium min-h-screen overflow-x-hidden overflow-y-auto relative select-none flex flex-col items-center justify-start p-4 pb-24">
+
+    <audio id="sfxPop" src="sfx/pop.wav" preload="auto"></audio>
+    <audio id="sfxSuccess" src="sfx/success.wav" preload="auto"></audio>
+
+    <canvas id="touchCanvas" class="fixed inset-0 w-full h-full pointer-events-none z-40"></canvas>
+
+    <div id="roamingDoll" class="animate-safe-mascot w-20 h-28 cursor-pointer select-none z-40 premium-gpu filter drop-shadow-[0_10px_20px_rgba(244,63,94,0.12)]">
+        <img id="mascotDynamicImg" src="images/mascot.png" class="w-full h-full object-contain" alt="Mascot Doll" onclick="triggerMascotCoreTalk()">
+        
+        <div id="dollBubble" class="absolute -top-10 left-1/2 -translate-x-1/2 bg-white border border-pink-100 py-1 px-3 rounded-xl shadow-md text-[9px] font-extrabold text-pink-500 tracking-wide scale-100 transition-all duration-300 whitespace-nowrap">
+            Tap a row to reveal my thoughts! ✨📖
+        </div>
+    </div>
+
+    <div class="text-center mt-12 mb-10 relative z-20 w-full max-w-sm premium-gpu" id="reasonHeader">
+        <span class="text-[9px] font-extrabold tracking-[0.5em] text-pink-600 uppercase block mb-1 animate-pulse">THE SYSTEM CORE</span>
+        <h1 class="font-luxury font-black text-3xl text-indigo-950 leading-tight">Why You Are So<br>Precious To Me 👑💎</h1>
+        <p class="text-[11px] font-medium text-slate-400 mt-2">Interact with the sleek terminal rows below</p>
+    </div>
+
+    <div id="accordionTerminal" class="w-full max-w-xs backdrop-blur-3xl bg-white/50 rounded-[2.5rem] p-4 glass-terminal-glow relative z-20 premium-gpu flex flex-col overflow-hidden mb-6">
+        
+        <div class="w-full accordion-node-border py-4 px-2 cursor-pointer premium-gpu" onclick="handleAccordionToggle(1, this)">
+            <div class="flex items-center justify-between w-full">
+                <div class="flex items-center gap-3">
+                    <span class="text-base bg-pink-50 p-2 rounded-xl border border-pink-100/50">✨</span>
+                    <h3 class="font-luxury font-black text-sm text-slate-800 tracking-tight">My Instant Mood Cure</h3>
+                </div>
+                <span id="accordionArrow1" class="text-xs font-black text-pink-400 transition-transform duration-300">＋</span>
+            </div>
+            <div id="drawerBody1" class="h-0 opacity-0 overflow-hidden premium-gpu transition-all duration-300">
+                <p class="text-[11px] text-slate-500 font-medium leading-relaxed pt-3 px-1 border-t border-dashed border-slate-100 mt-3 italic">
+                    “Whenever I feel down, low, or completely overwhelmed, you possess this incredible superpower to fix my emotional state instantly. A tiny word from you completely rewrites my cloudy sky and updates my entire world beautifully.”
+                </p>
+            </div>
+        </div>
+
+        <div class="w-full accordion-node-border py-4 px-2 cursor-pointer premium-gpu" onclick="handleAccordionToggle(2, this)">
+            <div class="flex items-center justify-between w-full">
+                <div class="flex items-center gap-3">
+                    <span class="text-base bg-purple-50 p-2 rounded-xl border border-purple-100/50">📚</span>
+                    <h3 class="font-luxury font-black text-sm text-slate-800 tracking-tight">The Adorable Study Scold</h3>
+                </div>
+                <span id="accordionArrow2" class="text-xs font-black text-purple-400 transition-transform duration-300">＋</span>
+            </div>
+            <div id="drawerBody2" class="h-0 opacity-0 overflow-hidden premium-gpu transition-all duration-300">
+                <p class="text-[11px] text-slate-500 font-medium leading-relaxed pt-3 px-1 border-t border-dashed border-slate-100 mt-3 italic">
+                    “When I run away from my books or act lazy, you turn into the sweetest monitor! You genuinely scold me, push my boundaries, and forcefully make me focus on my studies because you care deeply about my future and success.”
+                </p>
+            </div>
+        </div>
+
+        <div class="w-full accordion-node-border py-4 px-2 cursor-pointer premium-gpu" onclick="handleAccordionToggle(3, this)">
+            <div class="flex items-center justify-between w-full">
+                <div class="flex items-center gap-3">
+                    <span class="text-base bg-sky-50 p-2 rounded-xl border border-sky-100/50">💝</span>
+                    <h3 class="font-luxury font-black text-sm text-slate-800 tracking-tight">Your Infinite Pure Care</h3>
+                </div>
+                <span id="accordionArrow3" class="text-xs font-black text-sky-400 transition-transform duration-300">＋</span>
+            </div>
+            <div id="drawerBody3" class="h-0 opacity-0 overflow-hidden premium-gpu transition-all duration-300">
+                <p class="text-[11px] text-slate-500 font-medium leading-relaxed pt-3 px-1 border-t border-dashed border-slate-100 mt-3 italic">
+                    “The deep level of care you show me is simply beautiful. From endlessly reminding me to eat on time to continuously nagging about my health, it feels incredibly comforting to have you always looking over me like a guardian angel.”
+                </p>
+            </div>
+        </div>
+
+        <div class="w-full accordion-node-border py-4 px-2 cursor-pointer premium-gpu" onclick="handleAccordionToggle(4, this)">
+            <div class="flex items-center justify-between w-full">
+                <div class="flex items-center gap-3">
+                    <span class="text-base bg-rose-50 p-2 rounded-xl border border-rose-100/50">😡</span>
+                    <h3 class="font-luxury font-black text-sm text-slate-800 tracking-tight">The Protective Angry Pout</h3>
+                </div>
+                <span id="accordionArrow4" class="text-xs font-black text-rose-400 transition-transform duration-300">＋</span>
+            </div>
+            <div id="drawerBody4" class="h-0 opacity-0 overflow-hidden premium-gpu transition-all duration-300">
+                <p class="text-[11px] text-slate-500 font-medium leading-relaxed pt-3 px-1 border-t border-dashed border-slate-100 mt-3 italic">
+                    “Whenever I make a mistake or do something wrong, you never hesitate to get honestly angry with me. That sweet protective anger simply reflects just how deeply and beautifully you treasure this connection we share.”
+                </p>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="text-[9px] font-bold tracking-widest text-slate-400 uppercase relative z-20 mb-4" id="progressMetrics">
+        DECRYPT STATUS: <span id="scannedCounter" class="text-pink-500 font-black">0 / 4 EXPLORED</span>
+    </div>
+
+    <div id="actionFooterBar" class="w-full max-w-xs relative z-20 text-center px-4 opacity-0 scale-90 hidden pointer-events-none transition-all duration-500">
+        <button onclick="advanceToAudioPlatformPage()" class="w-full bg-gradient-to-r from-pink-400 via-rose-400 to-purple-500 text-white font-extrabold tracking-[0.22em] text-[10px] py-4 rounded-xl shadow-md shadow-pink-300/30 hover:scale-[1.02] active:scale-95 transition-all border border-white/20 premium-gpu animate-bounce">
+            PROCEED TO TUNES 🎵🚀
+        </button>
+    </div>
+
+    <script>
+        let openedDrawersSet = new Set();
+        const totalTargetDrawers = 4;
+        let activeOpenId = null;
+
+        const needhzyBoutiqueTalks = [
+            "You look completely stunning, Needhzy! 😍💎",
+            "Wow! Every single row holds 100% pure truth! 👸🏻🌸",
+            "I am so incredibly lucky to have you in my cosmos! 💖",
+            "Explore all rows to unlock the musical matrices! 🥰⚡",
+            "All elements verified! Let's explore the music station! 🎵🚀"
+        ];
+        let trackingTalksPool = [...needhzyBoutiqueTalks];
+
+        const playSFX = (id) => {
+            const audio = document.getElementById(id);
+            if (audio) { audio.currentTime = 0; audio.play().catch(e => {}); }
+        };
+
+        window.addEventListener('DOMContentLoaded', () => {
+            playSFX('sfxSuccess');
+            gsap.from("#reasonHeader", { opacity: 0, y: -20, duration: 0.7, ease: "back.out(1.1)" });
+            gsap.from("#accordionTerminal", { opacity: 0, scale: 0.95, duration: 0.8, ease: "back.out(1.15)", delay: 0.1 });
+        });
+
+        // 🧠 THE LIQUID SMOOTH KINETIC ACCORDION ENGINE MECHANISM
+        function handleAccordionToggle(rowId, nodeElement) {
+            playSFX('sfxPop');
+
+            const currentDrawer = document.getElementById(`drawerBody${rowId}`);
+            const currentArrow = document.getElementById(`accordionArrow1${rowId}`);
+
+            // Fire sparkles over specific tapped row bounds
+            const rect = nodeElement.getBoundingClientRect();
+            for(let i=0; i<5; i++) touchParticles.push(new TouchSparkle(rect.left + 40, rect.top + 20, '💖'));
+
+            // If user clicks the currently opened row, collapse it smoothly
+            if (activeOpenId === rowId) {
+                collapseDrawerBlock(rowId);
+                activeOpenId = null;
+                return;
+            }
+
+            // Collapse previous active open row if it exists
+            if (activeOpenId !== null) {
+                collapseDrawerBlock(activeOpenId);
+            }
+
+            // Open new targeted row drawer smoothly via GSAP autoHeight calculation lines
+            activeOpenId = rowId;
+            openedDrawersSet.add(rowId);
+
+            // Update visible HUD counting tags
+            document.getElementById("scannedCounter").innerText = `${openedDrawersSet.size} / ${totalTargetDrawers} EXPLORED`;
+
+            const arrow = document.getElementById(`accordionArrow${rowId}`);
+            if (arrow) arrow.innerText = "－";
+
+            currentDrawer.style.height = "auto";
+            const targetHeight = currentDrawer.clientHeight;
+            currentDrawer.style.height = "0px";
+
+            gsap.to(currentDrawer, {
+                height: targetHeight,
+                opacity: 1,
+                duration: 0.4,
+                ease: "power2.out"
+            });
+
+            triggerChibiExpressionShift();
+
+            // IF ALL FOUR CHANNELS READ COMPLETELY -> ACTIVATE PROCEED BUTTON LINK
+            if (openedDrawersSet.size === totalTargetDrawers) {
+                activateFinalProceedStationBar();
+            }
+        }
+
+        function collapseDrawerBlock(id) {
+            const drawer = document.getElementById(`drawerBody${id}`);
+            const arrow = document.getElementById(`accordionArrow${id}`);
+            if (arrow) arrow.innerText = "＋";
+
+            gsap.to(drawer, {
+                height: 0,
+                opacity: 0,
+                duration: 0.3,
+                ease: "power2.inOut"
+            });
+        }
+
+        function triggerChibiExpressionShift() {
+            const bubble = document.getElementById("dollBubble");
+            const targetImg = document.getElementById("mascotDynamicImg");
+
+            if (trackingTalksPool.length === 0) trackingTalksPool = [...needhzyBoutiqueTalks];
+            bubble.innerText = trackingTalksPool.splice(Math.floor(Math.random() * trackingTalksPool.length), 1)[0];
+
+            const expressions = ["images/mascot_happy.png", "images/mascot_excited.png"];
+            targetImg.src = expressions[Math.floor(Math.random() * expressions.length)];
+
+            setTimeout(() => {
+                targetImg.src = "images/mascot.png";
+                bubble.innerText = "Tap a row to reveal my thoughts! ✨📖";
+            }, 3500);
+        }
+
+        function triggerMascotCoreTalk() {
+            playSFX('sfxPop');
+            triggerChibiExpressionShift();
+            const r = document.getElementById("roamingDoll").getBoundingClientRect();
+            for(let i=0; i<5; i++) touchParticles.push(new TouchSparkle(r.left + 35, r.top + 35, '✨'));
+        }
+
+        function activateFinalProceedStationBar() {
+            setTimeout(() => {
+                playSFX('sfxSuccess');
+                document.getElementById("progressMetrics").innerHTML = "STATUS CORE: <span class='text-emerald-500 font-black animate-pulse'>ALL DETAILS EXPANDED! 👑</span>";
+                
+                // Traces neon glowing borders on final check
+                document.getElementById("accordionTerminal").style.borderColor = "rgba(244, 63, 94, 0.4)";
+
+                const footerBar = document.getElementById("actionFooterBar");
+                footerBar.classList.remove("hidden");
+                
+                setTimeout(() => {
+                    footerBar.classList.remove("opacity-0", "scale-90");
+                    footerBar.classList.add("opacity-100", "scale-100", "pointer-events-auto");
+                }, 50);
+
+                // Constant fountain spark loops
+                setInterval(() => {
+                    touchParticles.push(new TouchSparkle(window.innerWidth/2, window.innerHeight/2));
+                }, 350);
+            }, 400);
+        }
+
+        function advanceToAudioPlatformPage() {
+            playSFX('sfxPop');
+            gsap.to("body", { opacity: 0, duration: 0.5, onComplete: () => {
+                window.location.href = "page7-audio.html";
+            }});
+        }
+
+        // --- MOBILE OPTIMIZED TOUCH SPARK TRAIL ENGINE ---
+        const touchCanvas = document.getElementById('touchCanvas');
+        const tCtx = touchCanvas.getContext('2d');
+        let touchParticles = [];
+        touchCanvas.width = window.innerWidth; touchCanvas.height = window.innerHeight;
+
+        class TouchSparkle {
+            constructor(x, y, sym = '✨') {
+                this.x = x; this.y = y; this.size = Math.random() * 12 + 10;
+                this.speedX = (Math.random() - 0.5) * 4; this.speedY = (Math.random() - 0.5) * 4;
+                this.opacity = 1; this.symbol = sym;
+            }
+            update() { this.x += this.speedX; this.y += this.speedY; this.opacity -= 0.02; }
+            draw() { tCtx.save(); tCtx.globalAlpha = this.opacity; tCtx.font = `${this.size}px serif`; tCtx.fillText(this.symbol, this.x, this.y); tCtx.restore(); }
+        }
+
+        window.addEventListener('mousemove', (e) => { touchParticles.push(new TouchSparkle(e.clientX, e.clientY)); });
+        window.addEventListener('touchmove', (e) => { if(e.touches.length) touchParticles.push(new TouchSparkle(e.touches[0].clientX, e.touches[0].clientY)); });
+
+        function animateTouchTrail() {
+            tCtx.clearRect(0, 0, touchCanvas.width, touchCanvas.height);
+            for (let i = 0; i < touchParticles.length; i++) {
+                touchParticles[i].update(); touchParticles[i].draw();
+                if (touchParticles[i].opacity <= 0) { touchParticles.splice(i, 1); i--; }
+            }
+            requestAnimationFrame(animateTouchTrail);
+        }
+        animateTouchTrail();
+    </script>
+</body>
+</html>
