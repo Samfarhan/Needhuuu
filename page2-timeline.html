@@ -2,12 +2,12 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Memory Core | Needhzy Timeline</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;800&family=Playfair+Display:ital,wght@0,900;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,700;0,800;1,600&family=Playfair+Display:ital,wght@0,700;0,900;1,600&display=swap" rel="stylesheet">
     
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
@@ -17,25 +17,20 @@
         .font-sans-premium { font-family: 'Plus Jakarta Sans', sans-serif; }
         
         .premium-gpu {
-            will-change: transform, opacity;
+            will-change: transform, opacity, filter;
             transform: translateZ(0);
             backface-visibility: hidden;
             -webkit-font-smoothing: antialiased;
         }
 
-        /* Continuous Cosmic Luxury Soft Pastel Shifting Aura Background */
-        @keyframes cyberMeshFlow {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-        .animated-cyber-bg {
-            background: linear-gradient(-45deg, #ffd6e8, #e0e7ff, #bae6fd, #fbcfe8, #d9f99d);
-            background-size: 400% 400%;
-            animation: cyberMeshFlow 12s ease infinite;
+        /* 🌌 DEEP CINEMATIC COSMIC AURA BACKGROUND */
+        .animated-cosmic-dark-bg {
+            background: radial-gradient(circle at 50% 30%, rgba(30, 15, 45, 0.98) 0%, rgba(8, 5, 18, 0.99) 60%, #020106 100%), 
+                        radial-gradient(circle at center, transparent 10%, rgba(0, 0, 0, 0.95) 100%);
+            position: relative;
         }
 
-        /* 🔄 CSS-BASED RESPONSIVE VIEWPORT BOUNDS FOR MOBILE STICKER ROAMING */
+        /* 🔄 RESPONSIVE VIEWPORT BOUNDS FOR MOBILE STICKER ROAMING */
         @keyframes safeMascotTrack {
             0% { top: 12%; left: 6%; transform: scale(1) rotate(0deg); }
             25% { top: 14%; left: 62%; transform: scale(1.04) rotate(6deg); }
@@ -48,99 +43,141 @@
             animation: safeMascotTrack 20s linear infinite;
         }
 
-        /* Frosted Glass Soft Pink Neon Glow Outlines */
-        .cyber-panel-glow {
-            box-shadow: 0 0 30px rgba(244, 63, 94, 0.12), inset 0 0 15px rgba(255, 255, 255, 0.8);
+        /* 💎 ULTRA-AESTHETIC GLASS VAULT CARD */
+        .glass-vault-card {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(18, 12, 35, 0.7) 100%);
+            backdrop-filter: blur(32px);
+            -webkit-backdrop-filter: blur(32px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8), 
+                        inset 0 1px 0 rgba(255, 255, 255, 0.25),
+                        0 0 35px rgba(244, 63, 94, 0.12);
         }
 
-        /* Vertical Time Line Strip Vector Design */
+        /* Vertical Timeline Strip Vector Design */
         .timeline-strip {
             background: linear-gradient(to bottom, #f43f5e 0%, #c084fc 50%, #6366f1 100%);
+            box-shadow: 0 0 15px rgba(244, 63, 94, 0.6);
         }
 
-        /* Cute Girly Holographic Portal loader pulsing loop */
+        /* Holographic Portal loader pulsing loop */
         @keyframes portalPulse {
-            0%, 100% { transform: scale(1); box-shadow: 0 0 25px #f43f5e, inset 0 0 15px #f0abfc; border-color: #f43f5e; }
-            50% { transform: scale(1.06); box-shadow: 0 0 45px #f0abfc, inset 0 0 30px #f43f5e; border-color: #f0abfc; }
+            0%, 100% { transform: scale(1); box-shadow: 0 0 35px #f43f5e, inset 0 0 20px #c084fc; border-color: #f43f5e; }
+            50% { transform: scale(1.08); box-shadow: 0 0 55px #c084fc, inset 0 0 35px #f43f5e; border-color: #c084fc; }
         }
         .animate-portal-circle {
             animation: portalPulse 2s ease-in-out infinite;
         }
+
+        .text-glow-rose {
+            text-shadow: 0 0 20px rgba(244, 63, 94, 0.6), 0 0 40px rgba(236, 72, 153, 0.3);
+        }
+
+        .async-glow-node {
+            position: absolute;
+            border-radius: 50%;
+            pointer-events: none;
+            mix-blend-mode: screen;
+            filter: blur(55px);
+            opacity: 0.5;
+        }
     </style>
 </head>
-<body id="masterBody" class="bg-[#fff1f2] text-slate-800 font-sans-premium min-h-screen overflow-x-hidden overflow-y-auto relative select-none flex flex-col items-center justify-start p-4 md:p-6 pb-20 transition-colors duration-500">
+<body id="masterBody" class="animated-cosmic-dark-bg text-slate-100 font-sans-premium min-h-screen overflow-x-hidden overflow-y-auto relative select-none flex flex-col items-center justify-start p-4 md:p-6 pb-20 transition-colors duration-500">
 
+    <!-- AUDIO SFX ENGINE -->
     <audio id="sfxPop" src="sfx/pop.wav" preload="auto"></audio>
     <audio id="sfxSuccess" src="sfx/success.wav" preload="auto"></audio>
 
+    <!-- BACKGROUND AMBIENT GLOW NODES -->
+    <div id="asyncLightsMatrix" class="absolute inset-0 pointer-events-none z-0"></div>
+
     <canvas id="touchCanvas" class="fixed inset-0 w-full h-full pointer-events-none z-40"></canvas>
 
-    <div id="roamingDoll" onclick="triggerMascotInteractiveWishes()" class="animate-constrained-sticker w-20 h-28 cursor-pointer select-none z-40 premium-gpu filter drop-shadow-[0_10px_20px_rgba(244,63,94,0.12)] opacity-0 scale-50 transition-all duration-500">
-        <img id="mascotDynamicImg" src="images/mascot.png" class="w-full h-full object-contain" alt="Mascot Doll">
+    <!-- 🌸 FLOATING MASCOT STICKER (SPECIFIC "BETTU" TEXT ON BUBBLE) -->
+    <div id="roamingDoll" onclick="triggerMascotInteractiveWishes()" class="animate-constrained-sticker w-20 h-28 cursor-pointer select-none z-40 premium-gpu filter drop-shadow-[0_12px_25px_rgba(244,63,94,0.35)] opacity-0 scale-50 transition-all duration-500">
+        <img id="mascotDynamicImg" src="images/mascot.png" onerror="handleMascotLoadError(this)" class="w-full h-full object-contain" alt="Mascot Doll">
         
-        <div id="dollBubble" class="absolute -top-10 left-1/2 -translate-x-1/2 bg-white border border-pink-100 py-1 px-3 rounded-xl shadow-md text-[9px] font-extrabold text-pink-500 tracking-wide scale-100 transition-all duration-300 whitespace-nowrap">
-            Happy Birthday Needhzy! 🎂✨
+        <div id="dollBubble" class="absolute -top-11 left-1/2 -translate-x-1/2 bg-slate-900/90 backdrop-blur-md border border-pink-500/30 py-1 px-3.5 rounded-xl shadow-xl text-[9px] font-extrabold text-pink-300 tracking-wide scale-100 transition-all duration-300 whitespace-nowrap">
+            Happy Birthday Bettuu! 🎂✨
         </div>
     </div>
 
-    <div id="systemBootOverlay" class="fixed inset-0 bg-gradient-to-b from-[#fff1f2] via-[#faf5ff] to-[#fff1f2] flex flex-col items-center justify-center z-50 transition-opacity duration-500 premium-gpu px-6">
-        <div class="w-20 h-20 mb-4 rounded-full border-4 border-dashed flex items-center justify-center bg-white/80 backdrop-blur-md animate-portal-circle text-xl">
+    <!-- 🌌 SYSTEM BOOT OVERLAY -->
+    <div id="systemBootOverlay" class="fixed inset-0 bg-[#040208] flex flex-col items-center justify-center z-50 transition-opacity duration-500 premium-gpu px-6">
+        <div class="w-20 h-20 mb-4 rounded-full border-4 border-dashed flex items-center justify-center bg-slate-950/80 backdrop-blur-md animate-portal-circle text-xl">
             💝
         </div>
-        <code id="bootText" class="text-rose-500 text-xs font-mono tracking-widest uppercase font-extrabold text-center max-w-xs">Restoring Our Memory Grid...</code>
+        <code id="bootText" class="text-transparent bg-clip-text bg-gradient-to-r from-pink-400 to-purple-300 text-xs font-mono tracking-widest uppercase font-extrabold text-center max-w-xs">Restoring Needhzy's Memory Grid...</code>
     </div>
 
-    <div class="w-full max-w-md text-center mt-12 mb-10 relative z-20 opacity-0 premium-gpu" id="headerNode">
-        <span class="text-[9px] font-extrabold tracking-[0.45em] text-rose-500 uppercase block mb-1 animate-pulse">OUR UNIVERSE RESTORED</span>
-        <h1 class="font-luxury font-black text-3xl text-slate-800 leading-tight">Needhzy's Cosmic<br>Milestone Journey ⏳✨</h1>
+    <!-- HEADER TITLE NODE -->
+    <div class="w-full max-w-md text-center mt-8 mb-8 relative z-20 opacity-0 premium-gpu px-2" id="headerNode">
+        <div class="flex items-center justify-center gap-2 mb-1">
+            <span class="w-1.5 h-1.5 rounded-full bg-pink-500 animate-ping"></span>
+            <span class="text-[9px] font-extrabold tracking-[0.45em] text-pink-400 uppercase block">OUR UNIVERSE RESTORED</span>
+        </div>
+        <h1 class="font-luxury font-black text-3xl sm:text-4xl text-transparent bg-clip-text bg-gradient-to-r from-white via-pink-100 to-rose-300 leading-tight text-glow-rose">
+            Needhzy's Cosmic<br>Milestone Journey ⏳✨
+        </h1>
     </div>
 
-    <div id="timelineContainer" class="w-full max-w-xs relative z-20 opacity-0 premium-gpu px-2">
+    <!-- TIMELINE CONTAINER -->
+    <div id="timelineContainer" class="w-full max-w-sm relative z-20 opacity-0 premium-gpu px-2">
         
-        <div class="absolute left-[21px] top-4 bottom-4 w-1 rounded-full timeline-strip opacity-60"></div>
+        <!-- VERTICAL GLOWING LINE STRIP -->
+        <div class="absolute left-[21px] top-4 bottom-4 w-1 rounded-full timeline-strip opacity-70"></div>
 
-        <div class="relative flex items-start gap-5 mb-10 timeline-item-pod">
-            <div class="w-6 h-6 rounded-full bg-gradient-to-tr from-pink-400 to-rose-400 border-2 border-white shadow-md flex items-center justify-center z-10 relative mt-1 text-[10px]">💬</div>
-            <div class="flex-1 backdrop-blur-3xl bg-white/60 border border-white rounded-[2rem] p-5 cyber-panel-glow">
-                <span class="text-[9px] font-extrabold text-pink-500 tracking-wider block mb-1">MAY 05 // THE FIRST HELLO</span>
-                <h3 class="font-luxury font-black text-base text-slate-800 leading-tight mb-2">When You Messaged Me 🌌</h3>
-                <p class="text-[11px] text-slate-600 font-medium leading-relaxed">
-                    The exact moment it all started! You sent me that first message, and our beautiful conversations began right there. Step by step, we became so incredibly close and special to each other without even realizing it. Happiest Birthday, Needhzy! 💖
+        <!-- POD 1: MAY 05 -->
+        <div class="relative flex items-start gap-5 mb-8 timeline-item-pod">
+            <div class="w-6 h-6 rounded-full bg-gradient-to-tr from-pink-500 to-rose-500 border-2 border-white/80 shadow-[0_0_12px_rgba(244,63,94,0.6)] flex items-center justify-center z-10 relative mt-1 text-[10px]">💬</div>
+            <div class="flex-1 rounded-[2rem] p-5 glass-vault-card relative overflow-hidden">
+                <div class="absolute -top-10 -right-10 w-20 h-20 bg-pink-500/10 rounded-full blur-xl"></div>
+                <span class="text-[9px] font-extrabold text-pink-400 tracking-wider block mb-1 uppercase">MAY 05 // THE FIRST HELLO</span>
+                <h3 class="font-luxury font-black text-lg text-white leading-tight mb-2">When You Messaged Me 🌌</h3>
+                <p class="text-[11px] text-slate-300 font-medium leading-relaxed">
+                    The exact moment our universe sparked into existence! You dropped that very first message, opening a door to endless late-night chats and heartwarming laughter. Without even realizing, we became an indispensable part of each other's lives. Happiest Birthday, Needhzy! 💖
                 </p>
             </div>
         </div>
 
-        <div class="relative flex items-start gap-5 mb-10 timeline-item-pod">
-            <div class="w-6 h-6 rounded-full bg-gradient-to-tr from-purple-400 to-indigo-400 border-2 border-white shadow-md flex items-center justify-center z-10 relative mt-1 text-[10px]">🥺</div>
-            <div class="flex-1 backdrop-blur-3xl bg-white/60 border border-white rounded-[2rem] p-5 cyber-panel-glow">
-                <span class="text-[9px] font-extrabold text-purple-500 tracking-wider block mb-1">MAY 24 // THE SILENT MATRIX</span>
-                <h3 class="font-luxury font-black text-base text-slate-800 leading-tight mb-2">Two Days of Silence 🌸</h3>
-                <p class="text-[11px] text-slate-600 font-medium leading-relaxed">
-                    Remember when you got upset and angry with me for two whole days? The entire world felt so quiet, and it felt like the whole system crashed without your texts. But it only showed how much we mean to each other. Always stay by my side & HBD, Needhzy! ⚡
+        <!-- POD 2: MAY 24 -->
+        <div class="relative flex items-start gap-5 mb-8 timeline-item-pod">
+            <div class="w-6 h-6 rounded-full bg-gradient-to-tr from-purple-500 to-indigo-500 border-2 border-white/80 shadow-[0_0_12px_rgba(168,85,247,0.6)] flex items-center justify-center z-10 relative mt-1 text-[10px]">🥺</div>
+            <div class="flex-1 rounded-[2rem] p-5 glass-vault-card relative overflow-hidden">
+                <div class="absolute -top-10 -right-10 w-20 h-20 bg-purple-500/10 rounded-full blur-xl"></div>
+                <span class="text-[9px] font-extrabold text-purple-400 tracking-wider block mb-1 uppercase">MAY 24 // THE SILENT MATRIX</span>
+                <h3 class="font-luxury font-black text-lg text-white leading-tight mb-2">Two Days of Silence 🌸</h3>
+                <p class="text-[11px] text-slate-300 font-medium leading-relaxed">
+                    Remember those two quiet days when you got upset with me? The entire world felt muted, and the whole system crashed without your notifications. It proved just how deeply your presence impacts my world. Always stay right by my side & HBD, Needhzy! ⚡
                 </p>
             </div>
         </div>
 
-        <div class="relative flex items-start gap-5 mb-10 timeline-item-pod">
-            <div class="w-6 h-6 rounded-full bg-gradient-to-tr from-sky-400 to-emerald-400 border-2 border-white shadow-md flex items-center justify-center z-10 relative mt-1 text-[10px]">🎁</div>
-            <div class="flex-1 backdrop-blur-3xl bg-white/60 border border-white rounded-[2rem] p-5 cyber-panel-glow">
-                <span class="text-[9px] font-extrabold text-sky-500 tracking-wider block mb-1">JUNE 11 // EXTRA SPECIAL CORE</span>
-                <h3 class="font-luxury font-black text-base text-slate-800 leading-tight mb-2">My Birthday Shard 🎉</h3>
-                <p class="text-[11px] text-slate-600 font-medium leading-relaxed">
-                    You have always gone out of your way to make me feel special, but what you did for me on my birthday on June 11... it was just too much, so full of warmth and love! I will never ever forget that happiness. Thank you for being my constant comfort, Needhzy! 🎂✨
+        <!-- POD 3: JUNE 11 -->
+        <div class="relative flex items-start gap-5 mb-8 timeline-item-pod">
+            <div class="w-6 h-6 rounded-full bg-gradient-to-tr from-sky-400 to-emerald-400 border-2 border-white/80 shadow-[0_0_12px_rgba(56,189,248,0.6)] flex items-center justify-center z-10 relative mt-1 text-[10px]">🎁</div>
+            <div class="flex-1 rounded-[2rem] p-5 glass-vault-card relative overflow-hidden">
+                <div class="absolute -top-10 -right-10 w-20 h-20 bg-sky-500/10 rounded-full blur-xl"></div>
+                <span class="text-[9px] font-extrabold text-sky-400 tracking-wider block mb-1 uppercase">JUNE 11 // EXTRA SPECIAL CORE</span>
+                <h3 class="font-luxury font-black text-lg text-white leading-tight mb-2">My Birthday Shard 🎉</h3>
+                <p class="text-[11px] text-slate-300 font-medium leading-relaxed">
+                    You have always gone above and beyond to make me feel cherished, but what you crafted for me on June 11 was pure magic! Overflowing with effort, warmth, and affection—it is a core memory locked forever. Thank you for being my constant comfort, Needhzy! 🎂✨
                 </p>
             </div>
         </div>
 
-        <div class="relative flex items-start gap-5 mb-10 timeline-item-pod">
-            <div class="w-6 h-6 rounded-full bg-gradient-to-tr from-rose-400 to-purple-500 border-2 border-white shadow-md flex items-center justify-center z-10 relative mt-1 text-[10px]">👑</div>
-            <div class="flex-1 backdrop-blur-3xl bg-white/80 border-2 border-pink-200 rounded-[2rem] p-5 shadow-[0_12px_25px_rgba(244,63,94,0.06)]">
-                <span class="text-[9px] font-extrabold text-rose-500 tracking-wider block mb-1 animate-pulse">TODAY // THE CELEBRATION</span>
-                <h3 class="font-luxury font-black text-lg text-slate-800 leading-tight mb-2">Happy Birthday, Needhzy! 🎂🎈</h3>
-                <p class="text-[11px] text-slate-700 font-bold leading-relaxed mb-3">
-                    You did so much to celebrate me, and now it is my turn! Sending you the biggest cosmic hug and the absolute happiest birthday, Needhzy! May your private galaxy always remain full of endless smiles, love, and magical moments! You mean the absolute world to me! 🥰❤️
+        <!-- POD 4: TODAY -->
+        <div class="relative flex items-start gap-5 mb-8 timeline-item-pod">
+            <div class="w-6 h-6 rounded-full bg-gradient-to-tr from-rose-500 to-purple-600 border-2 border-white/90 shadow-[0_0_15px_rgba(244,63,94,0.8)] flex items-center justify-center z-10 relative mt-1 text-[10px]">👑</div>
+            <div class="flex-1 rounded-[2rem] p-5 glass-vault-card relative overflow-hidden border-pink-500/40 shadow-[0_10px_30px_rgba(244,63,94,0.25)]">
+                <div class="absolute -top-10 -right-10 w-24 h-24 bg-pink-500/20 rounded-full blur-xl"></div>
+                <span class="text-[9px] font-extrabold text-pink-400 tracking-wider block mb-1 uppercase animate-pulse">TODAY // THE CELEBRATION</span>
+                <h3 class="font-luxury font-black text-xl text-white leading-tight mb-2">Happy Birthday, Needhzy! 🎂🎈</h3>
+                <p class="text-[11px] text-slate-200 font-semibold leading-relaxed mb-3">
+                    You did so much to celebrate me, and now it is my turn to wrap your day in endless magic! Sending you the warmest cosmic hug and a birthday full of unforgettable memories. May your private galaxy forever shine bright with joy! 🥰❤️
                 </p>
-                <div class="text-[9px] font-extrabold text-pink-500 uppercase bg-pink-50/60 py-1.5 rounded-xl border border-pink-100 text-center tracking-wider">
+                <div class="text-[9px] font-extrabold text-pink-300 uppercase bg-slate-900/80 py-2 rounded-xl border border-pink-500/30 text-center tracking-wider">
                     ✨ Coded with pure love for Needhzy ✨
                 </div>
             </div>
@@ -148,14 +185,15 @@
 
     </div>
 
-    <div id="actionFooterBar" class="w-full max-w-xs mt-2 relative z-20 opacity-0 premium-gpu text-center px-4">
-        <button onclick="advanceToNextLetterPage()" class="w-full bg-gradient-to-r from-pink-400 via-rose-400 to-purple-500 text-white font-extrabold tracking-[0.2em] text-[10px] py-4 rounded-xl shadow-md shadow-pink-300/30 hover:scale-[1.02] active:scale-95 transition-all border border-white/20 premium-gpu">
+    <!-- ACTION FOOTER BAR -->
+    <div id="actionFooterBar" class="w-full max-w-sm mt-2 relative z-20 opacity-0 premium-gpu text-center px-2">
+        <button onclick="advanceToNextLetterPage()" class="w-full bg-gradient-to-r from-pink-500 via-rose-500 to-purple-600 hover:from-pink-600 hover:to-purple-700 text-white font-extrabold tracking-[0.2em] text-[10px] py-4 rounded-xl shadow-[0_10px_25px_rgba(244,63,94,0.4)] hover:scale-[1.02] active:scale-95 transition-all duration-200 border border-white/20 premium-gpu">
             PROCEED TO SECRET LETTERS 💌
         </button>
     </div>
 
     <script>
-        // Non-repeating wishes pool matching Needhzy's timeline context
+        // Non-repeating wishes pool matching Needhzy's context
         const wishesMatrix = [
             "Happy Birthday to the most special Needhzy! 🎂🥰",
             "You will always be my absolute favorite, Needhzy! 💖",
@@ -165,42 +203,49 @@
         
         let wishesPool = [...wishesMatrix];
 
+        function handleMascotLoadError(imgObj) {
+            const currentSrc = imgObj.src;
+            if (currentSrc.includes('images/')) {
+                imgObj.src = currentSrc.replace('images/', '');
+            }
+        }
+
         const playSFX = (id) => {
             const audio = document.getElementById(id);
             if (audio) { audio.currentTime = 0; audio.play().catch(e => {}); }
         };
 
-        // 🧠 ACCELERATED TIMINGS FOR INSTANT LOADING HANDSHAKE
         window.addEventListener('DOMContentLoaded', () => {
+            initAmbientLighting();
+
             const bootText = document.getElementById("bootText");
             
-            setTimeout(() => { bootText.innerText = "DECRYPTING OUR MEMORY ARCHIVES..."; }, 400);
-            setTimeout(() => { bootText.innerText = "CALIBRATING THE SPECIAL SHARDS..."; }, 800);
+            setTimeout(() => { bootText.innerText = "DECRYPTING NEEDHZY'S MEMORY ARCHIVES..."; }, 400);
+            setTimeout(() => { bootText.innerText = "CALIBRATING SPECIAL HEART SHARDS..."; }, 800);
 
             setTimeout(() => {
                 playSFX('sfxSuccess');
                 
-                gsap.to("#systemBootOverlay", { opacity: 0, scale: 1.02, duration: 0.3, onComplete: () => {
+                gsap.to("#systemBootOverlay", { opacity: 0, scale: 1.02, duration: 0.35, onComplete: () => {
                     document.getElementById("systemBootOverlay").remove();
-                    
-                    document.getElementById("masterBody").className = "animated-cyber-bg text-slate-800 font-sans-premium min-h-screen overflow-x-hidden overflow-y-auto relative select-none flex flex-col items-center justify-start p-4 md:p-6 pb-20";
                     
                     const header = document.getElementById("headerNode");
                     const timeline = document.getElementById("timelineContainer");
                     const footer = document.getElementById("actionFooterBar");
                     const sticker = document.getElementById("roamingDoll");
                     
-                    header.classList.remove("opacity-0"); timeline.classList.remove("opacity-0"); footer.classList.remove("opacity-0");
+                    header.classList.remove("opacity-0"); 
+                    timeline.classList.remove("opacity-0"); 
+                    footer.classList.remove("opacity-0");
                     
                     gsap.from(header, { opacity: 0, y: -15, duration: 0.5, ease: "back.out(1.2)" });
-                    gsap.from(".timeline-item-pod", { opacity: 0, scale: 0.9, x: -15, duration: 0.4, stagger: 0.1, ease: "back.out(1.1)" });
+                    gsap.from(".timeline-item-pod", { opacity: 0, scale: 0.9, x: -15, duration: 0.45, stagger: 0.1, ease: "back.out(1.1)" });
                     gsap.to(sticker, { opacity: 1, scale: 1, duration: 0.4, ease: "back.out(1.2)" });
                     gsap.from(footer, { opacity: 0, y: 15, duration: 0.4, ease: "power2.out" });
                 }});
-            }, 1200); // Drastically optimized from 3600ms down to 1200ms for speed!
+            }, 1200);
         });
 
-        // 👸🏻 STICKER DYNAMIC INTERACTIVE WISHES ENGINE
         function triggerMascotInteractiveWishes() {
             playSFX('sfxPop');
             const bubble = document.getElementById("dollBubble");
@@ -213,21 +258,24 @@
             const randomIndex = Math.floor(Math.random() * wishesPool.length);
             const selectedWish = wishesPool.splice(randomIndex, 1)[0];
             
-            const expressionImages = ["images/mascot_happy.png", "images/mascot_excited.png", "images/mascot_confused.png"];
+            const expressionImages = ["mascot_happy.png", "mascot_excited.png", "mascot_confused.png"];
             const randomImg = expressionImages[Math.floor(Math.random() * expressionImages.length)];
             
-            targetImg.src = randomImg;
+            targetImg.src = `images/${randomImg}`;
+            targetImg.onerror = function() { this.onerror = null; this.src = randomImg; };
+
             bubble.innerText = selectedWish;
             
-            gsap.fromTo("#roamingDoll", { scale: 0.95 }, { scale: 1.05, duration: 0.2, yoyo: true, repeat: 1 });
+            gsap.fromTo("#roamingDoll", { scale: 0.95 }, { scale: 1.08, duration: 0.2, yoyo: true, repeat: 1 });
             
             setTimeout(() => {
                 targetImg.src = "images/mascot.png";
-                bubble.innerText = "Happy Birthday Needhzy! 🎂✨";
+                targetImg.onerror = function() { this.onerror = null; this.src = "mascot.png"; };
+                bubble.innerText = "Happy Birthday Bettuu! 🎂✨";
             }, 3500);
 
             const r = document.getElementById("roamingDoll").getBoundingClientRect();
-            for(let i=0; i<5; i++) touchParticles.push(new TouchSparkle(r.left + 35, r.top + 35));
+            for(let i=0; i<6; i++) touchParticles.push(new TouchSparkle(r.left + 35, r.top + 35));
         }
 
         function advanceToNextLetterPage() {
@@ -238,7 +286,21 @@
             });
         }
 
-        // --- MOBILE OPTIMIZED TOUCH SPARK TRAIL ENGINE ---
+        function initAmbientLighting() {
+            const trackLayer = document.getElementById("asyncLightsMatrix");
+            for(let i=0; i<5; i++) {
+                const node = document.createElement("div");
+                node.className = "async-glow-node premium-gpu";
+                const size = Math.floor(Math.random() * 80) + 160;
+                node.style.left = `calc(${(i * 20) + Math.random() * 5}vw - ${size/2}px)`;
+                node.style.top = `${Math.floor(Math.random() * 50) + 10}px`;
+                node.style.width = `${size}px`; node.style.height = `${size}px`;
+                node.style.background = `radial-gradient(circle, rgba(244, 63, 94, 0.25) 0%, transparent 75%)`;
+                trackLayer.appendChild(node);
+            }
+        }
+
+        // TOUCH SPARKLE CANVAS ENGINE
         const touchCanvas = document.getElementById('touchCanvas');
         const tCtx = touchCanvas.getContext('2d');
         let touchParticles = [];
@@ -246,12 +308,13 @@
 
         class TouchSparkle {
             constructor(x, y) {
-                this.x = x; this.y = y; this.size = Math.random() * 10 + 10;
+                this.x = x; this.y = y; this.size = Math.random() * 12 + 10;
                 this.speedX = (Math.random() - 0.5) * 3.5; this.speedY = (Math.random() - 0.5) * 3.5;
                 this.opacity = 1;
+                this.symbol = ['✨', '🌸', '💖', '⏳'][Math.floor(Math.random() * 4)];
             }
             update() { this.x += this.speedX; this.y += this.speedY; this.opacity -= 0.02; }
-            draw() { tCtx.save(); tCtx.globalAlpha = this.opacity; tCtx.font = `${this.size}px serif`; tCtx.fillText('✨', this.x, this.y); tCtx.restore(); }
+            draw() { tCtx.save(); tCtx.globalAlpha = this.opacity; tCtx.font = `${this.size}px serif`; tCtx.fillText(this.symbol, this.x, this.y); tCtx.restore(); }
         }
 
         window.addEventListener('mousemove', (e) => { touchParticles.push(new TouchSparkle(e.clientX, e.clientY)); });
