@@ -2,12 +2,12 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Cosmic Core | Letters to Needhzy</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;800&family=Playfair+Display:ital,wght@0,900;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,700;0,800;1,600&family=Playfair+Display:ital,wght@0,700;0,900;1,400&display=swap" rel="stylesheet">
     
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
@@ -23,19 +23,14 @@
             -webkit-font-smoothing: antialiased;
         }
 
-        /* Moving Cosmic Dream Neon Sky Background Mesh */
-        @keyframes letterSkyFlow {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-        .animated-letter-bg {
-            background: linear-gradient(-45deg, #fbcfe8, #e0e7ff, #fef08a, #ffd6e8, #bae6fd);
-            background-size: 400% 400%;
-            animation: letterSkyFlow 12s ease infinite;
+        /* 🌌 DEEP CINEMATIC COSMIC AURA BACKGROUND */
+        .animated-cosmic-dark-bg {
+            background: radial-gradient(circle at 50% 30%, rgba(30, 15, 45, 0.98) 0%, rgba(8, 5, 18, 0.99) 60%, #020106 100%), 
+                        radial-gradient(circle at center, transparent 10%, rgba(0, 0, 0, 0.95) 100%);
+            position: relative;
         }
 
-        /* 🔄 RESPONSIVE STICKER CONSTRAINT BOUNDS (Mobile-Safe Orbit) */
+        /* 🔄 RESPONSIVE VIEWPORT BOUNDS FOR MOBILE STICKER ROAMING */
         @keyframes safeLetterMascot {
             0% { top: 12%; left: 6%; transform: scale(1) rotate(0deg); }
             25% { top: 15%; left: 64%; transform: scale(1.05) rotate(5deg); }
@@ -57,9 +52,28 @@
             animation: envelopeFloat 5s cubic-bezier(0.45, 0, 0.55, 1) infinite;
         }
 
-        /* High-End Holographic Glassmorphic Glow Panel Shadow */
-        .holo-envelope-glow {
-            box-shadow: 0 25px 60px rgba(244, 63, 94, 0.12), inset 0 0 20px rgba(255, 255, 255, 0.8);
+        /* 💎 ULTRA-AESTHETIC GLASS VAULT CARD */
+        .glass-vault-card {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(18, 12, 35, 0.75) 100%);
+            backdrop-filter: blur(32px);
+            -webkit-backdrop-filter: blur(32px);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.85), 
+                        inset 0 1px 0 rgba(255, 255, 255, 0.3),
+                        0 0 45px rgba(244, 63, 94, 0.18);
+        }
+
+        .text-glow-rose {
+            text-shadow: 0 0 20px rgba(244, 63, 94, 0.6), 0 0 40px rgba(236, 72, 153, 0.3);
+        }
+
+        .async-glow-node {
+            position: absolute;
+            border-radius: 50%;
+            pointer-events: none;
+            mix-blend-mode: screen;
+            filter: blur(55px);
+            opacity: 0.5;
         }
 
         /* Letter paper custom scrollbar styling */
@@ -67,94 +81,136 @@
             width: 4px;
         }
         .custom-scroll::-webkit-scrollbar-thumb {
-            background: #f43f5e;
+            background: rgba(244, 63, 94, 0.6);
             border-radius: 10px;
         }
     </style>
 </head>
-<body id="masterBody" class="animated-letter-bg text-slate-800 font-sans-premium min-h-screen overflow-x-hidden overflow-y-auto relative select-none flex flex-col items-center justify-start p-4 md:p-6 pb-20">
+<body id="masterBody" class="animated-cosmic-dark-bg text-slate-100 font-sans-premium min-h-screen overflow-x-hidden overflow-y-auto relative select-none flex flex-col items-center justify-start p-4 md:p-6 pb-20">
 
+    <!-- AUDIO SFX ENGINE -->
     <audio id="sfxPop" src="sfx/pop.wav" preload="auto"></audio>
     <audio id="sfxSuccess" src="sfx/success.wav" preload="auto"></audio>
 
+    <!-- BACKGROUND AMBIENT GLOW NODES -->
+    <div id="asyncLightsMatrix" class="absolute inset-0 pointer-events-none z-0"></div>
+
     <canvas id="touchCanvas" class="fixed inset-0 w-full h-full pointer-events-none z-40"></canvas>
 
-    <div id="roamingDoll" onclick="triggerMascotLetterTalk()" class="animate-constrained-sticker w-20 h-28 cursor-pointer select-none z-50 premium-gpu filter drop-shadow-[0_10px_20px_rgba(244,63,94,0.15)]">
-        <img id="mascotDynamicImg" src="images/mascot.png" class="w-full h-full object-contain" alt="Mascot Doll">
+    <!-- 🌸 FLOATING MASCOT STICKER -->
+    <div id="roamingDoll" onclick="triggerMascotLetterTalk()" class="animate-constrained-sticker w-20 h-28 cursor-pointer select-none z-50 premium-gpu filter drop-shadow-[0_12px_25px_rgba(244,63,94,0.35)]">
+        <img id="mascotDynamicImg" src="images/mascot.png" onerror="handleMascotLoadError(this)" class="w-full h-full object-contain" alt="Mascot Doll">
         
-        <div id="dollBubble" class="absolute -top-10 left-1/2 -translate-x-1/2 bg-white border border-pink-100 py-1 px-3 rounded-xl shadow-md text-[9px] font-extrabold text-pink-500 tracking-wide scale-100 transition-all duration-300 whitespace-nowrap">
-            Tap the letter! 💌✨
+        <div id="dollBubble" class="absolute -top-11 left-1/2 -translate-x-1/2 bg-slate-900/90 backdrop-blur-md border border-pink-500/30 py-1 px-3.5 rounded-xl shadow-xl text-[9px] font-extrabold text-pink-300 tracking-wide scale-100 transition-all duration-300 whitespace-nowrap">
+            Tap the letter Bettuu! 💌✨
         </div>
     </div>
 
-    <div class="w-full max-w-md text-center mt-12 mb-8 relative z-20 premium-gpu" id="headerBlock">
-        <span class="text-[9px] font-extrabold tracking-[0.5em] text-pink-600 uppercase block mb-1 animate-pulse">CONFIDENTIAL DECRYPTION</span>
-        <h1 class="font-luxury font-black text-3xl text-indigo-950 leading-tight">Needhzy's Secret<br>Time-Capsule Letter ✉️💫</h1>
+    <!-- HEADER TITLE BLOCK -->
+    <div class="w-full max-w-md text-center mt-8 mb-8 relative z-20 premium-gpu px-2" id="headerBlock">
+        <div class="flex items-center justify-center gap-2 mb-1">
+            <span class="w-1.5 h-1.5 rounded-full bg-pink-500 animate-ping"></span>
+            <span class="text-[9px] font-extrabold tracking-[0.5em] text-pink-400 uppercase block">CONFIDENTIAL DECRYPTION</span>
+        </div>
+        <h1 class="font-luxury font-black text-3xl sm:text-4xl text-transparent bg-clip-text bg-gradient-to-r from-white via-pink-100 to-rose-300 leading-tight text-glow-rose">
+            Needhzy's Secret<br>Time-Capsule Letter ✉️💫
+        </h1>
     </div>
 
-    <div id="envelopeCardWrapper" class="w-full max-w-xs aspect-[4/5] backdrop-blur-3xl bg-white/50 border-2 border-white rounded-[3rem] p-6 text-center animate-envelope-card holo-envelope-glow relative z-20 premium-gpu flex flex-col items-center justify-center cursor-pointer transition-all duration-500 hover:scale-[1.02]" onclick="openSecretLetterPaper()">
+    <!-- ENVELOPE CARD WRAPPER -->
+    <div id="envelopeCardWrapper" class="w-full max-w-xs aspect-[4/5] glass-vault-card rounded-[3rem] p-6 text-center animate-envelope-card relative z-20 premium-gpu flex flex-col items-center justify-center cursor-pointer transition-all duration-500 hover:scale-[1.02]" onclick="openSecretLetterPaper()">
         
-        <div id="heartSeal" class="w-20 h-20 bg-gradient-to-tr from-pink-400 via-rose-400 to-purple-400 rounded-full flex items-center justify-center text-4xl shadow-lg shadow-pink-300/50 animate-pulse relative z-10">
+        <div id="heartSeal" class="w-20 h-20 bg-gradient-to-tr from-pink-500 via-rose-500 to-purple-600 rounded-full flex items-center justify-center text-4xl shadow-[0_10px_25px_rgba(244,63,94,0.5)] border border-white/20 animate-pulse relative z-10">
             💝
         </div>
         
-        <h2 id="envelopeTitle" class="font-luxury font-black text-xl text-indigo-950 mt-6 mb-2">Tap To Unfold</h2>
-        <p id="envelopeSub" class="text-[11px] text-slate-500 font-extrabold tracking-widest uppercase animate-pulse">Specifically Sealed For Needhzy</p>
+        <h2 id="envelopeTitle" class="font-luxury font-black text-2xl text-white mt-6 mb-2 tracking-wide">Tap To Unfold</h2>
+        <p id="envelopeSub" class="text-[10px] text-pink-400 font-extrabold tracking-widest uppercase animate-pulse">Specifically Sealed For Needhzy</p>
     </div>
 
-    <div id="revealedLetterPaper" class="w-full max-w-xs bg-white/95 border-2 border-pink-100 rounded-[2.5rem] p-6 shadow-[0_30px_60px_rgba(244,63,94,0.12)] relative z-30 premium-gpu hidden opacity-0 flex flex-col max-h-[70vh]">
+    <!-- REVEALED LETTER PAPER CARD -->
+    <div id="revealedLetterPaper" class="w-full max-w-sm glass-vault-card rounded-[2.5rem] p-6 shadow-[0_30px_80px_rgba(0,0,0,0.85)] relative z-30 premium-gpu hidden opacity-0 flex flex-col max-h-[75vh]">
         
-        <div class="flex justify-between items-center pb-3 border-b border-dashed border-pink-100 mb-4">
+        <div class="flex justify-between items-center pb-3 border-b border-white/10 mb-4">
             <span class="text-[9px] font-black tracking-widest text-pink-400 uppercase">CORE MEMORY UNLOCKED</span>
-            <span class="text-xs cursor-pointer hover:scale-125 transition-transform p-1" onclick="closeSecretLetterPaper(event)">❌</span>
+            <span class="text-xs cursor-pointer hover:scale-125 transition-transform p-1 text-slate-400 hover:text-white" onclick="closeSecretLetterPaper(event)">❌</span>
         </div>
 
-        <div class="flex-1 overflow-y-auto custom-scroll pr-1 text-slate-700 font-medium text-xs leading-relaxed space-y-4 font-sans-premium select-text">
-            <p class="font-luxury font-black text-base text-indigo-950 italic">Dear Needhi,</p>
+        <div class="flex-1 overflow-y-auto custom-scroll pr-2 text-slate-200 font-medium text-xs leading-relaxed space-y-4 font-sans-premium select-text">
+            <p class="font-luxury font-black text-base text-pink-200 italic">Dear Needhi,</p>
             
             <p>
-                First of all, a very very happy birthday to the most special person in my universe! Writing this to tell you how incredibly grateful I am to have you in my matrix life journey.
+                Happy Birthday to the one who unknowingly made ordinary days feel unforgettable.
             </p>
             
             <p>
-                From that unforgettable first text on May 05 to all the random late-night gossips, stupid arguments, and crazy inside laughs, everything has been so surreal. Remember when you got so angry with me for two whole days? Honestly, those 48 hours felt like an absolute system crash. It made me realize how dark my sky gets without your continuous pings!
+                Some people enter your life quietly, and before you realize it, they become a part of your happiest memories. That's exactly what happened with you. I never imagined that someone could leave such a beautiful impact simply by being themselves.
             </p>
             
             <p>
-                You have always stepped up to make me feel like the luckiest person alive—especially what you did on my birthday on June 11! It was just unforgettable. So today, on your special day, I wanted to build this private digital galaxy just to see that beautiful smile on your face.
+                You've given me countless reasons to smile without even trying. Whether it was our random conversations, the moments we laughed at absolutely nothing, or the times we simply existed in each other's company, every memory has found a permanent place in my heart.
             </p>
             
             <p>
-                May your sky always remain full of endless warmth, pure love, and magical code parameters. Never stop smiling, because you truly mean the absolute world to me. Happy Birthday once again, my favorite human! 🎂🎁💖
+                What I admire most about you isn't just your smile—it's your kindness, your determination, the way you care for people, and the strength you carry even when life isn't easy. Never let the world change that beautiful part of you.
             </p>
             
-            <p class="pt-2 font-luxury font-black text-slate-800 text-right italic">— Yours samm ✨</p>
+            <p>
+                Today isn't just another date on the calendar; it's the day someone truly special was born. I hope this year surprises you with happiness you've never imagined, fills your heart with peace, and rewards every bit of hard work you've put into your dreams.
+            </p>
+            
+            <p>
+                If this little birthday page can make you smile for even a few seconds, then it has already done its job.
+            </p>
+            
+            <p>
+                Keep shining, keep believing in yourself, and never forget how wonderfully unique you are.
+            </p>
+            
+            <p>
+                Happy Birthday once again, Needhi. 🤍
+            </p>
+            
+            <p>
+                May your story always be filled with beautiful chapters, unforgettable adventures, endless laughter, and the kind of happiness that stays for a lifetime.
+            </p>
+            
+            <p class="pt-2 font-luxury font-black text-rose-300 text-right italic">— Yours, Samm ✨</p>
         </div>
 
-        <div class="mt-5 pt-3 border-t border-dashed border-pink-100">
-            <button onclick="finishJourneyRoute()" class="w-full bg-gradient-to-r from-pink-400 via-rose-400 to-purple-500 text-white font-extrabold tracking-[0.2em] text-[10px] py-3.5 rounded-xl shadow-md border border-white/20 premium-gpu">
+        <div class="mt-5 pt-3 border-t border-white/10">
+            <button onclick="finishJourneyRoute()" class="w-full bg-gradient-to-r from-pink-500 via-rose-500 to-purple-600 hover:from-pink-600 hover:to-purple-700 text-white font-extrabold tracking-[0.2em] text-[10px] py-4 rounded-xl shadow-[0_10px_25px_rgba(244,63,94,0.4)] hover:scale-[1.02] active:scale-95 transition-all duration-200 border border-white/20 premium-gpu">
                 ENTER CHIBI PLATFORM GAME 🎮
             </button>
         </div>
     </div>
 
     <script>
-        // Non-repeating letters responses pool data matrix
         const letterQuotesPool = [
             "OMG! Tap the heart seal to read my message, Needhzy! 💌",
-            "I spent hours coding these lines for you, Needhzy! 👸🏻🎀",
+            "I spent hours writing these lines for you, Needhzy! 👸🏻🎀",
             "You are going to love this letter, read it quick! 🥰✨",
             "Happy Birthday to my absolute favorite companion! 🎂💖"
         ];
         
         let trackingQuotes = [...letterQuotesPool];
 
+        function handleMascotLoadError(imgObj) {
+            const currentSrc = imgObj.src;
+            if (currentSrc.includes('images/')) {
+                imgObj.src = currentSrc.replace('images/', '');
+            }
+        }
+
         const playSFX = (id) => {
             const audio = document.getElementById(id);
             if (audio) { audio.currentTime = 0; audio.play().catch(e => {}); }
         };
 
-        // 👸🏻 STICKER CLICK INTERACTIONS STATE MATRIX (Non-Repeating Phrases)
+        window.addEventListener('DOMContentLoaded', () => {
+            initAmbientLighting();
+        });
+
         function triggerMascotLetterTalk() {
             playSFX('sfxPop');
             const bubble = document.getElementById("dollBubble");
@@ -167,38 +223,41 @@
             const randomIndex = Math.floor(Math.random() * trackingQuotes.length);
             const chosenMsg = trackingQuotes.splice(randomIndex, 1)[0];
             
-            // Cycle expression parameters dynamically
-            const imagePool = ["images/mascot_excited.png", "images/mascot_happy.png", "images/mascot_confused.png"];
-            targetImg.src = imagePool[Math.floor(Math.random() * imagePool.length)];
+            const imagePool = ["mascot_excited.png", "mascot_happy.png", "mascot_confused.png"];
+            const randomImg = imagePool[Math.floor(Math.random() * imagePool.length)];
+
+            targetImg.src = `images/${randomImg}`;
+            targetImg.onerror = function() { this.onerror = null; this.src = randomImg; };
+            
             bubble.innerText = chosenMsg;
             
-            gsap.fromTo("#roamingDoll", { scale: 0.95 }, { scale: 1.05, duration: 0.2, yoyo: true, repeat: 1 });
+            gsap.fromTo("#roamingDoll", { scale: 0.95 }, { scale: 1.08, duration: 0.2, yoyo: true, repeat: 1 });
             
             setTimeout(() => {
                 targetImg.src = "images/mascot.png";
-                bubble.innerText = "Tap the letter! 💌✨";
+                targetImg.onerror = function() { this.onerror = null; this.src = "mascot.png"; };
+                bubble.innerText = "Tap the letter Bettuu! 💌✨";
             }, 3500);
 
             const r = document.getElementById("roamingDoll").getBoundingClientRect();
-            for(let i=0; i<5; i++) touchParticles.push(new TouchSparkle(r.left + 35, r.top + 35, '💖'));
+            for(let i=0; i<6; i++) touchParticles.push(new TouchSparkle(r.left + 35, r.top + 35, '💖'));
         }
 
-        // ✉️ ENVELOPE OPENING HANDSHAKE MECHANICS (Unfolds Letter Paper)
         function openSecretLetterPaper() {
-            playSFX('sfxSuccess'); // Beautiful shimmer chime!
+            playSFX('sfxSuccess');
             
-            // Shower massive heart bursts all over the viewport layout coordinates
             const envelope = document.getElementById("envelopeCardWrapper");
             const rect = envelope.getBoundingClientRect();
-            for(let i=0; i<30; i++) {
+            for(let i=0; i<35; i++) {
                 touchParticles.push(new TouchSparkle(rect.left + rect.width/2, rect.top + rect.height/2, '💖'));
                 touchParticles.push(new TouchSparkle(rect.left + rect.width/2, rect.top + rect.height/2, '🌸'));
             }
 
-            document.getElementById("mascotDynamicImg").src = "images/mascot_happy.png";
+            const mascotImg = document.getElementById("mascotDynamicImg");
+            mascotImg.src = "images/mascot_happy.png";
+            mascotImg.onerror = function() { this.onerror = null; this.src = "mascot_happy.png"; };
             document.getElementById("dollBubble").innerText = "Yay! Read it! 🥰📄";
 
-            // Shrink down envelope box and slide up the premium text letter paper card module
             gsap.to("#envelopeCardWrapper", { scale: 0.7, opacity: 0, duration: 0.4, ease: "power2.in", onComplete: () => {
                 document.getElementById("envelopeCardWrapper").classList.add("hidden");
                 
@@ -208,13 +267,14 @@
             }});
         }
 
-        // ❌ RE-CLOSE INNER LETTER COMPONENT OVERLAYS
         function closeSecretLetterPaper(event) {
-            event.stopPropagation(); // Restrain bubbling triggers loop parameters
+            event.stopPropagation();
             playSFX('sfxPop');
             
-            document.getElementById("mascotDynamicImg").src = "images/mascot.png";
-            document.getElementById("dollBubble").innerText = "Tap the letter! 💌✨";
+            const mascotImg = document.getElementById("mascotDynamicImg");
+            mascotImg.src = "images/mascot.png";
+            mascotImg.onerror = function() { this.onerror = null; this.src = "mascot.png"; };
+            document.getElementById("dollBubble").innerText = "Tap the letter Bettuu! 💌✨";
 
             gsap.to("#revealedLetterPaper", { scale: 0.8, opacity: 0, duration: 0.4, ease: "power2.in", onComplete: () => {
                 document.getElementById("revealedLetterPaper").classList.add("hidden");
@@ -225,16 +285,29 @@
             }});
         }
 
-        // 🚀 ADVANCE TERMINAL FORWARD INTO GAME ENDPOINT
         function finishJourneyRoute() {
             playSFX('sfxPop');
             gsap.to(["#revealedLetterPaper", "#headerBlock", "#roamingDoll"], {
                 opacity: 0, scale: 0.8, y: -20, filter: "blur(12px)", duration: 0.5, stagger: 0.05,
-                onComplete: () => { window.location.href = "page4-game.html"; } // Secure routing link
+                onComplete: () => { window.location.href = "page4-game.html"; }
             });
         }
 
-        // --- MOBILE OPTIMIZED TOUCH SPARK TRAIL ENGINE ---
+        function initAmbientLighting() {
+            const trackLayer = document.getElementById("asyncLightsMatrix");
+            for(let i=0; i<5; i++) {
+                const node = document.createElement("div");
+                node.className = "async-glow-node premium-gpu";
+                const size = Math.floor(Math.random() * 80) + 160;
+                node.style.left = `calc(${(i * 20) + Math.random() * 5}vw - ${size/2}px)`;
+                node.style.top = `${Math.floor(Math.random() * 50) + 10}px`;
+                node.style.width = `${size}px`; node.style.height = `${size}px`;
+                node.style.background = `radial-gradient(circle, rgba(244, 63, 94, 0.25) 0%, transparent 75%)`;
+                trackLayer.appendChild(node);
+            }
+        }
+
+        // TOUCH SPARKLE CANVAS ENGINE
         const touchCanvas = document.getElementById('touchCanvas');
         const tCtx = touchCanvas.getContext('2d');
         let touchParticles = [];
@@ -245,7 +318,7 @@
                 this.x = x; this.y = y; this.size = Math.random() * 12 + 10;
                 this.speedX = (Math.random() - 0.5) * 4; this.speedY = (Math.random() - 0.5) * 4;
                 this.opacity = 1;
-                this.symbol = symbolOverride ? symbolOverride : ['✨', '🌸', '💖'][Math.floor(Math.random() * 3)];
+                this.symbol = symbolOverride ? symbolOverride : ['✨', '🌸', '💖', '💌'][Math.floor(Math.random() * 4)];
             }
             update() { this.x += this.speedX; this.y += this.speedY; this.opacity -= 0.02; }
             draw() { tCtx.save(); tCtx.globalAlpha = this.opacity; tCtx.font = `${this.size}px serif`; tCtx.fillText(this.symbol, this.x, this.y); tCtx.restore(); }
