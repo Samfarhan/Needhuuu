@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>The Journey | Main Portal Engine</title>
+    <title>The Journey | Celestial Vault Portal</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@700;800&family=Playfair+Display:ital,wght=0,900;1,600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,700;0,800;1,600&family=Playfair+Display:ital,wght=0,700;0,900;1,600&display=swap" rel="stylesheet">
     
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
@@ -17,17 +17,48 @@
         .font-sans-premium { font-family: 'Plus Jakarta Sans', sans-serif; }
         
         .premium-gpu {
-            will-change: transform, opacity, filter, background;
+            will-change: transform, opacity, filter;
             transform: translateZ(0);
             backface-visibility: hidden;
             -webkit-font-smoothing: antialiased;
         }
 
         .animated-cosmic-bg {
-            background: radial-gradient(circle at 50% 50%, rgba(13, 10, 26, 0.95) 0%, rgba(4, 3, 8, 0.98) 60%, #010103 100%), 
-                        radial-gradient(circle at center, transparent 20%, rgba(0, 0, 0, 0.85) 100%);
+            background: radial-gradient(circle at 50% 35%, rgba(20, 12, 38, 0.95) 0%, rgba(6, 4, 14, 0.98) 60%, #020106 100%), 
+                        radial-gradient(circle at center, transparent 10%, rgba(0, 0, 0, 0.9) 100%);
             position: relative;
-            transition: background 3.5s cubic-bezier(0.33, 1, 0.68, 1);
+        }
+
+        /* Ambient Aura Pulsing for Flowers & Background */
+        @keyframes ambientBloom {
+            0%, 100% { filter: drop-shadow(0 0 25px rgba(244, 63, 94, 0.25)) brightness(1.1); }
+            50% { filter: drop-shadow(0 0 45px rgba(236, 72, 153, 0.45)) brightness(1.25); }
+        }
+
+        .original-center-bouquet {
+            position: absolute;
+            top: 50%; 
+            left: 50%;
+            transform: translate(-50%, -46%);
+            width: 88%;
+            max-width: 360px;
+            pointer-events: none;
+            z-index: 4; 
+            animation: ambientBloom 6s ease-in-out infinite;
+        }
+
+        .single-bulbs-garland {
+            position: absolute;
+            top: -22px;
+            left: 50%;
+            transform: translateX(-50%) scale(1.03);
+            width: 100%;
+            max-width: 460px;
+            height: auto;
+            pointer-events: none;
+            z-index: 30;
+            mix-blend-mode: screen;
+            filter: drop-shadow(0 10px 20px rgba(251, 191, 36, 0.3));
         }
 
         @keyframes safeStickerOrbit {
@@ -50,18 +81,33 @@
             50% { transform: translateY(-8px); }
         }
 
+        /* 💎 ULTRA-AESTHETIC GLASS VAULT CARD */
+        .glass-vault-card {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.07) 0%, rgba(15, 10, 30, 0.55) 100%);
+            backdrop-filter: blur(28px);
+            -webkit-backdrop-filter: blur(28px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.8), 
+                        inset 0 1px 0 rgba(255, 255, 255, 0.25),
+                        0 0 40px rgba(244, 63, 94, 0.15);
+        }
+
+        /* Cyberpunk Pink Neon Ring Glow */
+        .neon-input-glow {
+            background: rgba(4, 2, 10, 0.75);
+            border: 1px solid rgba(244, 63, 94, 0.3);
+            box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.8), 0 0 15px rgba(244, 63, 94, 0.1);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .neon-input-glow:focus-within {
+            border-color: rgba(244, 63, 94, 0.8);
+            box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.8), 0 0 25px rgba(244, 63, 94, 0.4);
+        }
+
         .heart-mask {
             -webkit-text-security: none;
             color: #ff2a74 !important;
-            text-shadow: 0 0 15px rgba(255, 42, 116, 0.5);
-        }
-
-        .neon-border-glow {
-            box-shadow: 0 30px 70px rgba(0, 0, 0, 0.75), inset 0 0 15px rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.12);
-            background: rgba(10, 8, 20, 0.5);
-            backdrop-filter: blur(24px);
-            -webkit-backdrop-filter: blur(24px);
+            text-shadow: 0 0 18px rgba(255, 42, 116, 0.8);
         }
 
         .phone-container {
@@ -75,32 +121,6 @@
             justify-content: center;
         }
 
-        .single-bulbs-garland {
-            position: absolute;
-            top: -22px;
-            left: 50%;
-            transform: translateX(-50%) scale(1.03);
-            width: 100%;
-            max-width: 460px;
-            height: auto;
-            pointer-events: none;
-            z-index: 30;
-            mix-blend-mode: screen;
-        }
-
-        .original-center-bouquet {
-            position: absolute;
-            top: 50%; 
-            left: 50%;
-            transform: translate(-50%, -46%);
-            width: 88%;
-            max-width: 360px;
-            pointer-events: none;
-            z-index: 4; 
-            filter: drop-shadow(0 15px 40px rgba(244, 63, 94, 0.2)) contrast(1.4) saturate(1.6) brightness(1.2);
-        }
-
-        /* ⏳ HIGH-END CRYPTO CELESTIAL COUNTER ENGINE */
         .live-counter-engine {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
@@ -110,12 +130,12 @@
             margin-top: 12px;
         }
         .counter-slot {
-            background: linear-gradient(135deg, rgba(15, 12, 30, 0.8), rgba(5, 3, 10, 0.9));
-            border: 1px solid rgba(244, 63, 94, 0.25);
+            background: linear-gradient(135deg, rgba(20, 15, 38, 0.85), rgba(6, 4, 14, 0.95));
+            border: 1px solid rgba(244, 63, 94, 0.3);
             border-radius: 14px;
             padding: 10px 4px;
             text-align: center;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.4), inset 0 0 12px rgba(244, 63, 94, 0.15);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.5), inset 0 0 12px rgba(244, 63, 94, 0.2);
         }
         .counter-num {
             font-size: 24px;
@@ -129,7 +149,7 @@
             text-transform: uppercase;
             font-weight: 700;
             color: #94a3b8;
-            letter-spacing: 0.08em;
+            letter-spacing: 0.1em;
             margin-top: 4px;
         }
 
@@ -138,69 +158,74 @@
             border-radius: 50%;
             pointer-events: none;
             mix-blend-mode: screen;
-            filter: blur(40px);
-            opacity: 0;
+            filter: blur(50px);
+            opacity: 0.6;
         }
         .gold-dust-node {
             position: absolute;
-            background: radial-gradient(circle, rgba(253, 186, 116, 0.7) 0%, rgba(245, 158, 11, 0) 70%);
+            background: radial-gradient(circle, rgba(253, 186, 116, 0.8) 0%, rgba(245, 158, 11, 0) 70%);
             border-radius: 50%;
             pointer-events: none;
             z-index: 2;
         }
     </style>
 </head>
-<body id="masterBody" class="animated-cosmic-bg text-slate-800 font-sans-premium min-h-screen w-full flex items-center justify-center overflow-hidden relative select-none">
+<body id="masterBody" class="animated-cosmic-bg text-slate-100 font-sans-premium min-h-screen w-full flex items-center justify-center overflow-hidden relative select-none">
 
+    <!-- DYNAMIC AMBIENT LIGHTING LAYER -->
     <div id="asyncLightsMatrix" class="absolute inset-0 pointer-events-none z-0"></div>
     <div id="goldDustMatrixContainer" class="absolute inset-0 pointer-events-none overflow-hidden z-10"></div>
 
-    <!-- AUTO-FALLBACK IMAGE ASSETS -->
+    <!-- PRESERVED DECORATIVE ASSETS WITH AUTOMATIC FALLBACKS -->
     <img src="images/bulbs-string.png" onerror="this.onerror=null; this.src='bulbs-string.png';" class="single-bulbs-garland premium-gpu" alt="Hanging Bulbs String">
     <img src="images/lotus-bg.png" onerror="this.onerror=null; this.src='lotus-bg.png';" class="original-center-bouquet premium-gpu" alt="Original Center Bouquet">
 
     <canvas id="touchCanvas" class="fixed inset-0 w-full h-full pointer-events-none z-40"></canvas>
 
-    <!-- 🌸 MASCOT CHARACTER STICKER LOOP -->
-    <div id="roamingDoll" onclick="handleDynamicStickerClicks()" class="animate-constrained-sticker w-20 h-28 cursor-pointer select-none z-50 premium-gpu filter drop-shadow-[0_10px_20px_rgba(244,63,94,0.12)]">
+    <!-- 🌸 FLOATING MASCOT STICKER LOOP -->
+    <div id="roamingDoll" onclick="handleDynamicStickerClicks()" class="animate-constrained-sticker w-20 h-28 cursor-pointer select-none z-50 premium-gpu filter drop-shadow-[0_12px_25px_rgba(244,63,94,0.35)]">
         <img id="mascotDynamicImg" src="images/mascot.png" onerror="handleMascotLoadError(this)" class="w-full h-full object-contain" alt="Cute Mascot Doll">
-        <div id="dollBubble" class="absolute -top-10 left-1/2 -translate-x-1/2 bg-white border border-pink-100 py-1 px-3 rounded-xl shadow-md text-[9px] font-extrabold text-pink-500 tracking-wide scale-100 transition-all duration-300 whitespace-nowrap">
+        <div id="dollBubble" class="absolute -top-11 left-1/2 -translate-x-1/2 bg-slate-900/90 backdrop-blur-md border border-pink-500/30 py-1 px-3 rounded-xl shadow-lg text-[9px] font-extrabold text-pink-300 tracking-wide scale-100 transition-all duration-300 whitespace-nowrap">
             Tap for Today's Key! 🔑🌸
         </div>
     </div>
 
-    <!-- 📱 PORTABLE FRAMED LAYER -->
-    <div class="phone-container relative z-20">
+    <!-- 📱 MAIN PORTABLE FRAME CONTAINMENT -->
+    <div class="phone-container relative z-20 px-4">
         <div id="magneticWrapper" class="w-full flex flex-col items-center justify-center relative premium-gpu animate-glass-platform py-4">
             
-            <!-- MODULE 1: SECURITY INPUT PORTAL -->
-            <div id="passcodePortal" class="w-full rounded-[2.5rem] p-6 text-center relative premium-gpu transition-all duration-300 neon-border-glow">
-                <span class="text-[9px] font-extrabold tracking-[0.45em] text-pink-500 uppercase block mb-1">CELESTIAL VAULT ACCESS</span>
-                <h1 class="font-luxury font-black text-2xl text-white mb-5 tracking-tight">Decrypt Your Sky ☁️</h1>
-                
-                <div class="relative w-full mb-4">
-                    <div id="heartDisplayOverlay" class="absolute inset-0 flex items-center justify-center text-2xl font-bold tracking-[0.4em] pointer-events-none heart-mask text-center w-full z-10 select-none"></div>
-                    <input type="text" id="secretInput" pattern="[0-9]*" inputmode="numeric" maxlength="4" placeholder="••••" oninput="processHeartTextFormatting(this)"
-                        class="w-full text-center text-2xl font-bold tracking-[0.4em] py-3 bg-slate-950/60 border border-white/10 rounded-2xl focus:outline-none focus:border-pink-500 opacity-100 text-transparent select-none selection:bg-transparent caret-pink-500 shadow-inner placeholder-slate-700 transition-all duration-300 font-sans-premium relative z-0" style="-webkit-text-fill-color: transparent; -webkit-user-select: none;" />
+            <!-- 🔮 AESTHETIC RE-DESIGNED SECURITY INPUT CARD -->
+            <div id="passcodePortal" class="w-full rounded-[2.5rem] p-7 text-center relative premium-gpu glass-vault-card transition-all duration-500">
+                <div class="flex items-center justify-center gap-2 mb-1">
+                    <span class="w-1.5 h-1.5 rounded-full bg-pink-500 animate-ping"></span>
+                    <span class="text-[9px] font-extrabold tracking-[0.5em] text-pink-400 uppercase">CELESTIAL VAULT ACCESS</span>
                 </div>
                 
-                <button onclick="verifySecretCode()" class="w-full bg-gradient-to-r from-pink-500 via-rose-500 to-purple-600 text-white font-extrabold tracking-[0.22em] text-[10px] py-4 rounded-xl shadow-md border border-white/10 premium-gpu">
+                <h1 class="font-luxury font-black text-3xl text-transparent bg-clip-text bg-gradient-to-r from-white via-pink-100 to-rose-300 mb-6 tracking-tight drop-shadow-sm">
+                    Decrypt Your Sky ☁️
+                </h1>
+                
+                <div class="relative w-full mb-5 neon-input-glow rounded-2xl p-1">
+                    <div id="heartDisplayOverlay" class="absolute inset-0 flex items-center justify-center text-2xl font-bold tracking-[0.45em] pointer-events-none heart-mask text-center w-full z-10 select-none"></div>
+                    <input type="text" id="secretInput" pattern="[0-9]*" inputmode="numeric" maxlength="4" placeholder="••••" oninput="processHeartTextFormatting(this)"
+                        class="w-full text-center text-2xl font-bold tracking-[0.45em] py-3.5 bg-transparent focus:outline-none opacity-100 text-transparent select-none caret-pink-500 font-sans-premium relative z-0 placeholder-slate-600 transition-all duration-300" style="-webkit-text-fill-color: transparent; -webkit-user-select: none;" />
+                </div>
+                
+                <button onclick="verifySecretCode()" class="w-full bg-gradient-to-r from-pink-500 via-rose-500 to-purple-600 hover:from-pink-600 hover:to-purple-700 text-white font-extrabold tracking-[0.25em] text-[10px] py-4 rounded-xl shadow-[0_10px_25px_rgba(244,63,94,0.4)] border border-white/20 active:scale-[0.98] transition-all duration-200 premium-gpu">
                     INITIALIZE UNIVERSE 🚀
                 </button>
-                <p id="errorFeedback" class="text-[9px] text-rose-400 font-extrabold mt-3 h-3 tracking-wider uppercase"></p>
+                <p id="errorFeedback" class="text-[9px] text-rose-400 font-extrabold mt-3 h-3 tracking-wider uppercase drop-shadow"></p>
             </div>
 
-            <!-- MODULE 2: ULTRA-COOL GREETING & TRANSITION CARD -->
-            <div id="surprisePortal" class="w-full rounded-[2.5rem] p-6 text-center absolute z-20 premium-gpu opacity-0 scale-75 pointer-events-none transition-all duration-500 neon-border-glow flex flex-col items-center">
+            <!-- 🌸 SMOOTH GREETING & TRANSITION CARD -->
+            <div id="surprisePortal" class="w-full rounded-[2.5rem] p-7 text-center absolute z-20 premium-gpu opacity-0 scale-75 pointer-events-none transition-all duration-500 glass-vault-card flex flex-col items-center">
                 <span id="surpriseDayBadge" class="text-[9px] font-extrabold tracking-[0.45em] text-pink-400 uppercase block mb-1">GALAXY UNLOCKED</span>
                 
-                <!-- GREETING CONTENT CONTAINER -->
-                <div class="bg-black/50 border border-white/5 rounded-2xl p-5 mb-4 mt-2 text-center w-full">
-                    <h3 id="surpriseTitle" class="font-luxury font-black text-white text-lg leading-snug mb-2 tracking-wide text-pink-400">Happy Birthday! 🎉🎂</h3>
+                <div class="bg-slate-950/60 border border-white/10 rounded-2xl p-5 mb-4 mt-2 text-center w-full shadow-inner">
+                    <h3 id="surpriseTitle" class="font-luxury font-black text-white text-xl leading-snug mb-2 tracking-wide text-pink-400">Happy Birthday! 🎉🎂</h3>
                     <p id="surpriseBody" class="text-xs font-semibold text-slate-200 leading-relaxed tracking-wide">Welcome to your ultimate magical space! Opening your special world in just a moment... ❤️✨</p>
                 </div>
 
-                <!-- LIVE COUNTDOWN DISPLAY BOX GRID -->
                 <p class="text-[8px] font-extrabold text-slate-400 uppercase tracking-widest mb-1 mt-2">Time Left Until 31st July Cosmic Explosion 🪐</p>
                 <div class="live-counter-engine font-sans-premium">
                     <div class="counter-slot"> <div id="cDays" class="counter-num">00</div> <div class="counter-label">Days</div> </div>
@@ -214,12 +239,10 @@
     </div>
 
     <script>
-        // MASTER CONFIGURATION
         const SECRET_KEY = "2910";
         let isPasswordResolved = false;
         let dollTapsCount = 0;
 
-        // Auto Image Fallback Loader System
         function handleMascotLoadError(imgObj) {
             const currentSrc = imgObj.src;
             if (currentSrc.includes('images/')) {
@@ -240,7 +263,7 @@
             const bubble = document.getElementById("dollBubble");
             const dollNode = document.getElementById("roamingDoll");
             
-            gsap.fromTo(dollNode, { scale: 0.9, rotation: -8 }, { scale: 1.05, rotation: 8, duration: 0.3, ease: "back.out(1.5)" });
+            gsap.fromTo(dollNode, { scale: 0.9, rotation: -8 }, { scale: 1.08, rotation: 8, duration: 0.3, ease: "back.out(1.5)" });
 
             if (!isPasswordResolved) {
                 dollTapsCount++;
@@ -271,16 +294,13 @@
             if (inputField.value.trim() === SECRET_KEY) {
                 isPasswordResolved = true;
                 
-                // Mascot celebration update
                 setMascotImage("mascot_happy.png");
                 document.getElementById("dollBubble").innerText = "YAY! Access Granted! 😍🎉";
 
-                // Particle explosion
                 triggerCelebrationFairyRain();
 
-                // Smooth Greeting Transition & Page Redirection to Page 1
                 gsap.to("#passcodePortal", {
-                    y: 40, opacity: 0, scale: 0.8, duration: 0.4, ease: "power3.in",
+                    y: 40, opacity: 0, scale: 0.8, duration: 0.45, ease: "power3.in",
                     onComplete: () => {
                         document.getElementById("passcodePortal").remove();
                         startGalaxyCountdownEngine();
@@ -288,7 +308,6 @@
                         surpriseCard.classList.remove("pointer-events-none", "opacity-0", "scale-75");
                         surpriseCard.classList.add("opacity-100", "scale-100", "pointer-events-auto");
                         
-                        // 🚀 Smooth Auto-Redirection to Page 1 Welcome
                         setTimeout(() => {
                             gsap.to("body", {
                                 opacity: 0,
@@ -330,33 +349,31 @@
         }
 
         function triggerCelebrationFairyRain() {
-            for (let i = 0; i < 40; i++) {
+            for (let i = 0; i < 45; i++) {
                 setTimeout(() => {
                     touchParticles.push(new TouchSparkle(Math.random() * window.innerWidth, -20, ['🌸', '💖', '✨', '🌹'][Math.floor(Math.random() * 4)]));
-                }, i * 60);
+                }, i * 50);
             }
         }
 
-        // BACKGROUND ENGINES
         function initAsynchronousLightingMatrix() {
             const trackLayer = document.getElementById("asyncLightsMatrix");
             for(let i=0; i<6; i++) {
                 const node = document.createElement("div");
                 node.className = "async-glow-node premium-gpu";
-                const size = Math.floor(Math.random() * 60) + 130;
+                const size = Math.floor(Math.random() * 80) + 150;
                 node.style.left = `calc(${(i * 16) + Math.random() * 5}vw - ${size/2}px)`;
-                node.style.top = `${Math.floor(Math.random() * 40) + 15}px`;
+                node.style.top = `${Math.floor(Math.random() * 40) + 10}px`;
                 node.style.width = `${size}px`; node.style.height = `${size}px`;
                 trackLayer.appendChild(node);
-                node.style.background = `radial-gradient(circle, rgba(244, 63, 94, 0.25) 0%, transparent 70%)`;
-                node.style.opacity = "1";
+                node.style.background = `radial-gradient(circle, rgba(244, 63, 94, 0.3) 0%, transparent 70%)`;
             }
             initGoldenDustMatrixEngine();
         }
 
         function initGoldenDustMatrixEngine() {
             const dustBox = document.getElementById("goldDustMatrixContainer");
-            for(let i = 0; i < 25; i++) {
+            for(let i = 0; i < 30; i++) {
                 const singleParticle = document.createElement("div");
                 singleParticle.className = "gold-dust-node premium-gpu";
                 const dimension = Math.random() * 4 + 2; 
@@ -374,7 +391,6 @@
             document.getElementById("heartDisplayOverlay").innerText = heartString;
         }
 
-        // CANVAS TOUCH PARTICLES
         const touchCanvas = document.getElementById('touchCanvas');
         const tCtx = touchCanvas.getContext('2d');
         let touchParticles = [];
