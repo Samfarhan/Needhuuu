@@ -34,8 +34,8 @@
         @keyframes safeMascotTrack {
             0% { top: 12%; left: 6%; transform: scale(1) rotate(0deg); }
             25% { top: 14%; left: 62%; transform: scale(1.05) rotate(6deg); }
-            50% { top: 70%; left: 64%; transform: scale(0.95) rotate(-6deg); }
-            75% { top: 64%; left: 8%; transform: scale(1.02) rotate(4deg); }
+            50% { top: 65%; left: 64%; transform: scale(0.95) rotate(-6deg); }
+            75% { top: 60%; left: 8%; transform: scale(1.02) rotate(4deg); }
             100% { top: 12%; left: 6%; transform: scale(1) rotate(0deg); }
         }
         .animate-safe-mascot {
@@ -80,8 +80,7 @@
         .phone-container {
             width: 100%;
             max-width: 412px;
-            height: 100vh;
-            max-height: 892px;
+            height: 100dvh;
         }
     </style>
 </head>
@@ -105,10 +104,10 @@
         </div>
     </div>
 
-    <div class="phone-container relative z-10 flex flex-col justify-between p-4 pb-8 overflow-hidden">
+    <div class="phone-container relative z-10 flex flex-col justify-between p-4 pb-20 overflow-hidden">
         
         <!-- HEADER TITLE BLOCK -->
-        <div class="text-center w-full premium-gpu mt-6 relative z-20" id="trapHeader">
+        <div class="text-center w-full premium-gpu mt-4 relative z-20" id="trapHeader">
             <div class="flex items-center justify-center gap-2 mb-1">
                 <span class="w-1.5 h-1.5 rounded-full bg-pink-500 animate-ping"></span>
                 <span class="text-[9px] font-extrabold tracking-[0.5em] text-pink-400 uppercase block">THE CORE FLOW</span>
@@ -129,21 +128,23 @@
             </button>
         </div>
 
-        <div id="popupSpawnPlane" class="absolute inset-x-4 top-24 bottom-24 pointer-events-none z-30 overflow-hidden rounded-3xl"></div>
+        <!-- POPUP SPAWN PLANE (RESTRICTED HEIGHT) -->
+        <div id="popupSpawnPlane" class="absolute inset-x-4 top-24 bottom-28 pointer-events-none z-30 overflow-hidden rounded-3xl"></div>
 
-        <!-- FOOTER & NAVIGATION -->
-        <div class="w-full flex flex-col items-center gap-2 mt-4 relative z-40">
+        <!-- STATUS DISPLAY -->
+        <div class="w-full flex flex-col items-center gap-2 mt-2 relative z-20">
             <div class="text-[8px] font-bold tracking-widest text-slate-400 uppercase" id="progressMetrics">
                 SYSTEM CORE STATUS: <span class='text-pink-400 font-black animate-pulse'>STANDBY MODE</span>
             </div>
-
-            <div id="actionFooterBar" class="w-full opacity-0 scale-90 hidden pointer-events-none transition-all duration-500">
-                <button onclick="advanceToWishesGrandPage()" class="w-full bg-gradient-to-r from-pink-500 via-rose-500 to-purple-600 hover:from-pink-600 hover:to-purple-700 text-white font-extrabold tracking-[0.22em] text-[10px] py-4 rounded-xl shadow-[0_10px_25px_rgba(244,63,94,0.4)] border border-white/20 premium-gpu animate-bounce">
-                    PROCEED TO WISHES 🎂🚀
-                </button>
-            </div>
         </div>
 
+    </div>
+
+    <!-- FIXED HIGHEST Z-INDEX FOOTER DOCK (ALWAYS ON TOP) -->
+    <div id="actionFooterBar" class="fixed bottom-4 left-1/2 -translate-x-1/2 w-[90%] max-w-[372px] z-50 text-center opacity-0 scale-90 hidden pointer-events-none transition-all duration-500">
+        <button onclick="advanceToWishesGrandPage()" class="w-full bg-gradient-to-r from-pink-500 via-rose-500 to-purple-600 hover:from-pink-600 hover:to-purple-700 text-white font-extrabold tracking-[0.22em] text-[10px] py-4 rounded-2xl shadow-[0_10px_30px_rgba(244,63,94,0.6)] border border-white/30 premium-gpu animate-bounce uppercase">
+            PROCEED TO WISHES 🎂🚀
+        </button>
     </div>
 
     <script>
@@ -237,7 +238,7 @@
         }
 
         function spawnSingleCutePopupNode() {
-            if (activePopupsCounter >= 35) return;
+            if (activePopupsCounter >= 30) return;
             playSFX('sfxPop');
 
             const container = document.getElementById("popupSpawnPlane");
@@ -260,9 +261,9 @@
             }
 
             const posX = Math.random() * 42 + 2;
-            const posY = Math.random() * 66 + 2;
+            const posY = Math.random() * 55 + 2;
 
-            newPopup.className = "absolute glass-pod-glow rounded-[2.2rem] p-3 py-4.5 text-center w-44 pointer-events-auto shadow-2xl premium-gpu select-none border border-pink-500/30";
+            newPopup.className = "absolute glass-pod-glow rounded-[2.2rem] p-3 py-4 text-center w-44 pointer-events-auto shadow-2xl premium-gpu select-none border border-pink-500/30";
             newPopup.style.left = `${posX}%`;
             newPopup.style.top = `${posY}%`;
             newPopup.style.zIndex = 100 + currentSpawnIndex;
