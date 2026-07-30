@@ -7,7 +7,7 @@
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@700;800&family=Playfair+Display:ital,wght@0,900;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,700;0,800;1,600&family=Playfair+Display:ital,wght@0,700;0,900;1,400&display=swap" rel="stylesheet">
     
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
@@ -23,94 +23,128 @@
             -webkit-font-smoothing: antialiased;
         }
 
-        /* Fluid Cyber Pastel Shifting Background Layout Mesh */
-        @keyframes dynamicSky {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-        .animated-game-bg {
-            background: linear-gradient(-45deg, #ffd6e8, #bae6fd, #e0e7ff, #fbcfe8);
-            background-size: 400% 400%;
-            animation: dynamicSky 12s ease infinite;
+        /* 🌌 DEEP CINEMATIC COSMIC AURA BACKGROUND */
+        .animated-cosmic-dark-bg {
+            background: radial-gradient(circle at 50% 30%, rgba(30, 15, 45, 0.98) 0%, rgba(8, 5, 18, 0.99) 60%, #020106 100%), 
+                        radial-gradient(circle at center, transparent 10%, rgba(0, 0, 0, 0.95) 100%);
+            position: relative;
         }
 
-        /* 🔄 COMPACT RESPONSIVE VIEWPORT BOUNDS FOR MASCOT STICKER */
+        /* 🔄 CSS VIEWPORT SAFE RESTRAINT FOR FLOATING MASCOT */
         @keyframes safeMascotTrack {
-            0% { top: 12%; left: 6%; transform: scale(1) rotate(0deg); }
-            25% { top: 14%; left: 62%; transform: scale(1.05) rotate(6deg); }
-            50% { top: 70%; left: 64%; transform: scale(0.95) rotate(-6deg); }
-            75% { top: 64%; left: 8%; transform: scale(1.02) rotate(4deg); }
-            100% { top: 12%; left: 6%; transform: scale(1) rotate(0deg); }
+            0% { top: 8%; left: 4%; transform: scale(1) rotate(0deg); }
+            25% { top: 10%; left: 66%; transform: scale(1.05) rotate(6deg); }
+            50% { top: 65%; left: 68%; transform: scale(0.95) rotate(-6deg); }
+            75% { top: 60%; left: 6%; transform: scale(1.02) rotate(4deg); }
+            100% { top: 8%; left: 4%; transform: scale(1) rotate(0deg); }
         }
         .animate-safe-mascot {
             position: fixed;
             animation: safeMascotTrack 18s linear infinite;
         }
 
-        .holo-card-glow {
-            box-shadow: 0 25px 60px rgba(244, 63, 94, 0.12), inset 0 0 20px rgba(255, 255, 255, 0.8);
+        /* 💎 ULTRA-AESTHETIC GLASS VAULT PLAYGROUND */
+        .glass-vault-card {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(18, 12, 35, 0.75) 100%);
+            backdrop-filter: blur(32px);
+            -webkit-backdrop-filter: blur(32px);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.85), inset 0 1px 0 rgba(255, 255, 255, 0.25);
         }
 
         .neon-basket-glow {
-            box-shadow: 0 0 20px rgba(244, 63, 94, 0.35), inset 0 0 10px rgba(255, 255, 255, 0.6);
+            box-shadow: 0 0 25px rgba(244, 63, 94, 0.6), inset 0 0 10px rgba(255, 255, 255, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+        }
+
+        .text-glow-rose {
+            text-shadow: 0 0 20px rgba(244, 63, 94, 0.6), 0 0 40px rgba(236, 72, 153, 0.3);
+        }
+
+        .async-glow-node {
+            position: absolute;
+            border-radius: 50%;
+            pointer-events: none;
+            mix-blend-mode: screen;
+            filter: blur(55px);
+            opacity: 0.5;
         }
     </style>
 </head>
-<body id="masterBody" class="animated-game-bg text-slate-800 font-sans-premium h-screen overflow-hidden relative select-none flex flex-col items-center justify-start p-4">
+<body id="masterBody" class="animated-cosmic-dark-bg text-slate-100 font-sans-premium h-[100dvh] w-full overflow-hidden relative select-none flex flex-col items-center justify-between p-3 pb-4">
 
+    <!-- AUDIO SFX ENGINE -->
     <audio id="sfxPop" src="sfx/pop.wav" preload="auto"></audio>
     <audio id="sfxError" src="sfx/error.wav" preload="auto"></audio>
     <audio id="sfxSuccess" src="sfx/success.wav" preload="auto"></audio>
 
+    <!-- BACKGROUND AMBIENT GLOW NODES -->
+    <div id="asyncLightsMatrix" class="absolute inset-0 pointer-events-none z-0"></div>
+
     <canvas id="touchCanvas" class="fixed inset-0 w-full h-full pointer-events-none z-40"></canvas>
 
-    <div id="roamingDoll" class="animate-safe-mascot w-20 h-28 cursor-pointer select-none z-40 premium-gpu filter drop-shadow-[0_10px_20px_rgba(244,63,94,0.12)]">
-        <img id="mascotDynamicImg" src="images/mascot.png" class="w-full h-full object-contain" alt="Mascot Doll" onclick="triggerMascotArcadeTalk()">
+    <!-- 🌸 FLOATING MASCOT STICKER -->
+    <div id="roamingDoll" class="animate-safe-mascot w-16 h-24 cursor-pointer select-none z-40 premium-gpu filter drop-shadow-[0_12px_25px_rgba(244,63,94,0.35)]">
+        <img id="mascotDynamicImg" src="images/mascot.png" onerror="handleMascotLoadError(this)" class="w-full h-full object-contain" alt="Mascot Doll" onclick="triggerMascotArcadeTalk()">
         
-        <div id="dollBubble" class="absolute -top-10 left-1/2 -translate-x-1/2 bg-white border border-pink-100 py-1 px-3 rounded-xl shadow-md text-[9px] font-extrabold text-pink-500 tracking-wide scale-100 transition-all duration-300 whitespace-nowrap">
-            Avoid the icy obstacles! 🧊✨
+        <div id="dollBubble" class="absolute -top-10 left-1/2 -translate-x-1/2 bg-slate-900/90 backdrop-blur-md border border-pink-500/30 py-1 px-3 rounded-xl shadow-xl text-[9px] font-extrabold text-pink-300 tracking-wide scale-100 transition-all duration-300 whitespace-nowrap">
+            Avoid the icy obstacles Bettuu! 🧊✨
         </div>
     </div>
 
-    <div id="mainContentGroup" class="w-full max-w-xs flex flex-col items-center justify-start h-full premium-gpu">
+    <!-- MAIN CONTAINER WITH FIXED DVH FIT -->
+    <div id="mainContentGroup" class="w-full max-w-sm flex flex-col items-center justify-between h-full relative z-20 premium-gpu">
         
-        <div class="text-center mt-6 mb-2 w-full">
-            <span class="text-[9px] font-extrabold tracking-[0.45em] text-pink-600 uppercase block mb-1 animate-pulse">COSMIC TERMINAL</span>
-            <h1 class="font-luxury font-black text-2xl text-indigo-950 leading-tight">Needhzy's Heart Quest 🌌</h1>
+        <!-- HEADER TITLE BLOCK -->
+        <div class="text-center mt-2 mb-1 w-full">
+            <div class="flex items-center justify-center gap-2 mb-0.5">
+                <span class="w-1.5 h-1.5 rounded-full bg-pink-500 animate-ping"></span>
+                <span class="text-[8px] font-extrabold tracking-[0.45em] text-pink-400 uppercase block">COSMIC TERMINAL</span>
+            </div>
+            <h1 class="font-luxury font-black text-2xl text-transparent bg-clip-text bg-gradient-to-r from-white via-pink-100 to-rose-300 leading-tight text-glow-rose">
+                Needhzy's Heart Quest 🌌
+            </h1>
         </div>
 
-        <div class="w-full backdrop-blur-3xl bg-white/50 border border-white p-3 rounded-2xl flex items-center justify-between shadow-sm relative mb-6 px-4">
+        <!-- SCORE STATUS HUD BAR -->
+        <div class="w-full glass-vault-card p-2.5 rounded-2xl flex items-center justify-between relative mb-2 px-4 border border-white/10">
             <div class="flex flex-col">
-                <span class="text-[9px] font-extrabold text-slate-400 tracking-wider uppercase">Stability Shard</span>
-                <span id="warningCounter" class="text-xs font-black text-rose-500 tracking-wide">❤️❤️❤️ THREE LIVES</span>
+                <span class="text-[8px] font-extrabold text-slate-400 tracking-wider uppercase">Stability Shard</span>
+                <span id="warningCounter" class="text-xs font-black text-rose-400 tracking-wide">❤️❤️❤️ THREE LIVES</span>
             </div>
-            <div class="h-6 w-[1px] bg-pink-100"></div>
+            <div class="h-6 w-[1px] bg-white/10"></div>
             <div class="flex flex-col items-end">
-                <span class="text-[9px] font-extrabold text-pink-500 tracking-wider uppercase">Combo Scores</span>
-                <span id="comboGoalDisplay" class="text-xs font-black text-pink-500 bg-pink-50 px-2.5 py-0.5 rounded-lg border border-pink-100">0 / 5 CAUGHT</span>
+                <span class="text-[8px] font-extrabold text-pink-400 tracking-wider uppercase">Combo Scores</span>
+                <span id="comboGoalDisplay" class="text-xs font-black text-pink-300 bg-pink-500/20 px-2.5 py-0.5 rounded-lg border border-pink-500/30">0 / 5 CAUGHT</span>
             </div>
         </div>
 
-        <div id="gamePlayground" class="w-full flex-1 bg-white/40 border-2 border-white rounded-[2.5rem] relative premium-gpu holo-card-glow overflow-hidden mb-8">
+        <!-- GAME PLAYGROUND GRID -->
+        <div id="gamePlayground" class="w-full flex-1 glass-vault-card rounded-[2rem] relative premium-gpu overflow-hidden my-1 border border-white/20">
             <div id="fallingContainer" class="absolute inset-0 pointer-events-none w-full h-full"></div>
 
-            <div id="catcherBasket" class="absolute bottom-5 left-1/2 -translate-x-1/2 w-20 h-6 bg-gradient-to-r from-pink-400 via-rose-400 to-purple-500 rounded-full flex items-center justify-center text-[10px] text-white border border-white/40 neon-basket-glow font-extrabold cursor-grab active:cursor-grabbing select-none" style="touch-action: none;">
+            <!-- BASKET NODE -->
+            <div id="catcherBasket" class="absolute bottom-4 left-1/2 -translate-x-1/2 w-24 h-8 bg-gradient-to-r from-pink-500 via-rose-500 to-purple-600 rounded-full flex items-center justify-center text-[10px] text-white neon-basket-glow font-extrabold cursor-grab active:cursor-grabbing select-none z-30" style="touch-action: none;">
                 💝 BASKET
             </div>
         </div>
 
+        <p class="text-[9px] font-bold text-slate-400 tracking-wider uppercase mt-1 mb-1 text-center opacity-80">
+            👈 Drag anywhere on screen to move basket 👉
+        </p>
+
     </div>
 
-    <div id="winScreenOverlay" class="w-full max-w-xs backdrop-blur-3xl bg-white/90 border-2 border-pink-200 rounded-[2.5rem] p-7 text-center absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50 premium-gpu shadow-2xl hidden opacity-0 scale-90">
-        <div class="w-16 h-16 mx-auto mb-4 bg-gradient-to-tr from-pink-100 to-purple-100 rounded-2xl border border-white flex items-center justify-center text-2xl shadow-inner">
+    <!-- WIN OVERLAY MODAL -->
+    <div id="winScreenOverlay" class="w-full max-w-xs glass-vault-card rounded-[2.5rem] p-6 text-center absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50 premium-gpu shadow-2xl hidden opacity-0 scale-90 border border-pink-500/30">
+        <div class="w-16 h-16 mx-auto mb-3 bg-pink-500/20 border border-pink-500/40 rounded-2xl flex items-center justify-center text-3xl shadow-[0_0_25px_rgba(244,63,94,0.4)] animate-pulse">
             👑
         </div>
-        <h2 class="font-luxury font-black text-2xl text-indigo-950 mb-2">Jackpot Win! 🎉</h2>
-        <p class="text-xs text-slate-600 font-bold leading-relaxed mb-6">
+        <h2 class="font-luxury font-black text-2xl text-white mb-2">Jackpot Win! 🎉</h2>
+        <p class="text-xs text-slate-300 font-medium leading-relaxed mb-6 italic">
             OMG, Needhzy! You matched every moving cosmic coordinate flawlessly. You are simply the absolute prettiest and most stunning person alive. Never forget that you mean the entire galaxy to me! 💕🪐
         </p>
-        <button onclick="navigateToPageFive()" class="w-full bg-gradient-to-r from-pink-400 via-rose-400 to-purple-600 text-white font-extrabold tracking-widest text-[10px] py-4 rounded-xl shadow-md border border-white/20 active:scale-95 transition-all">
+        <button onclick="navigateToPageFive()" class="w-full bg-gradient-to-r from-pink-500 via-rose-500 to-purple-600 hover:from-pink-600 hover:to-purple-700 text-white font-extrabold tracking-widest text-[10px] py-4 rounded-xl shadow-[0_10px_25px_rgba(244,63,94,0.4)] border border-white/20 active:scale-95 transition-all">
             PROCEED TO NEXT SECRET PAGE 🚀
         </button>
     </div>
@@ -131,12 +165,20 @@
         ];
         let trackingCompliments = [...needhzyCompliments];
 
+        function handleMascotLoadError(imgObj) {
+            const currentSrc = imgObj.src;
+            if (currentSrc.includes('images/')) {
+                imgObj.src = currentSrc.replace('images/', '');
+            }
+        }
+
         const playSFX = (id) => {
             const audio = document.getElementById(id);
             if (audio) { audio.currentTime = 0; audio.play().catch(e => {}); }
         };
 
         window.addEventListener('DOMContentLoaded', () => {
+            initAmbientLighting();
             initMobileBasketController();
             startGravityDropEngine();
         });
@@ -147,24 +189,25 @@
             let activeDrag = false;
 
             const handlePointerMove = (e) => {
-                if (!activeDrag || isGameFinished || warningStrikes <= 0) return;
+                if (isGameFinished || warningStrikes <= 0) return;
                 const bounds = playground.getBoundingClientRect();
                 let clientX = e.clientX;
                 if (e.touches && e.touches.length) clientX = e.touches[0].clientX;
 
                 let calculatedX = clientX - bounds.left;
-                if (calculatedX < 40) calculatedX = 40;
-                if (calculatedX > bounds.width - 40) calculatedX = bounds.width - 40;
+                if (calculatedX < 45) calculatedX = 45;
+                if (calculatedX > bounds.width - 45) calculatedX = bounds.width - 45;
 
                 basket.style.left = `${calculatedX}px`;
             };
 
-            basket.addEventListener('pointerdown', () => activeDrag = true);
+            window.addEventListener('pointerdown', (e) => activeDrag = true);
             window.addEventListener('pointerup', () => activeDrag = false);
-            window.addEventListener('pointermove', handlePointerMove);
-            basket.addEventListener('touchstart', () => activeDrag = true);
+            window.addEventListener('pointermove', (e) => { if(activeDrag) handlePointerMove(e); });
+            
+            window.addEventListener('touchstart', (e) => activeDrag = true);
             window.addEventListener('touchend', () => activeDrag = false);
-            window.addEventListener('touchmove', handlePointerMove, { passive: true });
+            window.addEventListener('touchmove', (e) => { if(activeDrag) handlePointerMove(e); }, { passive: true });
         }
 
         function startGravityDropEngine() {
@@ -174,7 +217,7 @@
                     return;
                 }
                 dropSingleRandomParticle();
-            }, 1600);
+            }, 1500);
         }
 
         function dropSingleRandomParticle() {
@@ -192,7 +235,7 @@
                 itemNode.setAttribute("data-type", "reward");
             }
 
-            itemNode.className = "absolute text-3xl select-none premium-gpu filter drop-shadow-sm";
+            itemNode.className = "absolute text-2xl select-none premium-gpu filter drop-shadow-[0_5px_10px_rgba(244,63,94,0.4)]";
             
             const pBounds = playground.getBoundingClientRect();
             const randomXOffset = Math.floor(Math.random() * (pBounds.width - 60)) + 30;
@@ -203,7 +246,7 @@
 
             gsap.to(itemNode, {
                 top: `${playground.clientHeight + 40}px`,
-                duration: 3.2,
+                duration: 3.0,
                 ease: "none",
                 onUpdate: () => {
                     if (isGameFinished || warningStrikes <= 0) {
@@ -214,13 +257,13 @@
 
                     const basket = document.getElementById("catcherBasket");
                     const itemY = parseFloat(itemNode.style.top);
-                    const basketY = playground.clientHeight - 44;
+                    const basketY = playground.clientHeight - 48;
 
-                    if (itemY >= basketY && itemY <= basketY + 24) {
+                    if (itemY >= basketY && itemY <= basketY + 30) {
                         const bX = basket.offsetLeft;
                         const iX = itemNode.offsetLeft;
 
-                        if (iX >= bX - 42 && iX <= bX + 42) {
+                        if (iX >= bX - 45 && iX <= bX + 45) {
                             gsap.killTweensOf(itemNode);
                             
                             const itemType = itemNode.getAttribute("data-type");
@@ -249,7 +292,9 @@
 
             if (trackingCompliments.length === 0) trackingCompliments = [...needhzyCompliments];
             bubble.innerText = trackingCompliments.splice(Math.floor(Math.random() * trackingCompliments.length), 1)[0];
+            
             targetImg.src = "images/mascot_happy.png";
+            targetImg.onerror = function() { this.onerror = null; this.src = "mascot_happy.png"; };
 
             gsap.fromTo("#catcherBasket", { scaleY: 0.7 }, { scaleY: 1, duration: 0.2, ease: "back.out(1.2)" });
 
@@ -259,7 +304,8 @@
             setTimeout(() => {
                 if(!isGameFinished && warningStrikes > 0) {
                     targetImg.src = "images/mascot.png";
-                    bubble.innerText = "Avoid the icy obstacles! 🧊✨";
+                    targetImg.onerror = function() { this.onerror = null; this.src = "mascot.png"; };
+                    bubble.innerText = "Avoid the icy obstacles Bettuu! 🧊✨";
                 }
             }, 1800);
 
@@ -276,22 +322,30 @@
             else if (warningStrikes === 1) strikesLabel.innerText = "❤️🖤🖤 LAST LIFE";
 
             if (warningStrikes > 0) {
-                document.getElementById("dollBubble").innerText = "Ouch! Watch out, Needhzy! 🥺❌";
-                document.getElementById("mascotDynamicImg").src = "images/mascot_sad.png";
+                document.getElementById("dollBubble").innerText = "Ouch! Watch out Bettuu! 🥺❌";
                 
-                gsap.fromTo("#gamePlayground", { backgroundColor: "rgba(244,63,94,0.18)" }, { backgroundColor: "rgba(255,255,255,0.4)", duration: 0.4 });
+                const targetImg = document.getElementById("mascotDynamicImg");
+                targetImg.src = "images/mascot_confused.png";
+                targetImg.onerror = function() { this.onerror = null; this.src = "mascot_confused.png"; };
+                
+                gsap.fromTo("#gamePlayground", { borderColor: "rgba(244,63,94,0.8)" }, { borderColor: "rgba(255,255,255,0.2)", duration: 0.4 });
                 gsap.fromTo("#catcherBasket", { x: -8 }, { x: 8, duration: 0.05, repeat: 4, yoyo: true });
                 
                 setTimeout(() => {
                     if(!isGameFinished && warningStrikes > 0) {
-                        document.getElementById("mascotDynamicImg").src = "images/mascot.png";
-                        document.getElementById("dollBubble").innerText = "Avoid the icy obstacles! 🧊✨";
+                        targetImg.src = "images/mascot.png";
+                        targetImg.onerror = function() { this.onerror = null; this.src = "mascot.png"; };
+                        document.getElementById("dollBubble").innerText = "Avoid the icy obstacles Bettuu! 🧊✨";
                     }
                 }, 1500);
             } else {
                 strikesLabel.innerText = "🖤🖤🖤 RESETTING...";
                 document.getElementById("dollBubble").innerText = "Let's rebuild the grid! 🔄🔮";
-                document.getElementById("mascotDynamicImg").src = "images/mascot_sad.png";
+                
+                const targetImg = document.getElementById("mascotDynamicImg");
+                targetImg.src = "images/mascot_confused.png";
+                targetImg.onerror = function() { this.onerror = null; this.src = "mascot_confused.png"; };
+
                 clearInterval(spawnTimerInterval);
                 
                 gsap.to("#gamePlayground", { opacity: 0.2, scale: 0.96, duration: 0.4, onComplete: () => {
@@ -299,7 +353,9 @@
                     warningStrikes = 3;
                     document.getElementById("comboGoalDisplay").innerText = `0 / ${finalMaxScore} CAUGHT`;
                     strikesLabel.innerText = "❤️❤️❤️ THREE LIVES";
-                    document.getElementById("mascotDynamicImg").src = "images/mascot.png";
+                    
+                    targetImg.src = "images/mascot.png";
+                    targetImg.onerror = function() { this.onerror = null; this.src = "mascot.png"; };
                     
                     gsap.to("#gamePlayground", { opacity: 1, scale: 1, duration: 0.4, onComplete: () => {
                         startGravityDropEngine();
@@ -313,7 +369,10 @@
             clearInterval(spawnTimerInterval);
             playSFX('sfxSuccess');
 
-            document.getElementById("mascotDynamicImg").src = "images/mascot_excited.png";
+            const targetImg = document.getElementById("mascotDynamicImg");
+            targetImg.src = "images/mascot_excited.png";
+            targetImg.onerror = function() { this.onerror = null; this.src = "mascot_excited.png"; };
+
             document.getElementById("dollBubble").innerText = "MISSION SUCCESSFUL! 😍🏆";
 
             setTimeout(() => {
@@ -322,18 +381,17 @@
                 const winCard = document.getElementById("winScreenOverlay");
                 winCard.classList.remove("hidden");
                 gsap.to(winCard, { opacity: 1, scale: 1, duration: 0.5, ease: "back.out(1.1)" });
-            }, 1000);
+            }, 800);
         }
 
         function triggerMascotArcadeTalk() {
             playSFX('sfxPop');
             const bubble = document.getElementById("dollBubble");
-            bubble.innerText = "You are doing wonderful, Needhzy! 👸🏻🌸";
+            bubble.innerText = "You are doing wonderful Bettuu! 👸🏻🌸";
             gsap.fromTo("#roamingDoll", { scale: 0.95 }, { scale: 1.05, duration: 0.2, yoyo: true, repeat: 1 });
-            setTimeout(() => { bubble.innerText = "Avoid the icy obstacles! 🧊✨"; }, 3000);
+            setTimeout(() => { bubble.innerText = "Avoid the icy obstacles Bettuu! 🧊✨"; }, 3000);
         }
 
-        /* ✅ ROUTING FLUIDLY PATCHED TO TARGET PAGE5-GALLERY.HTML */
         function navigateToPageFive() {
             playSFX('sfxPop');
             gsap.to("body", { opacity: 0, duration: 0.5, onComplete: () => {
@@ -341,7 +399,21 @@
             }});
         }
 
-        // --- MOBILE OPTIMIZED TOUCH SPARK TRAIL ENGINE ---
+        function initAmbientLighting() {
+            const trackLayer = document.getElementById("asyncLightsMatrix");
+            for(let i=0; i<5; i++) {
+                const node = document.createElement("div");
+                node.className = "async-glow-node premium-gpu";
+                const size = Math.floor(Math.random() * 80) + 160;
+                node.style.left = `calc(${(i * 20) + Math.random() * 5}vw - ${size/2}px)`;
+                node.style.top = `${Math.floor(Math.random() * 50) + 10}px`;
+                node.style.width = `${size}px`; node.style.height = `${size}px`;
+                node.style.background = `radial-gradient(circle, rgba(244, 63, 94, 0.25) 0%, transparent 75%)`;
+                trackLayer.appendChild(node);
+            }
+        }
+
+        // TOUCH SPARKLE CANVAS ENGINE
         const touchCanvas = document.getElementById('touchCanvas');
         const tCtx = touchCanvas.getContext('2d');
         let touchParticles = [];
