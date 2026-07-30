@@ -17,7 +17,7 @@
         .font-sans-premium { font-family: 'Plus Jakarta Sans', sans-serif; }
         
         .premium-gpu {
-            will-change: transform, opacity, height, filter;
+            will-change: transform, opacity;
             transform: translateZ(0);
             backface-visibility: hidden;
             -webkit-font-smoothing: antialiased;
@@ -25,33 +25,30 @@
 
         /* 🌌 DEEP CINEMATIC COSMIC AURA BACKGROUND */
         .animated-cosmic-dark-bg {
-            background: radial-gradient(circle at 50% 30%, rgba(30, 15, 45, 0.98) 0%, rgba(8, 5, 18, 0.99) 60%, #020106 100%), 
-                        radial-gradient(circle at center, transparent 10%, rgba(0, 0, 0, 0.95) 100%);
+            background: radial-gradient(circle at 50% 30%, rgba(30, 15, 45, 0.98) 0%, rgba(8, 5, 18, 0.99) 60%, #020106 100%);
             position: relative;
         }
 
         /* 🔄 CSS VIEWPORT SAFE RESTRAINT FOR FLOATING MASCOT */
         @keyframes safeMascotTrack {
-            0% { top: 12%; left: 6%; transform: scale(1) rotate(0deg); }
-            25% { top: 14%; left: 62%; transform: scale(1.05) rotate(6deg); }
-            50% { top: 70%; left: 64%; transform: scale(0.95) rotate(-6deg); }
-            75% { top: 64%; left: 8%; transform: scale(1.02) rotate(4deg); }
-            100% { top: 12%; left: 6%; transform: scale(1) rotate(0deg); }
+            0% { top: 12%; left: 6%; transform: translateZ(0) scale(1) rotate(0deg); }
+            25% { top: 14%; left: 62%; transform: translateZ(0) scale(1.05) rotate(6deg); }
+            50% { top: 70%; left: 64%; transform: translateZ(0) scale(0.95) rotate(-6deg); }
+            75% { top: 64%; left: 8%; transform: translateZ(0) scale(1.02) rotate(4deg); }
+            100% { top: 12%; left: 6%; transform: translateZ(0) scale(1) rotate(0deg); }
         }
         .animate-safe-mascot {
             position: fixed;
             animation: safeMascotTrack 18s linear infinite;
         }
 
-        /* 💎 ULTRA-AESTHETIC GLASS VAULT ACCORDION CONTAINER */
+        /* 💎 ULTRA-AESTHETIC GLASS VAULT ACCORDION CONTAINER (LIGHTWEIGHT) */
         .glass-vault-card {
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(18, 12, 35, 0.75) 100%);
-            backdrop-filter: blur(32px);
-            -webkit-backdrop-filter: blur(32px);
-            border: 1px solid rgba(255, 255, 255, 0.18);
-            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.85), 
-                        inset 0 1px 0 rgba(255, 255, 255, 0.3),
-                        0 0 45px rgba(244, 63, 94, 0.18);
+            background: rgba(18, 12, 35, 0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8);
         }
 
         /* Clean Accordion Node Border Separator Styles */
@@ -63,16 +60,19 @@
         }
 
         .text-glow-rose {
-            text-shadow: 0 0 20px rgba(244, 63, 94, 0.6), 0 0 40px rgba(236, 72, 153, 0.3);
+            text-shadow: 0 0 15px rgba(244, 63, 94, 0.5);
         }
 
-        .async-glow-node {
-            position: absolute;
-            border-radius: 50%;
-            pointer-events: none;
-            mix-blend-mode: screen;
-            filter: blur(55px);
-            opacity: 0.5;
+        .accordion-drawer {
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+            transition: max-height 0.35s cubic-bezier(0, 1, 0, 1), opacity 0.25s ease-out;
+        }
+        .accordion-drawer.open {
+            max-height: 250px;
+            opacity: 1;
+            transition: max-height 0.35s ease-in-out, opacity 0.3s ease-in;
         }
     </style>
 </head>
@@ -82,16 +82,13 @@
     <audio id="sfxPop" src="sfx/pop.wav" preload="auto"></audio>
     <audio id="sfxSuccess" src="sfx/success.wav" preload="auto"></audio>
 
-    <!-- BACKGROUND AMBIENT GLOW NODES -->
-    <div id="asyncLightsMatrix" class="absolute inset-0 pointer-events-none z-0"></div>
-
     <canvas id="touchCanvas" class="fixed inset-0 w-full h-full pointer-events-none z-40"></canvas>
 
     <!-- 🌸 FLOATING MASCOT STICKER -->
-    <div id="roamingDoll" class="animate-safe-mascot w-20 h-28 cursor-pointer select-none z-40 premium-gpu filter drop-shadow-[0_12px_25px_rgba(244,63,94,0.35)]">
+    <div id="roamingDoll" class="animate-safe-mascot w-20 h-28 cursor-pointer select-none z-40 premium-gpu filter drop-shadow-[0_10px_20px_rgba(244,63,94,0.3)]">
         <img id="mascotDynamicImg" src="images/mascot.png" onerror="handleMascotLoadError(this)" class="w-full h-full object-contain" alt="Mascot Doll" onclick="triggerMascotCoreTalk()">
         
-        <div id="dollBubble" class="absolute -top-11 left-1/2 -translate-x-1/2 bg-slate-900/90 backdrop-blur-md border border-pink-500/30 py-1 px-3.5 rounded-xl shadow-xl text-[9px] font-extrabold text-pink-300 tracking-wide scale-100 transition-all duration-300 whitespace-nowrap">
+        <div id="dollBubble" class="absolute -top-11 left-1/2 -translate-x-1/2 bg-slate-900/95 border border-pink-500/30 py-1 px-3.5 rounded-xl shadow-xl text-[9px] font-extrabold text-pink-300 tracking-wide scale-100 transition-all duration-300 whitespace-nowrap">
             Tap a row to reveal my thoughts Bettuu! ✨📖
         </div>
     </div>
@@ -114,15 +111,15 @@
     <div id="accordionTerminal" class="w-full max-w-sm glass-vault-card rounded-[2.5rem] p-4 relative z-20 premium-gpu flex flex-col overflow-hidden mb-6">
         
         <!-- REASON 1 -->
-        <div class="w-full accordion-node-border py-4 px-2 cursor-pointer premium-gpu" onclick="handleAccordionToggle(1, this)">
+        <div class="w-full accordion-node-border py-3.5 px-2 cursor-pointer premium-gpu" onclick="handleAccordionToggle(1, this)">
             <div class="flex items-center justify-between w-full">
                 <div class="flex items-center gap-3">
                     <span class="text-base bg-pink-500/20 p-2 rounded-xl border border-pink-500/30">✨</span>
                     <h3 class="font-luxury font-black text-sm text-white tracking-tight">My Instant Mood Cure</h3>
                 </div>
-                <span id="accordionArrow1" class="text-xs font-black text-pink-400 transition-transform duration-300">＋</span>
+                <span id="accordionArrow1" class="text-xs font-black text-pink-400 transition-transform duration-200">＋</span>
             </div>
-            <div id="drawerBody1" class="h-0 opacity-0 overflow-hidden premium-gpu transition-all duration-300">
+            <div id="drawerBody1" class="accordion-drawer">
                 <p class="text-[11px] text-slate-300 font-medium leading-relaxed pt-3 px-1 border-t border-white/10 mt-3 italic">
                     “Whenever I feel down, low, or completely overwhelmed, you possess this incredible superpower to fix my emotional state instantly. A tiny word from you completely rewrites my cloudy sky and updates my entire world beautifully.”
                 </p>
@@ -130,15 +127,15 @@
         </div>
 
         <!-- REASON 2 -->
-        <div class="w-full accordion-node-border py-4 px-2 cursor-pointer premium-gpu" onclick="handleAccordionToggle(2, this)">
+        <div class="w-full accordion-node-border py-3.5 px-2 cursor-pointer premium-gpu" onclick="handleAccordionToggle(2, this)">
             <div class="flex items-center justify-between w-full">
                 <div class="flex items-center gap-3">
                     <span class="text-base bg-purple-500/20 p-2 rounded-xl border border-purple-500/30">📚</span>
                     <h3 class="font-luxury font-black text-sm text-white tracking-tight">The Adorable Study Scold</h3>
                 </div>
-                <span id="accordionArrow2" class="text-xs font-black text-purple-400 transition-transform duration-300">＋</span>
+                <span id="accordionArrow2" class="text-xs font-black text-purple-400 transition-transform duration-200">＋</span>
             </div>
-            <div id="drawerBody2" class="h-0 opacity-0 overflow-hidden premium-gpu transition-all duration-300">
+            <div id="drawerBody2" class="accordion-drawer">
                 <p class="text-[11px] text-slate-300 font-medium leading-relaxed pt-3 px-1 border-t border-white/10 mt-3 italic">
                     “When I run away from my books or act lazy, you turn into the sweetest monitor! You genuinely scold me, push my boundaries, and forcefully make me focus on my studies because you care deeply about my future and success.”
                 </p>
@@ -146,15 +143,15 @@
         </div>
 
         <!-- REASON 3 -->
-        <div class="w-full accordion-node-border py-4 px-2 cursor-pointer premium-gpu" onclick="handleAccordionToggle(3, this)">
+        <div class="w-full accordion-node-border py-3.5 px-2 cursor-pointer premium-gpu" onclick="handleAccordionToggle(3, this)">
             <div class="flex items-center justify-between w-full">
                 <div class="flex items-center gap-3">
                     <span class="text-base bg-sky-500/20 p-2 rounded-xl border border-sky-500/30">💝</span>
                     <h3 class="font-luxury font-black text-sm text-white tracking-tight">Your Infinite Pure Care</h3>
                 </div>
-                <span id="accordionArrow3" class="text-xs font-black text-sky-400 transition-transform duration-300">＋</span>
+                <span id="accordionArrow3" class="text-xs font-black text-sky-400 transition-transform duration-200">＋</span>
             </div>
-            <div id="drawerBody3" class="h-0 opacity-0 overflow-hidden premium-gpu transition-all duration-300">
+            <div id="drawerBody3" class="accordion-drawer">
                 <p class="text-[11px] text-slate-300 font-medium leading-relaxed pt-3 px-1 border-t border-white/10 mt-3 italic">
                     “The deep level of care you show me is simply beautiful. From endlessly reminding me to eat on time to continuously nagging about my health, it feels incredibly comforting to have you always looking over me like a guardian angel.”
                 </p>
@@ -162,15 +159,15 @@
         </div>
 
         <!-- REASON 4 -->
-        <div class="w-full accordion-node-border py-4 px-2 cursor-pointer premium-gpu" onclick="handleAccordionToggle(4, this)">
+        <div class="w-full accordion-node-border py-3.5 px-2 cursor-pointer premium-gpu" onclick="handleAccordionToggle(4, this)">
             <div class="flex items-center justify-between w-full">
                 <div class="flex items-center gap-3">
                     <span class="text-base bg-rose-500/20 p-2 rounded-xl border border-rose-500/30">😡</span>
                     <h3 class="font-luxury font-black text-sm text-white tracking-tight">The Protective Angry Pout</h3>
                 </div>
-                <span id="accordionArrow4" class="text-xs font-black text-rose-400 transition-transform duration-300">＋</span>
+                <span id="accordionArrow4" class="text-xs font-black text-rose-400 transition-transform duration-200">＋</span>
             </div>
-            <div id="drawerBody4" class="h-0 opacity-0 overflow-hidden premium-gpu transition-all duration-300">
+            <div id="drawerBody4" class="accordion-drawer">
                 <p class="text-[11px] text-slate-300 font-medium leading-relaxed pt-3 px-1 border-t border-white/10 mt-3 italic">
                     “Whenever I make a mistake or do something wrong, you never hesitate to get honestly angry with me. That sweet protective anger simply reflects just how deeply and beautifully you treasure this connection we share.”
                 </p>
@@ -178,15 +175,15 @@
         </div>
 
         <!-- REASON 5 -->
-        <div class="w-full accordion-node-border py-4 px-2 cursor-pointer premium-gpu" onclick="handleAccordionToggle(5, this)">
+        <div class="w-full accordion-node-border py-3.5 px-2 cursor-pointer premium-gpu" onclick="handleAccordionToggle(5, this)">
             <div class="flex items-center justify-between w-full">
                 <div class="flex items-center gap-3">
                     <span class="text-base bg-amber-500/20 p-2 rounded-xl border border-amber-500/30">👑</span>
                     <h3 class="font-luxury font-black text-sm text-white tracking-tight">Unmatched Loyalty & Vibe</h3>
                 </div>
-                <span id="accordionArrow5" class="text-xs font-black text-amber-400 transition-transform duration-300">＋</span>
+                <span id="accordionArrow5" class="text-xs font-black text-amber-400 transition-transform duration-200">＋</span>
             </div>
-            <div id="drawerBody5" class="h-0 opacity-0 overflow-hidden premium-gpu transition-all duration-300">
+            <div id="drawerBody5" class="accordion-drawer">
                 <p class="text-[11px] text-slate-300 font-medium leading-relaxed pt-3 px-1 border-t border-white/10 mt-3 italic">
                     “You are genuinely one of a kind. Your vibe, your humor, your unfiltered conversations, and the way you stand by me through thick and thin make you completely irreplaceable in my universe.”
                 </p>
@@ -194,15 +191,15 @@
         </div>
 
         <!-- REASON 6 -->
-        <div class="w-full accordion-node-border py-4 px-2 cursor-pointer premium-gpu" onclick="handleAccordionToggle(6, this)">
+        <div class="w-full accordion-node-border py-3.5 px-2 cursor-pointer premium-gpu" onclick="handleAccordionToggle(6, this)">
             <div class="flex items-center justify-between w-full">
                 <div class="flex items-center gap-3">
                     <span class="text-base bg-emerald-500/20 p-2 rounded-xl border border-emerald-500/30">🌸</span>
                     <h3 class="font-luxury font-black text-sm text-white tracking-tight">Your Pure Heart & Smile</h3>
                 </div>
-                <span id="accordionArrow6" class="text-xs font-black text-emerald-400 transition-transform duration-300">＋</span>
+                <span id="accordionArrow6" class="text-xs font-black text-emerald-400 transition-transform duration-200">＋</span>
             </div>
-            <div id="drawerBody6" class="h-0 opacity-0 overflow-hidden premium-gpu transition-all duration-300">
+            <div id="drawerBody6" class="accordion-drawer">
                 <p class="text-[11px] text-slate-300 font-medium leading-relaxed pt-3 px-1 border-t border-white/10 mt-3 italic">
                     “The genuine warmth you carry in your heart and that radiant smile of yours can light up the darkest room. Just seeing you happy makes everything I code and build completely worth it!”
                 </p>
@@ -217,8 +214,8 @@
     </div>
 
     <!-- ACTION FOOTER BAR -->
-    <div id="actionFooterBar" class="w-full max-w-sm relative z-20 text-center px-2 opacity-0 scale-90 hidden pointer-events-none transition-all duration-500">
-        <button onclick="advanceToAudioPlatformPage()" class="w-full bg-gradient-to-r from-pink-500 via-rose-500 to-purple-600 hover:from-pink-600 hover:to-purple-700 text-white font-extrabold tracking-[0.22em] text-[10px] py-4 rounded-xl shadow-[0_10px_25px_rgba(244,63,94,0.4)] hover:scale-[1.02] active:scale-95 transition-all duration-200 border border-white/20 premium-gpu animate-bounce">
+    <div id="actionFooterBar" class="w-full max-w-sm relative z-20 text-center px-2 opacity-0 hidden pointer-events-none transition-all duration-300">
+        <button onclick="advanceToAudioPlatformPage()" class="w-full bg-gradient-to-r from-pink-500 via-rose-500 to-purple-600 hover:from-pink-600 hover:to-purple-700 text-white font-extrabold tracking-[0.22em] text-[10px] py-4 rounded-xl shadow-[0_10px_25px_rgba(244,63,94,0.4)] active:scale-95 transition-all duration-200 border border-white/20 premium-gpu animate-bounce">
             PROCEED TO TUNES 🎵🚀
         </button>
     </div>
@@ -250,28 +247,32 @@
         };
 
         window.addEventListener('DOMContentLoaded', () => {
-            initAmbientLighting();
             playSFX('sfxSuccess');
-            gsap.from("#reasonHeader", { opacity: 0, y: -20, duration: 0.7, ease: "back.out(1.1)" });
-            gsap.from("#accordionTerminal", { opacity: 0, scale: 0.95, duration: 0.8, ease: "back.out(1.15)", delay: 0.1 });
+            gsap.from("#reasonHeader", { opacity: 0, y: -15, duration: 0.5, ease: "power2.out" });
+            gsap.from("#accordionTerminal", { opacity: 0, scale: 0.98, duration: 0.5, ease: "power2.out", delay: 0.1 });
         });
 
         function handleAccordionToggle(rowId, nodeElement) {
             playSFX('sfxPop');
 
             const currentDrawer = document.getElementById(`drawerBody${rowId}`);
+            const arrow = document.getElementById(`accordionArrow${rowId}`);
 
             const rect = nodeElement.getBoundingClientRect();
-            for(let i=0; i<5; i++) touchParticles.push(new TouchSparkle(rect.left + 40, rect.top + 20, '💖'));
+            for(let i=0; i<3; i++) touchParticles.push(new TouchSparkle(rect.left + 40, rect.top + 20, '💖'));
 
             if (activeOpenId === rowId) {
-                collapseDrawerBlock(rowId);
+                currentDrawer.classList.remove('open');
+                if (arrow) arrow.innerText = "＋";
                 activeOpenId = null;
                 return;
             }
 
             if (activeOpenId !== null) {
-                collapseDrawerBlock(activeOpenId);
+                const prevDrawer = document.getElementById(`drawerBody${activeOpenId}`);
+                const prevArrow = document.getElementById(`accordionArrow${activeOpenId}`);
+                if (prevDrawer) prevDrawer.classList.remove('open');
+                if (prevArrow) prevArrow.innerText = "＋";
             }
 
             activeOpenId = rowId;
@@ -279,38 +280,14 @@
 
             document.getElementById("scannedCounter").innerText = `${openedDrawersSet.size} / ${totalTargetDrawers} EXPLORED`;
 
-            const arrow = document.getElementById(`accordionArrow${rowId}`);
             if (arrow) arrow.innerText = "－";
-
-            currentDrawer.style.height = "auto";
-            const targetHeight = currentDrawer.clientHeight;
-            currentDrawer.style.height = "0px";
-
-            gsap.to(currentDrawer, {
-                height: targetHeight,
-                opacity: 1,
-                duration: 0.4,
-                ease: "power2.out"
-            });
+            currentDrawer.classList.add('open');
 
             triggerChibiExpressionShift();
 
             if (openedDrawersSet.size === totalTargetDrawers) {
                 activateFinalProceedStationBar();
             }
-        }
-
-        function collapseDrawerBlock(id) {
-            const drawer = document.getElementById(`drawerBody${id}`);
-            const arrow = document.getElementById(`accordionArrow${id}`);
-            if (arrow) arrow.innerText = "＋";
-
-            gsap.to(drawer, {
-                height: 0,
-                opacity: 0,
-                duration: 0.3,
-                ease: "power2.inOut"
-            });
         }
 
         function triggerChibiExpressionShift() {
@@ -337,52 +314,32 @@
             playSFX('sfxPop');
             triggerChibiExpressionShift();
             const r = document.getElementById("roamingDoll").getBoundingClientRect();
-            for(let i=0; i<5; i++) touchParticles.push(new TouchSparkle(r.left + 35, r.top + 35, '✨'));
+            for(let i=0; i<3; i++) touchParticles.push(new TouchSparkle(r.left + 35, r.top + 35, '✨'));
         }
 
         function activateFinalProceedStationBar() {
+            playSFX('sfxSuccess');
+            document.getElementById("progressMetrics").innerHTML = "STATUS CORE: <span class='text-emerald-400 font-black animate-pulse'>ALL DETAILS EXPANDED! 👑</span>";
+            
+            document.getElementById("accordionTerminal").style.borderColor = "rgba(244, 63, 94, 0.5)";
+
+            const footerBar = document.getElementById("actionFooterBar");
+            footerBar.classList.remove("hidden");
+            
             setTimeout(() => {
-                playSFX('sfxSuccess');
-                document.getElementById("progressMetrics").innerHTML = "STATUS CORE: <span class='text-emerald-400 font-black animate-pulse'>ALL DETAILS EXPANDED! 👑</span>";
-                
-                document.getElementById("accordionTerminal").style.borderColor = "rgba(244, 63, 94, 0.5)";
-
-                const footerBar = document.getElementById("actionFooterBar");
-                footerBar.classList.remove("hidden");
-                
-                setTimeout(() => {
-                    footerBar.classList.remove("opacity-0", "scale-90");
-                    footerBar.classList.add("opacity-100", "scale-100", "pointer-events-auto");
-                }, 50);
-
-                setInterval(() => {
-                    touchParticles.push(new TouchSparkle(window.innerWidth/2, window.innerHeight/2));
-                }, 350);
-            }, 400);
+                footerBar.classList.remove("opacity-0");
+                footerBar.classList.add("opacity-100", "pointer-events-auto");
+            }, 50);
         }
 
         function advanceToAudioPlatformPage() {
             playSFX('sfxPop');
-            gsap.to("body", { opacity: 0, duration: 0.5, onComplete: () => {
+            gsap.to("body", { opacity: 0, duration: 0.35, onComplete: () => {
                 window.location.href = "page7-audio.html";
             }});
         }
 
-        function initAmbientLighting() {
-            const trackLayer = document.getElementById("asyncLightsMatrix");
-            for(let i=0; i<5; i++) {
-                const node = document.createElement("div");
-                node.className = "async-glow-node premium-gpu";
-                const size = Math.floor(Math.random() * 80) + 160;
-                node.style.left = `calc(${(i * 20) + Math.random() * 5}vw - ${size/2}px)`;
-                node.style.top = `${Math.floor(Math.random() * 50) + 10}px`;
-                node.style.width = `${size}px`; node.style.height = `${size}px`;
-                node.style.background = `radial-gradient(circle, rgba(244, 63, 94, 0.25) 0%, transparent 75%)`;
-                trackLayer.appendChild(node);
-            }
-        }
-
-        // TOUCH SPARKLE CANVAS ENGINE
+        // LIGHTWEIGHT TOUCH SPARKLE CANVAS ENGINE
         const touchCanvas = document.getElementById('touchCanvas');
         const tCtx = touchCanvas.getContext('2d');
         let touchParticles = [];
@@ -390,16 +347,19 @@
 
         class TouchSparkle {
             constructor(x, y, sym = '✨') {
-                this.x = x; this.y = y; this.size = Math.random() * 12 + 10;
-                this.speedX = (Math.random() - 0.5) * 4; this.speedY = (Math.random() - 0.5) * 4;
+                this.x = x; this.y = y; this.size = Math.random() * 8 + 10;
+                this.speedX = (Math.random() - 0.5) * 3; this.speedY = (Math.random() - 0.5) * 3;
                 this.opacity = 1; this.symbol = sym;
             }
-            update() { this.x += this.speedX; this.y += this.speedY; this.opacity -= 0.02; }
+            update() { this.x += this.speedX; this.y += this.speedY; this.opacity -= 0.03; }
             draw() { tCtx.save(); tCtx.globalAlpha = this.opacity; tCtx.font = `${this.size}px serif`; tCtx.fillText(this.symbol, this.x, this.y); tCtx.restore(); }
         }
 
-        window.addEventListener('mousemove', (e) => { touchParticles.push(new TouchSparkle(e.clientX, e.clientY)); });
-        window.addEventListener('touchmove', (e) => { if(e.touches.length) touchParticles.push(new TouchSparkle(e.touches[0].clientX, e.touches[0].clientY)); });
+        window.addEventListener('touchmove', (e) => { 
+            if(e.touches.length && touchParticles.length < 15) {
+                touchParticles.push(new TouchSparkle(e.touches[0].clientX, e.touches[0].clientY)); 
+            }
+        });
 
         function animateTouchTrail() {
             tCtx.clearRect(0, 0, touchCanvas.width, touchCanvas.height);
